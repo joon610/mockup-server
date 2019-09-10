@@ -9,10 +9,13 @@
     "dev": "vue-cli-service serve",
     "dev:electron": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps"
+    "postuninstall": "electron-builder install-app-deps",
+    "dd":"ts-node src/utils/virtualServer.ts"
   },
   "dependencies": {
+    "@types/express": "^4.17.1",
     "core-js": "^2.6.5",
+    "express": "^4.17.1",
     "style-loader": "^1.0.0",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
