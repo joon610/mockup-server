@@ -1,7 +1,10 @@
 <template lang="pug">
     .api-list-container
         .api-container(v-for="api in apiList")
-            | {{ api }}
+            .http-method
+                | GET
+            .api-path
+                | {{ api }}
 </template>
 
 <script lang="ts">
@@ -16,14 +19,27 @@ export default class ApiList extends Vue {
 
 <style scoped>
 .api-container {
-    background-color:cadetblue;
-    border-radius: 2px;
-    margin: 2px;
-    height: 50px;
+    background-color:#424242;
+    border-radius: 5px;
+    margin-bottom: 5px;
     justify-content: center;
     vertical-align: middle;
+    height: 50px;
 }
 .api-list-container{
     margin: 10px;
+    width: 340px;
+
+}
+.api-path{
+    width: 290px;
+    float: left;
+    line-height: 50px;
+}
+.http-method{
+    line-height: 50px;
+    width: 50px;
+    float: left;
+    color:darkorange;
 }
 </style>

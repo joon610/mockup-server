@@ -2,7 +2,7 @@
   <v-app dark>
     <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>Mocking Brid</span>
+        <span>Mocking Bird</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn

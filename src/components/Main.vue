@@ -1,18 +1,18 @@
 <template lang="pug">
   v-container
     v-layout(text-center='', wrap='')
+      v-row.row-hegiht(no-gutters)
+        .input-row
+          v-text-field(v-model="rootPath" :solo="true" :flat="true" readonly)
+        v-btn(color="primary" @click="getPath()") Select Root
+      v-row.row-hegiht(no-gutters)
+        .input-row
+          .loacalhost-label http://loacalhost:
+          .loacalhost-input
+            v-text-field(:solo="true", :flat="true" style="hegiht:48px")
+        v-btn(color="primary" :disabled="hasApiList" @click="startServer()") start Server
       v-row(no-gutters)
-          v-text-field
-            template(v-slot:label='')
-              | Root Path
-          v-btn(color="primary" @click="getPath()") Select Root
-      v-row(no-gutters)
-          v-text-field
-            template(v-slot:label='')
-              | http://localhost:
-          v-btn(color="primary" :disabled="hasApiList" @click="startServer()") start Server
-          v-btn(color="primary" :disabled="isServerOn" @click="closeServer()") close Server
-      ApiList(:apiList="apiList")
+        ApiList(:apiList="apiList" style="width:100%")
 </template>
 
 <script lang="ts">
@@ -30,7 +30,7 @@ import { setTimeout } from 'timers';
 })
 export default class Main extends Vue {
 
-  private dirPath: string = '';
+  private rootPath: string = '';
   private server!: VirtualServer;
   private apiList: string[] = [];
 
@@ -41,8 +41,12 @@ export default class Main extends Vue {
     const electron = require('electron').remote;
     const dialog = electron.dialog;
     const path = await dialog.showOpenDialog({properties: ['openDirectory']});
-    this.dirPath = path.filePaths![0];
-    const filetree = new FileTree(this.dirPath);
+    if (path.filePaths!.length ===  0) {
+      console.log('empty path');
+      return;
+    }
+    this.rootPath = path.filePaths![0];
+    const filetree = new FileTree(this.rootPath);
     filetree.build();
     this.apiList = filetree.getRelativePath();
     if (this.apiList !== undefined) {
@@ -68,10 +72,36 @@ export default class Main extends Vue {
   margin:10px;
   border-radius: 3px;
   padding: 20px;
-  background-color: rgba(185, 224, 198,0.5);
+  background-color: #424242;
 }
 button{
-  margin: 5px;
+  margin-left: 5px;
+  width: 150px;
+  height: 48px !important;
+}
+
+.loacalhost-label{
+  height: 48px;
+  line-height: 48px;
+  font-size: 18px;
+  width: 40px;
+  text-align: right;
+  margin-right: 0px;
+  float: left;
+}
+
+.loacalhost-input{
+  float: right;
+  width: 200px;
+}
+
+.input-row{
+  width: 340px;
+}
+
+.row-hegiht{
+  height:48px;
+  margin-bottom: 5px;
 }
 
 </style>
