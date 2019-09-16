@@ -1,14 +1,14 @@
 <template>
-  <Main />
+  <MockingBird/>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import Main from '../components/Main.vue';
+import MockingBird from '../components/MockingBird.vue';
 
 export default Vue.extend({
   components: {
-    Main,
+    MockingBird,
   },
 });
 </script>

@@ -45,6 +45,10 @@
       "autoprefixer": {}
     }
   },
+  "extends": [
+    "plugin:vue/recommended",
+    "eslint:recommended"
+  ],
   "browserslist": [
     "> 1%",
     "last 2 versions"

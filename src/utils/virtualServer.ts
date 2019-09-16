@@ -1,15 +1,18 @@
 const express = require( 'express' );
 const app = express();
+const fs = require('fs');
 
 export default class VirtualServer {
   private static server: any;
 
   private port!: string;
   private apiList!: string[];
+  private rootPath!: string;
 
-  public constructor(serverPort: string, apiList: string[]) {
+  public constructor(serverPort: string, rootPath: string , apiList: string[]) {
     this.port = serverPort;
     this.apiList = apiList;
+    this.rootPath = rootPath;
   }
 
   public start(): boolean {
@@ -41,9 +44,15 @@ export default class VirtualServer {
 
   private api() {
     this.apiList.forEach((api) => {
-      app.get( api, ( req: any, res: any ) => {
-        res.send( api );
-    } );
+      try {
+        const rawdata = fs.readFileSync(this.rootPath + api + '/index.json');
+        const json = JSON.parse(rawdata);
+        app.get( api, ( req: any, res: any ) => {
+          res.send( json );
+      } );
+      } catch (errr) {
+        console.log('no file');
+      }
     });
   }
 }

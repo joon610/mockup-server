@@ -3,8 +3,8 @@ const fs = remote.require('fs');
 
 export default class FileTree {
 
-    private  dirTask: string[] = [];
-    private  dirEnd: string[] = [];
+    private dirTask: string[] = [];
+    private dirEnd: string[] = [];
 
     private path!: string;
 

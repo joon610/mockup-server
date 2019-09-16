@@ -9,11 +9,11 @@
         .input-row
           .loacalhost-label http://loacalhost:
           .loacalhost-input
-            v-text-field(v-model="portNum" :solo="true", :flat="true" style="hegiht:48px")
+            v-text-field(v-model="portNum" :solo="true" :readonly="this.isServerOn" :flat="true" style="hegiht:48px")
         v-btn(v-show="this.isServerOn === false" color="primary" :disabled="hasApiList" @click="startServer()") start Server
         v-btn(v-show="this.isServerOn === true " color="deep-orange" :disabled="hasApiList" @click="closeServer()") close Server
       v-row(no-gutters)
-        ApiList(:apiList="apiList" :port="portNum" style="width:100%" ) 
+        ApiList(:apiList="apiList" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
 </template>
 
 <script lang="ts">
@@ -29,25 +29,30 @@ import { setTimeout } from 'timers';
     ApiList,
   },
 })
-export default class Main extends Vue {
-
+export default class MockingBird extends Vue {
   private rootPath: string = '';
   private server!: VirtualServer;
   private apiList: string[] = [];
   private portNum: string = '';
 
+
   private isServerOn: boolean = false;
   private hasApiList: boolean = true;
 
-  private async getPath() {
+    private async getPath() {
     const electron = require('electron').remote;
     const dialog = electron.dialog;
-    const path = await dialog.showOpenDialog({properties: ['openDirectory']});
-    if (path.filePaths!.length ===  0) {
-      console.log('empty path');
-      return;
+    const path = await dialog.showOpenDialog({ properties: ['openDirectory'] });
+    if (path.filePaths!.length === 0) {
+        console.log('empty path');
+        return;
     }
     this.rootPath = path.filePaths![0];
+
+    this.makeFileTree();
+  }
+
+  private makeFileTree() {
     const filetree = new FileTree(this.rootPath);
     filetree.build();
     this.apiList = filetree.getRelativePath();
@@ -57,41 +62,38 @@ export default class Main extends Vue {
   }
 
   private async startServer() {
-    this.server = new VirtualServer(this.portNum, this.apiList);
+    this.server = new VirtualServer(this.portNum, this.rootPath, this.apiList);
     const serverStatus = await this.server.start();
     window.setTimeout(() => {
-      this.isServerOn = serverStatus;
-      console.log(this.isServerOn);
-      this.$forceUpdate();
+        this.isServerOn = serverStatus;
+        console.log(this.isServerOn);
     }, 0);
   }
 
   private async closeServer() {
     const serverStatus = await this.server.close();
     window.setTimeout(() => {
-    this.isServerOn = serverStatus;
-    console.log(this.isServerOn);
+        this.isServerOn = serverStatus;
+        console.log(this.isServerOn);
     }, 0);
   }
-
 }
-
 </script>
 
 <style lang="css" scoped>
 .rootPath {
-  margin:10px;
+  margin: 10px;
   border-radius: 3px;
   padding: 20px;
   background-color: #424242;
 }
-button{
+button {
   margin-left: 5px;
   width: 150px;
   height: 48px !important;
 }
 
-.loacalhost-label{
+.loacalhost-label {
   height: 48px;
   line-height: 48px;
   font-size: 18px;
@@ -101,19 +103,18 @@ button{
   float: left;
 }
 
-.loacalhost-input{
+.loacalhost-input {
   float: right;
   width: 200px;
 }
 
-.input-row{
+.input-row {
   width: 340px;
 }
 
-.row-hegiht{
-  height:48px;
+.row-hegiht {
+  height: 48px;
   margin-bottom: 5px;
 }
-
 </style>
 
