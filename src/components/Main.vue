@@ -4,15 +4,16 @@
       v-row.row-hegiht(no-gutters)
         .input-row
           v-text-field(v-model="rootPath" :solo="true" :flat="true" readonly)
-        v-btn(color="primary" @click="getPath()") Select Root
+        v-btn(color="#A5D6A7" @click="getPath()") Select Root
       v-row.row-hegiht(no-gutters)
         .input-row
           .loacalhost-label http://loacalhost:
           .loacalhost-input
-            v-text-field(:solo="true", :flat="true" style="hegiht:48px")
-        v-btn(color="primary" :disabled="hasApiList" @click="startServer()") start Server
+            v-text-field(v-model="portNum" :solo="true", :flat="true" style="hegiht:48px")
+        v-btn(v-show="this.isServerOn === false" color="primary" :disabled="hasApiList" @click="startServer()") start Server
+        v-btn(v-show="this.isServerOn === true " color="deep-orange" :disabled="hasApiList" @click="closeServer()") close Server
       v-row(no-gutters)
-        ApiList(:apiList="apiList" style="width:100%")
+        ApiList(:apiList="apiList" :port="portNum" style="width:100%" ) 
 </template>
 
 <script lang="ts">
@@ -33,8 +34,9 @@ export default class Main extends Vue {
   private rootPath: string = '';
   private server!: VirtualServer;
   private apiList: string[] = [];
+  private portNum: string = '';
 
-  private isServerOn: boolean = true;
+  private isServerOn: boolean = false;
   private hasApiList: boolean = true;
 
   private async getPath() {
@@ -55,12 +57,21 @@ export default class Main extends Vue {
   }
 
   private async startServer() {
-    this.server = new VirtualServer(8001, this.apiList);
-    this.isServerOn = await this.server.start();
+    this.server = new VirtualServer(this.portNum, this.apiList);
+    const serverStatus = await this.server.start();
+    window.setTimeout(() => {
+      this.isServerOn = serverStatus;
+      console.log(this.isServerOn);
+      this.$forceUpdate();
+    }, 0);
   }
 
   private async closeServer() {
-    this.isServerOn = await this.server.close();
+    const serverStatus = await this.server.close();
+    window.setTimeout(() => {
+    this.isServerOn = serverStatus;
+    console.log(this.isServerOn);
+    }, 0);
   }
 
 }

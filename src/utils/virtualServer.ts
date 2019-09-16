@@ -4,10 +4,10 @@ const app = express();
 export default class VirtualServer {
   private static server: any;
 
-  private port!: number;
+  private port!: string;
   private apiList!: string[];
 
-  public constructor(serverPort: number, apiList: string[]) {
+  public constructor(serverPort: string, apiList: string[]) {
     this.port = serverPort;
     this.apiList = apiList;
   }
@@ -21,6 +21,7 @@ export default class VirtualServer {
       console.error('server is running');
       return false;
     }
+    console.log(this.port);
     VirtualServer.server = app.listen( this.port, () => {
       console.log( `server started at http://localhost:${ this.port }` );
     } );
