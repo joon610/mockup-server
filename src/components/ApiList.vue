@@ -1,55 +1,95 @@
 <template lang="pug">
     .api-list-container
+        .server-btn
+          v-btn(v-show="isRunningServer === false" color="primary" :disabled="hasApiList" @click="startServer()") start Server
+          v-btn(v-show="isRunningServer === true " color="deep-orange" :disabled="hasApiList" @click="closeServer()") close Server
         .api-container(v-for="api in apiList" )
             a(@click="openBrowser(api)" :style="apiContainerStyle")
                 .http-method(:style="httpMethodStyle")
-                    | GET
+                    | GET 
                 .api-path(:style="apiPathStyle")
                     | {{ api }}
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import VirtualServer from '../utils/virtualServer';
 const shell = require('electron').shell;
 @Component
 export default class ApiList extends Vue {
-  @Prop() private apiList!: string[];
-  @Prop(String) private port!: string;
-  @Prop(Boolean) private isServerOn!: boolean;
 
-  private httpMethodStyle = {
-    color: 'dimgray',
-  };
+    private get hasApiList() {
+      return this.apiList.length === 0 ? true : false ;
+    }
 
-  private apiPathStyle = {
-    color: 'dimgray',
-  };
+    @Prop() private apiList!: string[];
+    @Prop(String) private port!: string;
+    @Prop(String) private rootPath!: string;
+    @Prop(Boolean) private isServerOn!: boolean;
 
-  private apiContainerStyle = {
-    cursor: 'default',
-  };
+    private isRunningServer!: boolean;
 
-  private openBrowser(api: string) {
-    console.log('http://localhost:' + this.port + api);
-    shell.openExternalSync('http://localhost:' + this.port + api);
+    private server!: VirtualServer;
+
+    private httpMethodStyle = {
+        color: 'dimgray',
+    };
+
+    private apiPathStyle = {
+        color: 'dimgray',
+    };
+
+    private apiContainerStyle = {
+        cursor: 'default',
+    };
+
+    private created() {
+      this.isRunningServer = this.isServerOn;
+    }
+
+  private async startServer() {
+    this.server = new VirtualServer(this.port, this.rootPath, this.apiList);
+    this.isRunningServer = await this.server.start();
+    this.setButtonStyle(this.isRunningServer );
   }
 
-  @Watch('isServerOn')
-  private watchServer() {
-    if (this.isServerOn) {
-      this.httpMethodStyle.color = 'darkorange';
-      this.apiPathStyle.color = 'white';
-      this.apiContainerStyle.cursor = 'pointer';
+  private async closeServer() {
+    this.isRunningServer = await this.server.close();
+    this.setButtonStyle(this.isRunningServer );
+  }
+
+  private setButtonStyle(serverStatus: boolean) {
+   if (serverStatus) {
+        this.httpMethodStyle.color = 'darkorange';
+        this.apiPathStyle.color = 'white';
+        this.apiContainerStyle.cursor = 'pointer';
     } else {
-      this.httpMethodStyle.color = 'dimgray';
-      this.apiPathStyle.color = 'gray';
-      this.apiContainerStyle.cursor = 'default';
+        this.httpMethodStyle.color = 'dimgray';
+        this.apiPathStyle.color = 'gray';
+        this.apiContainerStyle.cursor = 'default';
     }
   }
+
+  private openBrowser(api: string) {
+      console.log('http://localhost:' + this.port + api);
+      shell.openExternalSync('http://localhost:' + this.port + api);
+  }
+
 }
 </script>
 
 <style scoped>
+.server-btn {
+  margin-bottom: 10px;
+  width: 500px;
+}
+
+button{
+  width: 100%;
+}
+
+
+
 .api-container {
   background-color: #424242;
   border-radius: 5px;

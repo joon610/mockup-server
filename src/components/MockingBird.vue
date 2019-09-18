@@ -9,16 +9,13 @@
         .input-row
           .loacalhost-label http://loacalhost:
           .loacalhost-input
-            v-text-field(v-model="portNum" :solo="true" :readonly="this.isServerOn" :flat="true" style="hegiht:48px")
-        v-btn(v-show="this.isServerOn === false" color="primary" :disabled="hasApiList" @click="startServer()") start Server
-        v-btn(v-show="this.isServerOn === true " color="deep-orange" :disabled="hasApiList" @click="closeServer()") close Server
+            v-text-field(v-model="portNum" :solo="true" :readonly="isServerOn" :flat="true" style="hegiht:48px")
       v-row(no-gutters)
-        ApiList(:apiList="apiList" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
+        ApiList(:apiList="apiList" :rootPath="rootPath" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import VirtualServer from '../utils/virtualServer';
 import FileTree from '../utils/filetree';
 import ApiList from './ApiList.vue';
 import { fips } from 'crypto';
@@ -31,9 +28,8 @@ import { setTimeout } from 'timers';
 })
 export default class MockingBird extends Vue {
   private rootPath: string = '';
-  private server!: VirtualServer;
   private apiList: string[] = [];
-  private portNum: string = '';
+  private portNum: string = '9000';
 
 
   private isServerOn: boolean = false;
@@ -60,27 +56,11 @@ export default class MockingBird extends Vue {
       this.hasApiList = false;
     }
   }
-
-  private async startServer() {
-    this.server = new VirtualServer(this.portNum, this.rootPath, this.apiList);
-    const serverStatus = await this.server.start();
-    window.setTimeout(() => {
-        this.isServerOn = serverStatus;
-        console.log(this.isServerOn);
-    }, 0);
-  }
-
-  private async closeServer() {
-    const serverStatus = await this.server.close();
-    window.setTimeout(() => {
-        this.isServerOn = serverStatus;
-        console.log(this.isServerOn);
-    }, 0);
-  }
 }
 </script>
 
 <style lang="css" scoped>
+
 .rootPath {
   margin: 10px;
   border-radius: 3px;
