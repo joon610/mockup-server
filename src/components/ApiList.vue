@@ -18,6 +18,7 @@ const shell = require('electron').shell;
 @Component
 export default class ApiList extends Vue {
 
+
     private get hasApiList() {
       return this.apiList.length === 0 ? true : false ;
     }
@@ -49,13 +50,13 @@ export default class ApiList extends Vue {
 
   private async startServer() {
     this.server = new VirtualServer(this.port, this.rootPath, this.apiList);
-    this.isRunningServer = await this.server.start();
-    this.setButtonStyle(this.isRunningServer );
+    this.isServerOn = await this.server.start();
+    this.setButtonStyle(this.isServerOn );
   }
 
   private async closeServer() {
-    this.isRunningServer = await this.server.close();
-    this.setButtonStyle(this.isRunningServer );
+    this.isServerOn = await this.server.close();
+    this.setButtonStyle(this.isServerOn );
   }
 
   private setButtonStyle(serverStatus: boolean) {

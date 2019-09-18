@@ -18,9 +18,8 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import FileTree from '../utils/filetree';
 import ApiList from './ApiList.vue';
-import { fips } from 'crypto';
-import { setTimeout } from 'timers';
-
+import { ApiInfo } from '../const/mockingBirdConst';
+const fs = require('fs');
 @Component({
   components: {
     ApiList,
@@ -28,14 +27,14 @@ import { setTimeout } from 'timers';
 })
 export default class MockingBird extends Vue {
   private rootPath: string = '';
-  private apiList: string[] = [];
+  private apiList: ApiInfo[] = [];
   private portNum: string = '9000';
 
 
   private isServerOn: boolean = false;
   private hasApiList: boolean = true;
 
-    private async getPath() {
+  private async getPath() {
     const electron = require('electron').remote;
     const dialog = electron.dialog;
     const path = await dialog.showOpenDialog({ properties: ['openDirectory'] });
@@ -51,7 +50,14 @@ export default class MockingBird extends Vue {
   private makeFileTree() {
     const filetree = new FileTree(this.rootPath);
     filetree.build();
-    this.apiList = filetree.getRelativePath();
+    this.apiList = filetree.getRelativePath().map((api) => {
+      try {
+        const rawdata = fs.readFileSync(this.rootPath + api + '/index.json');
+      } catch {
+        return { api, hasJson: false};
+      }
+      return { api, hasJson: true};
+    });
     if (this.apiList !== undefined) {
       this.hasApiList = false;
     }

@@ -10,16 +10,11 @@ export default class VirtualServer {
   private apiList!: string[];
   private rootPath!: string;
 
-
-  private test!: ApiInfo[];
-
   public constructor(serverPort: string, rootPath: string , apiList: string[]) {
     this.port = serverPort;
     this.apiList = apiList;
     this.rootPath = rootPath;
   }
-
-
 
   public start(): boolean {
     if (this.apiList === undefined ) {
@@ -35,7 +30,6 @@ export default class VirtualServer {
       console.log( `server started at http://localhost:${ this.port }` );
     } );
     this.api();
-    console.log(this.test);
     return true;
   }
 
