@@ -8,7 +8,7 @@
                 .http-method(:style="httpMethodStyle")
                     | GET 
                 .api-path(:style="apiPathStyle")
-                    | {{ api }}
+                    | {{ api.api }}
 </template>
 
 <script lang="ts">
@@ -50,13 +50,13 @@ export default class ApiList extends Vue {
 
   private async startServer() {
     this.server = new VirtualServer(this.port, this.rootPath, this.apiList);
-    this.isServerOn = await this.server.start();
-    this.setButtonStyle(this.isServerOn );
+    this.isRunningServer = await this.server.start();
+    this.setButtonStyle(this.isRunningServer );
   }
 
   private async closeServer() {
-    this.isServerOn = await this.server.close();
-    this.setButtonStyle(this.isServerOn );
+    this.isRunningServer = await this.server.close();
+    this.setButtonStyle(this.isRunningServer );
   }
 
   private setButtonStyle(serverStatus: boolean) {
