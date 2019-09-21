@@ -7,18 +7,18 @@ export default class VirtualServer {
   private static server: any;
 
   private port!: string;
-  private apiList!: string[];
+  private restfullList!: ApiInfo[];
   private rootPath!: string;
 
-  public constructor(serverPort: string, rootPath: string , apiList: string[]) {
+  public constructor(serverPort: string, rootPath: string , restfullList: ApiInfo[]) {
     this.port = serverPort;
-    this.apiList = apiList;
+    this.restfullList = restfullList;
     this.rootPath = rootPath;
   }
 
   public start(): boolean {
-    if (this.apiList === undefined ) {
-      console.error('apiList is Empty');
+    if (this.restfullList === undefined ) {
+      console.error('restfullList is Empty');
       return false;
     }
     if ( VirtualServer.server !== undefined) {
@@ -44,13 +44,11 @@ export default class VirtualServer {
   }
 
   private api() {
-    this.apiList.forEach((api) => {
+    this.restfullList.forEach((restfull: ApiInfo) => {
       try {
-        const rawdata = fs.readFileSync(this.rootPath + api + '/index.json');
+        const rawdata = fs.readFileSync(this.rootPath + restfull.api + '/index.json');
         const json = JSON.parse(rawdata);
-        // this.test = this.test.concat({api: json, hasJson: true });
-        console.log(json);
-        app.get( api, ( req: any, res: any ) => {
+        app.get( restfull.api, ( req: any, res: any ) => {
           res.send( json );
        } );
       } catch (errr) {

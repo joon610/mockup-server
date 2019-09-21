@@ -3,27 +3,31 @@
         .server-btn
           v-btn(v-show="isRunningServer === false" color="primary" :disabled="hasApiList" @click="startServer()") start Server
           v-btn(v-show="isRunningServer === true " color="deep-orange" :disabled="hasApiList" @click="closeServer()") close Server
-        .api-container(v-for="api in apiList" )
-            a(@click="openBrowser(api)" :style="apiContainerStyle")
+        .api-container(v-for="rest in restfullList" )
+            a(@click="openBrowser(rest.api)" :style="apiContainerStyle")
                 .http-method(:style="httpMethodStyle")
                     | GET 
                 .api-path(:style="apiPathStyle")
-                    | {{ api.api }}
+                    | {{ rest.api }}
+            v-radio-group(row)
+              v-radio(label="red" color="red" value="red")
+              v-radio(label="blue" color="blue" value="blue")
+              
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import VirtualServer from '../utils/virtualServer';
+import { ApiInfo } from '../const/mockingBirdConst';
 const shell = require('electron').shell;
 @Component
-export default class ApiList extends Vue {
-
+export default class MakeRestfull extends Vue {
 
     private get hasApiList() {
-      return this.apiList.length === 0 ? true : false ;
+      return this.restfullList.length === 0 ? true : false ;
     }
 
-    @Prop() private apiList!: string[];
+    @Prop() private restfullList!: ApiInfo[];
     @Prop(String) private port!: string;
     @Prop(String) private rootPath!: string;
     @Prop(Boolean) private isServerOn!: boolean;
@@ -49,7 +53,7 @@ export default class ApiList extends Vue {
     }
 
   private async startServer() {
-    this.server = new VirtualServer(this.port, this.rootPath, this.apiList);
+    this.server = new VirtualServer(this.port, this.rootPath, this.restfullList);
     this.isRunningServer = await this.server.start();
     this.setButtonStyle(this.isRunningServer );
   }
@@ -59,8 +63,8 @@ export default class ApiList extends Vue {
     this.setButtonStyle(this.isRunningServer );
   }
 
-  private setButtonStyle(serverStatus: boolean) {
-   if (serverStatus) {
+  private setButtonStyle(isRunningServer: boolean) {
+   if (isRunningServer) {
         this.httpMethodStyle.color = 'darkorange';
         this.apiPathStyle.color = 'white';
         this.apiContainerStyle.cursor = 'pointer';

@@ -11,28 +11,28 @@
           .loacalhost-input
             v-text-field(v-model="portNum" :solo="true" :readonly="isServerOn" :flat="true" style="hegiht:48px")
       v-row(no-gutters)
-        ApiList(:apiList="apiList" :rootPath="rootPath" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
+        MakeRestfull(:restfullList="restfullList" :rootPath="rootPath" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import FileTree from '../utils/filetree';
-import ApiList from './ApiList.vue';
+import MakeRestfull from './MakeRestfull.vue';
 import { ApiInfo } from '../const/mockingBirdConst';
 const fs = require('fs');
 @Component({
   components: {
-    ApiList,
+    MakeRestfull,
   },
 })
 export default class MockingBird extends Vue {
   private rootPath: string = '';
-  private apiList: ApiInfo[] = [];
+  private restfullList: ApiInfo[] = [];
   private portNum: string = '9000';
 
 
   private isServerOn: boolean = false;
-  private hasApiList: boolean = true;
+  private hasRestfullList: boolean = true;
 
   private async getPath() {
     const electron = require('electron').remote;
@@ -43,24 +43,23 @@ export default class MockingBird extends Vue {
         return;
     }
     this.rootPath = path.filePaths![0];
-
     this.makeFileTree();
   }
 
   private makeFileTree() {
     const filetree = new FileTree(this.rootPath);
     filetree.build();
-    this.apiList = filetree.getRelativePath().map((api) => {
+    this.restfullList = filetree.getRelativePath().map((api) => {
       try {
         const rawdata = fs.readFileSync(this.rootPath + api + '/index.json');
       } catch {
-        return { api, hasJson: false};
+        return {api, hasJson: false, isFail: true};
       }
-      return { api, hasJson: true};
+      const apiInfo = new ApiInfo();
+      apiInfo.api = api;
+      apiInfo.hasJson = true;
+      return apiInfo;
     });
-    if (this.apiList !== undefined) {
-      this.hasApiList = false;
-    }
   }
 }
 </script>
