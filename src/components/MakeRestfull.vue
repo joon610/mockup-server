@@ -41,7 +41,6 @@ export default class MakeRestfull extends Vue {
 
     private server!: VirtualServer;
 
-
     private httpMethodStyle(restfull: ApiInfo) {
       const style = {
         color: 'dimgray',
