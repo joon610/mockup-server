@@ -2,6 +2,6 @@
 
 export class ApiInfo {
     public api: string = '';
-    public hasJson: boolean = false;
+    public status: string = 'sucsses';
     public isFail: boolean = false;
 }

@@ -53,11 +53,13 @@ export default class MockingBird extends Vue {
       try {
         const rawdata = fs.readFileSync(this.rootPath + api + '/index.json');
       } catch {
-        return {api, hasJson: false, isFail: true};
+        const error = new ApiInfo();
+        error.api = 'add index.json';
+        error.isFail = true;
+        return error;
       }
       const apiInfo = new ApiInfo();
       apiInfo.api = api;
-      apiInfo.hasJson = true;
       return apiInfo;
     });
   }

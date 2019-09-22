@@ -3,15 +3,15 @@
         .server-btn
           v-btn(v-show="isRunningServer === false" color="primary" :disabled="hasApiList" @click="startServer()") start Server
           v-btn(v-show="isRunningServer === true " color="deep-orange" :disabled="hasApiList" @click="closeServer()") close Server
-        .api-container(v-for="rest in restfullList" )
-            a(@click="openBrowser(rest.api)" :style="apiContainerStyle")
-                .http-method(:style="httpMethodStyle")
+        .api-container(v-for="rest,index in restfullList" :key="index" )
+            a(@click="openBrowser(rest.api)" :style="apiContainerStyle(rest)")
+                .http-method(:style="httpMethodStyle(rest)")
                     | GET 
-                .api-path(:style="apiPathStyle")
+                .api-path(:style="apiPathStyle(rest)")
                     | {{ rest.api }}
-            v-radio-group(row)
-              v-radio(label="red" color="red" value="red")
-              v-radio(label="blue" color="blue" value="blue")
+            v-radio-group.radio-group(v-model="restfullList[index].status" row :disabled="rest.isFail || isRunningServer")
+              v-radio.radio-style(label="sucsses" color="green" value="sucsses")
+              v-radio.radio-style(label="error" color="red" value="error")
               
 </template>
 
@@ -36,17 +36,39 @@ export default class MakeRestfull extends Vue {
 
     private server!: VirtualServer;
 
-    private httpMethodStyle = {
-        color: 'dimgray',
-    };
 
-    private apiPathStyle = {
+    private httpMethodStyle(restfull: ApiInfo) {
+      const style = {
         color: 'dimgray',
-    };
+      };
+      if (restfull.isFail === true) { return style; }
+      if (this.isRunningServer ) {
+        style.color = 'orange';
+      }
+      return style;
+    }
 
-    private apiContainerStyle = {
+    private apiPathStyle(restfull: ApiInfo) {
+      const style = {
+        color: 'dimgray',
+      };
+      if (restfull.isFail === true) { return style; }
+      if (this.isRunningServer) {
+        style.color = 'white';
+      }
+      return style;
+    }
+
+    private apiContainerStyle(restfull: ApiInfo) {
+      const style = {
         cursor: 'default',
-    };
+      };
+      if (restfull.isFail === true) { return style; }
+      if (this.isRunningServer) {
+        style.cursor = 'pointer';
+      }
+      return style;
+    }
 
     private created() {
       this.isRunningServer = this.isServerOn;
@@ -55,24 +77,12 @@ export default class MakeRestfull extends Vue {
   private async startServer() {
     this.server = new VirtualServer(this.port, this.rootPath, this.restfullList);
     this.isRunningServer = await this.server.start();
-    this.setButtonStyle(this.isRunningServer );
+    this.$forceUpdate();
   }
 
   private async closeServer() {
     this.isRunningServer = await this.server.close();
-    this.setButtonStyle(this.isRunningServer );
-  }
-
-  private setButtonStyle(isRunningServer: boolean) {
-   if (isRunningServer) {
-        this.httpMethodStyle.color = 'darkorange';
-        this.apiPathStyle.color = 'white';
-        this.apiContainerStyle.cursor = 'pointer';
-    } else {
-        this.httpMethodStyle.color = 'dimgray';
-        this.apiPathStyle.color = 'gray';
-        this.apiContainerStyle.cursor = 'default';
-    }
+    this.$forceUpdate();
   }
 
   private openBrowser(api: string) {
@@ -122,9 +132,19 @@ button{
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .http-method {
   line-height: 50px;
   width: 50px;
   float: left;
+}
+
+.radio-style{
+  height: 50px;
+}
+.radio-group {
+    margin: 0px;
+  padding: 0px;
+  
 }
 </style>
