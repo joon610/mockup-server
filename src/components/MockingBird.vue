@@ -1,15 +1,11 @@
 <template lang="pug">
   v-container
     v-layout(text-center='', wrap='')
-      v-row.row-hegiht(no-gutters)
+      v-row.row-height(no-gutters)
         .input-row
           v-text-field(v-model="rootPath" :solo="true" :flat="true" readonly)
-        v-btn(color="#A5D6A7" @click="getPath()") Select Root
-      v-row.row-hegiht(no-gutters)
-        .input-row
-          .loacalhost-label http://loacalhost:
-          .loacalhost-input
-            v-text-field(v-model="portNum" :solo="true" :readonly="isServerOn" :flat="true" style="hegiht:48px")
+        .test
+          v-btn(color="#A5D6A7" @click="getPath()") Select Root
       v-row(no-gutters)
         MakeRestfull(:restfullList="restfullList" :rootPath="rootPath" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
 </template>
@@ -67,6 +63,9 @@ export default class MockingBird extends Vue {
 </script>
 
 <style lang="css" scoped>
+.test{
+  display: flex;
+}
 
 .rootPath {
   margin: 10px;
@@ -99,7 +98,7 @@ button {
   width: 340px;
 }
 
-.row-hegiht {
+.row-height {
   height: 48px;
   margin-bottom: 5px;
 }

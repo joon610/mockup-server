@@ -46,7 +46,12 @@ export default class VirtualServer {
   private api() {
     this.restfullList.forEach((restfull: ApiInfo) => {
       try {
-        const rawdata = fs.readFileSync(this.rootPath + restfull.api + '/index.json');
+        let rawdata = '';
+        if (restfull.status === 'success' ) {
+           rawdata = fs.readFileSync(this.rootPath + restfull.api + '/index.json');
+          } else {
+            rawdata = fs.readFileSync(this.rootPath + restfull.api + '/error.json');
+        }
         const json = JSON.parse(rawdata);
         app.get( restfull.api, ( req: any, res: any ) => {
           res.send( json );
