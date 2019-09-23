@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import FileTree from '../utils/filetree';
+import FileTreeUtils from '../utils/filetreeUtils';
 import MakeRestfull from './MakeRestfull.vue';
 import { ApiInfo } from '../const/mockingBirdConst';
 const fs = require('fs');
@@ -43,7 +43,7 @@ export default class MockingBird extends Vue {
   }
 
   private makeFileTree() {
-    const filetree = new FileTree(this.rootPath);
+    const filetree = new FileTreeUtils(this.rootPath);
     filetree.build();
     this.restfullList = filetree.getRelativePath().map((api) => {
       try {
@@ -75,7 +75,7 @@ export default class MockingBird extends Vue {
 }
 button {
   margin-left: 5px;
-  width: 150px;
+  width: 165px;
   height: 48px !important;
 }
 

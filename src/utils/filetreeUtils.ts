@@ -1,7 +1,7 @@
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 
-export default class FileTree {
+export default class FiletreeUtils {
 
     private dirTask: string[] = [];
     private dirEnd: string[] = [];

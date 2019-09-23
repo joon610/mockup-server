@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import VirtualServer from '../utils/virtualServer';
+import VirtualServerUtils from '../utils/virtualServerUtils';
 import { ApiInfo } from '../const/mockingBirdConst';
 const shell = require('electron').shell;
 @Component
@@ -39,7 +39,7 @@ export default class MakeRestfull extends Vue {
 
     private isRunningServer!: boolean;
 
-    private server!: VirtualServer;
+    private server!: VirtualServerUtils;
 
     private httpMethodStyle(restfull: ApiInfo) {
       const style = {
@@ -80,7 +80,7 @@ export default class MakeRestfull extends Vue {
 
   private async startServer() {
     console.log(this.restfullList);
-    this.server = new VirtualServer(this.port, this.rootPath, this.restfullList);
+    this.server = new VirtualServerUtils(this.port, this.rootPath, this.restfullList);
     this.isRunningServer = await this.server.start();
     this.$forceUpdate();
   }
@@ -104,6 +104,8 @@ export default class MakeRestfull extends Vue {
 .server-on-container {
   height: 48px;
   margin-bottom: 5px;
+  width: 510px;
+  display: flex;
 }
 
 .server-btn  {
@@ -114,7 +116,7 @@ export default class MakeRestfull extends Vue {
 }
 
 button{
-  width: 100%;
+  width: 165px;
   margin-left: 5px;
   height: 48px !important;
 }
