@@ -47,14 +47,21 @@ export default class VirtualServerUtils {
   private async api() {
     await this.restfullList.forEach((restfull: ApiInfo) => {
       try {
-          const rawdata = {success: '', error: ''};
-          const success = fs.readFileSync(this.rootPath + restfull.api + '/index.json');
-          const error = fs.readFileSync(this.rootPath + restfull.api + '/error.json');
+        const rawdata = {success: '', error: ''};
+        const INDEX_JSON = this.rootPath + restfull.api + '/index.json';
+        const ERROR_JSON = this.rootPath + restfull.api + '/error.json';
+        if (!restfull.isFail) {
+
+          const success = fs.readFileSync(INDEX_JSON);
           rawdata.success = JSON.parse(success);
-          rawdata.error = JSON.parse(error);
-          app.get( restfull.api, ( req: any, res: any ) => {
+          if (fs.existsSync(ERROR_JSON)) {
+            const error = fs.readFileSync(ERROR_JSON);
+            rawdata.error = JSON.parse(error);
+          }
+        }
+        app.get( restfull.api, ( req: any, res: any ) => {
             // @ts-ignore
-           res.send( rawdata[restfull.status] );
+           res.send( rawdata.success );
        } );
       } catch (err) {
         app.get(restfull.api, (req: any, res: any) => {

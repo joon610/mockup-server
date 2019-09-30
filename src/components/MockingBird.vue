@@ -23,7 +23,7 @@ const fs = require('fs');
 })
 export default class MockingBird extends Vue {
   private rootPath: string = '';
-  private restfullList: ApiInfo[] = [];
+  private restfullList: ApiInfo[] = Array<ApiInfo>();
   private portNum: string = '9000';
 
 

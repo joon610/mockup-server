@@ -6,7 +6,6 @@ import {
   installVueDevtools,
 } from 'vue-cli-plugin-electron-builder/lib';
 const isDevelopment = process.env.NODE_ENV !== 'production';
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win: BrowserWindow | null;
@@ -15,8 +14,9 @@ let win: BrowserWindow | null;
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }]);
 
 function createWindow() {
+
   // Create the browser window.
-  win = new BrowserWindow({ resizable: true, width: 530, height: 600, webPreferences: {
+  win = new BrowserWindow({ resizable: false, width: 540, height: 600, webPreferences: {
     nodeIntegration: true,
   } });
 

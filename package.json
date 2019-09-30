@@ -5,13 +5,12 @@
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build:electron": "vue-cli-service electron:build",
+    "build:electron": "yarn vue-cli-service electron:build",
     "dev:vue": "vue-cli-service serve",
     "dev": "vue-cli-service electron:serve",
-    "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps",
     "build:win": "npm run build:win32 && npm run build:win64",
-    "build:osx": "build --mac"
+    "electron:build": "yarn electron-builder build"
+    
   },
   "dependencies": {
     "@types/express": "^4.17.1",
@@ -56,5 +55,27 @@
     "> 1%",
     "last 2 versions"
   ],
-  "main": "background.js"
+  "main": "./dist_electron/bundled/background.js",
+  "build": {
+    "appId": "mockingBird.dryhands",
+    "asar":true,
+    "productName": "mockingBird",
+    "target": [
+      {
+        "target": "dmg",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "dist_electron/bundled/**/*"
+    ],
+    "mac": {
+      "category": "mockingBird.app.category.type"
+    }
+  }
 }
