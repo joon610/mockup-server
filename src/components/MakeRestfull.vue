@@ -6,7 +6,7 @@
             .loacalhost-input
               v-text-field(v-model="port" :solo="true" :readonly="isServerOn" :flat="true" style="hegiht:48px")
           .server-btn
-            v-btn(v-show="isRunningServer === false" color="primary" :disabled="hasApiList" @click="startServer()") start Server
+            v-btn(v-show="isRunningServer === false" color="primary"  @click="startServer()") start Server
             v-btn(v-show="isRunningServer === true " color="deep-orange" :disabled="hasApiList" @click="closeServer()") close Server
         .api-container(v-for="rest,index in restfullList" :key="index"  :style="apiContainerStyle(rest)" )
             a(@click="openBrowser(rest.api)")
@@ -79,14 +79,16 @@ export default class MakeRestfull extends Vue {
     }
 
   private async startServer() {
-    console.log(this.restfullList);
     this.server = new VirtualServerUtils(this.port, this.rootPath, this.restfullList);
     this.isRunningServer = await this.server.start();
+
+    this.$emit('input', this.isRunningServer);
     this.$forceUpdate();
   }
 
   private async closeServer() {
     this.isRunningServer = await this.server.close();
+    this.$emit('input', this.isRunningServer);
     this.$forceUpdate();
   }
 

@@ -5,9 +5,9 @@
         .input-row
           v-text-field(v-model="rootPath" :solo="true" :flat="true" readonly)
         .test
-          v-btn(color="#A5D6A7" @click="getPath()") Select Root
+          v-btn(color="#A5D6A7" :disabled="serverStatus" @click="getPath()") Select Root
       v-row(no-gutters)
-        MakeRestfull(:restfullList="restfullList" :rootPath="rootPath" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
+        MakeRestfull(v-model="serverStatus" :restfullList="restfullList" :rootPath="rootPath" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
 </template>
 
 <script lang="ts">
@@ -26,7 +26,7 @@ export default class MockingBird extends Vue {
   private restfullList: ApiInfo[] = Array<ApiInfo>();
   private portNum: string = '9000';
 
-
+  private serverStatus: boolean = false;
   private isServerOn: boolean = false;
   private hasRestfullList: boolean = true;
 
