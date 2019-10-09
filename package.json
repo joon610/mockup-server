@@ -9,7 +9,8 @@
     "dev:vue": "vue-cli-service serve",
     "dev": "vue-cli-service electron:serve",
     "build:win": "npm run build:win32 && npm run build:win64",
-    "electron:build": "yarn electron-builder build"
+    "electron:build": "yarn vue-cli-service electron:build",
+    "build:all": "yarn electron-builder -mwl",
     
   },
   "dependencies": {
