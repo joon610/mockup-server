@@ -16,9 +16,10 @@ protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true
 function createWindow() {
 
   // Create the browser window.
-  win = new BrowserWindow({ resizable: true, width: 540, height: 600, webPreferences: {
+  win = new BrowserWindow({ resizable: true, width: 570, height: 600, webPreferences: {
     nodeIntegration: true,
   } });
+  win.setMenuBarVisibility(false);
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
@@ -26,6 +27,7 @@ function createWindow() {
     if (!process.env.IS_TEST) { win.webContents.openDevTools(); }
   } else {
     createProtocol('app');
+    win.setResizable(false);
     // Load the index.html when not in development
     win.loadURL('app://./index.html');
   }

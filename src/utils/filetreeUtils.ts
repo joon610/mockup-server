@@ -1,25 +1,34 @@
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
-
+import { ApiInfo } from '../const/mockServerConst';
 export default class FiletreeUtils {
 
     private dirTask: string[] = [];
     private dirEnd: string[] = [];
-
     private path!: string;
 
     constructor(path: string) {
         this.path = path;
-    }
-
-    public build()  {
-        return this.getChildDirectory(this.path);
+        this.getChildDirectory(this.path);
     }
 
     public getRelativePath() {
-        return this.dirEnd.map((value: string) => {
+        const apiList = this.dirEnd.map((value: string) => {
             return value.replace(this.path, '');
+        }).map((api: string) => {
+            try {
+                const rawdata = fs.readFileSync(this.path + api + '/index.json');
+              } catch {
+                const error = new ApiInfo();
+                error.api = 'add index.json';
+                error.isFail = true;
+                return error;
+              }
+            const apiInfo = new ApiInfo();
+            apiInfo.api = api;
+            return apiInfo;
         });
+        return apiList;
     }
 
     private getChildDirectory(path: string= ''): any {
@@ -38,7 +47,11 @@ export default class FiletreeUtils {
         this.dirTask = this.dirTask.concat(childDir);
 
         if (childDir.length === 0) {
-            this.dirEnd.push(path);
+            if (fs.existsSync(path + '/index.json')) {
+                this.dirEnd.unshift(path);
+            } else {
+                this.dirEnd.push(path);
+            }
         }
         if (this.dirTask.length === 0) {
             return this.dirEnd;

@@ -14,14 +14,14 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import FileTreeUtils from '../utils/filetreeUtils';
 import MakeRestfull from './MakeRestfull.vue';
-import { ApiInfo } from '../const/mockingBirdConst';
+import { ApiInfo } from '../const/mockServerConst';
 const fs = require('fs');
 @Component({
   components: {
     MakeRestfull,
   },
 })
-export default class MockingBird extends Vue {
+export default class MockServer extends Vue {
   private rootPath: string = '';
   private restfullList: ApiInfo[] = Array<ApiInfo>();
   private portNum: string = '9000';
@@ -35,7 +35,6 @@ export default class MockingBird extends Vue {
     const dialog = electron.dialog;
     const path = await dialog.showOpenDialog({ properties: ['openDirectory'] });
     if (path.filePaths!.length === 0) {
-        console.log('empty path');
         return;
     }
     this.rootPath = path.filePaths![0];
@@ -44,20 +43,7 @@ export default class MockingBird extends Vue {
 
   private makeFileTree() {
     const filetree = new FileTreeUtils(this.rootPath);
-    filetree.build();
-    this.restfullList = filetree.getRelativePath().map((api) => {
-      try {
-        const rawdata = fs.readFileSync(this.rootPath + api + '/index.json');
-      } catch {
-        const error = new ApiInfo();
-        error.api = 'add index.json';
-        error.isFail = true;
-        return error;
-      }
-      const apiInfo = new ApiInfo();
-      apiInfo.api = api;
-      return apiInfo;
-    });
+    this.restfullList = filetree.getRelativePath();
   }
 }
 </script>

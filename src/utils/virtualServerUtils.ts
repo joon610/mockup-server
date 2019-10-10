@@ -1,7 +1,7 @@
 import express from 'express';
 const app = express();
 const fs = require('fs');
-import { ApiInfo } from '@/const/mockingBirdConst';
+import { ApiInfo } from '@/const/mockServerConst';
 
 export default class VirtualServerUtils {
   private server: any;
@@ -21,9 +21,7 @@ export default class VirtualServerUtils {
       console.error('restfullList is Empty');
       return false;
     }
-    console.log(this.server);
     if ( this.server !== undefined) {
-      // console.error('server is running');
       return false;
     }
     this.api();
@@ -51,7 +49,6 @@ export default class VirtualServerUtils {
         const INDEX_JSON = this.rootPath + restfull.api + '/index.json';
         const ERROR_JSON = this.rootPath + restfull.api + '/error.json';
         if (!restfull.isFail) {
-
           const success = fs.readFileSync(INDEX_JSON);
           rawdata.success = JSON.parse(success);
           if (fs.existsSync(ERROR_JSON)) {
@@ -60,10 +57,11 @@ export default class VirtualServerUtils {
           }
         }
         app.get( restfull.api, ( req: any, res: any ) => {
-            // @ts-ignore
-           res.send( rawdata.success );
-       } );
+          // @ts-ignore
+          res.send( rawdata[restfull.status] );
+        } );
       } catch (err) {
+        console.log(err);
         app.get(restfull.api, (req: any, res: any) => {
           res.send(err);
         });

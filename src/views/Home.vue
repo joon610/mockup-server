@@ -1,14 +1,14 @@
 <template>
-  <MockingBird/>
+  <MockServer/>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import MockingBird from '../components/MockingBird.vue';
+import MockServer from '../components/MockServer.vue';
 
 export default Vue.extend({
   components: {
-    MockingBird,
+    MockServer,
   },
 });
 </script>

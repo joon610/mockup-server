@@ -23,7 +23,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import VirtualServerUtils from '../utils/virtualServerUtils';
-import { ApiInfo } from '../const/mockingBirdConst';
+import { ApiInfo } from '../const/mockServerConst';
 const shell = require('electron').shell;
 @Component
 export default class MakeRestfull extends Vue {

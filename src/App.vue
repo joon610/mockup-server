@@ -2,7 +2,7 @@
   v-app(dark)
     v-app-bar(app)
       v-toolbar-title.headline.text-uppercase
-        span Mocking Bird
+        span MockServer
       v-spacer
       v-btn(text @click="openBrowser()")
         span.mr-2 Latest Release

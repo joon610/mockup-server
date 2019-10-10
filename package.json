@@ -1,5 +1,5 @@
 {
-  "name": "mocking-bird",
+  "name": "mock-server",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
     "dev": "vue-cli-service electron:serve",
     "build:win": "npm run build:win32 && npm run build:win64",
     "electron:build": "yarn vue-cli-service electron:build",
-    "build:all": "yarn electron-builder -mwl",
+    "build:all": "yarn electron-builder -mwl"
     
   },
   "dependencies": {
@@ -56,27 +56,5 @@
     "> 1%",
     "last 2 versions"
   ],
-  "main": "./dist_electron/bundled/background.js",
-  "build": {
-    "appId": "mockingBird.dryhands",
-    "asar":true,
-    "productName": "mockingBird",
-    "target": [
-      {
-        "target": "dmg",
-        "arch": [
-          "x64"
-        ]
-      }
-    ],
-    "directories": {
-      "output": "build"
-    },
-    "files": [
-      "dist_electron/bundled/**/*"
-    ],
-    "mac": {
-      "category": "mockingBird.app.category.type"
-    }
-  }
+  "main": "background.js"
 }
