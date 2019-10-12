@@ -15,8 +15,13 @@ protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true
 
 function createWindow() {
 
+  let width = 570;
+
+  if (process.platform === 'darwin') {
+    width = 540;
+  }
   // Create the browser window.
-  win = new BrowserWindow({ resizable: true, width: 570, height: 600, webPreferences: {
+  win = new BrowserWindow({ resizable: true, width, height: 600, webPreferences: {
     nodeIntegration: true,
   } });
   win.setMenuBarVisibility(false);

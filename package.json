@@ -5,12 +5,10 @@
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build:electron": "yarn vue-cli-service electron:build",
     "dev:vue": "vue-cli-service serve",
     "dev": "vue-cli-service electron:serve",
-    "build:win": "npm run build:win32 && npm run build:win64",
-    "electron:build": "yarn vue-cli-service electron:build",
-    "build:all": "yarn electron-builder -mwl"
+    "build:electron": "yarn vue-cli-service electron:build",
+    "build:all": "yarn vue-cli-service electron:build --mac --win"
     
   },
   "dependencies": {
