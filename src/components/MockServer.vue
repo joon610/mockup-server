@@ -7,18 +7,18 @@
         .test
           v-btn(color="#A5D6A7" :disabled="serverStatus" @click="getPath()") Select Root
       v-row(no-gutters)
-        MakeRestfull(v-model="serverStatus" :restfullList="restfullList" :rootPath="rootPath" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
+        MakeRestful(v-model="serverStatus" :restfullList="restfullList" :rootPath="rootPath" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import FileTreeUtils from '../utils/filetreeUtils';
-import MakeRestfull from './MakeRestfull.vue';
+import MakeRestful from './MakeRestful.vue';
 import { ApiInfo } from '../const/mockServerConst';
 const fs = require('fs');
 @Component({
   components: {
-    MakeRestfull,
+    MakeRestful,
   },
 })
 export default class MockServer extends Vue {

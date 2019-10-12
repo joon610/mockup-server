@@ -26,7 +26,7 @@ import VirtualServerUtils from '../utils/virtualServerUtils';
 import { ApiInfo } from '../const/mockServerConst';
 const shell = require('electron').shell;
 @Component
-export default class MakeRestfull extends Vue {
+export default class MakeRestful extends Vue {
 
     private get hasApiList() {
       return this.restfullList.length === 0 ? true : false ;
