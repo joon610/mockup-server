@@ -4,7 +4,7 @@
           .input-row
             .loacalhost-label http://loacalhost:
             .loacalhost-input
-              v-text-field(v-model="port" :solo="true" :readonly="isServerOn" :flat="true" style="hegiht:48px")
+              v-text-field(v-model="vPort" :solo="true" :readonly="isServerOn" :flat="true" style="hegiht:48px")
           .server-btn
             v-btn(v-show="isRunningServer === false" color="primary"  @click="startServer()") start Server
             v-btn(v-show="isRunningServer === true " color="deep-orange" :disabled="hasApiList" @click="closeServer()") close Server
@@ -37,9 +37,13 @@ export default class MakeRestful extends Vue {
     @Prop(String) private rootPath!: string;
     @Prop(Boolean) private isServerOn!: boolean;
 
+
+    private vPort: string = '';
+
     private isRunningServer!: boolean;
 
     private server!: VirtualServerUtils;
+
 
     private httpMethodStyle(restfull: ApiInfo) {
       const style = {
@@ -75,11 +79,14 @@ export default class MakeRestful extends Vue {
     }
 
     private created() {
+      this.$nextTick(() => {
+        this.vPort = this.port;
+      });
       this.isRunningServer = this.isServerOn;
     }
 
   private async startServer() {
-    this.server = new VirtualServerUtils(this.port, this.rootPath, this.restfullList);
+    this.server = new VirtualServerUtils(this.vPort, this.rootPath, this.restfullList);
     this.isRunningServer = await this.server.start();
 
     this.$emit('input', this.isRunningServer);
@@ -94,8 +101,8 @@ export default class MakeRestful extends Vue {
 
   private openBrowser(api: string) {
     if (this.isRunningServer) {
-      console.log('http://localhost:' + this.port + api);
-      shell.openExternalSync('http://localhost:' + this.port + api);
+      console.log('http://localhost:' + this.vPort + api);
+      shell.openExternalSync('http://localhost:' + this.vPort + api);
     }
   }
 
