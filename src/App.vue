@@ -17,7 +17,7 @@ const shell = require('electron').shell;
 @Component
 export default class ComponentName extends Vue {
     private openBrowser() {
-      shell.openExternalSync('https://github.com/joon610/mockingbird/releases');
+      shell.openExternalSync('https://github.com/joon610/mock-server/releases');
   }
 
 }

@@ -9,7 +9,8 @@ export default class FiletreeUtils {
 
     constructor(path: string) {
         this.path = path;
-        this.getChildDirectory(this.path);
+        this.setChildDirectroy(this.path);
+        this.setRootDirectory(this.path);
     }
 
     public getRelativePath() {
@@ -31,12 +32,18 @@ export default class FiletreeUtils {
         return apiList;
     }
 
-    private getChildDirectory(path: string= ''): any {
+    private setRootDirectory(path: string) {
+        if (fs.existsSync(path + '/index.json')) {
+            this.dirEnd.unshift('/');
+        }
+    }
+
+    private setChildDirectroy(path: string= ''): any {
         if (!fs.lstatSync(path).isDirectory()) {
             if (this.dirTask.length === 0) {
                 return;
             }
-            return this.getChildDirectory(this.dirTask.pop());
+            return this.setChildDirectroy(this.dirTask.pop());
         }
         const childDir = fs.readdirSync(path).filter((value: string) => {
             return value.indexOf('.') === -1;
@@ -57,6 +64,6 @@ export default class FiletreeUtils {
             return this.dirEnd;
         }
 
-        return this.getChildDirectory(this.dirTask.pop());
+        return this.setChildDirectroy(this.dirTask.pop());
     }
 }
