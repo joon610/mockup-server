@@ -2,7 +2,7 @@
 
 ![mock-manual](https://github.com/joon610/readMEImg/blob/master/mock-server/mock-manual.gif)
 
-## you can make simple API server.
+## How to use
 
 1. make root directory.
 2. make child directory and add json(index.json) files in child directory.
