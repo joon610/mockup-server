@@ -21,7 +21,7 @@ export default class FiletreeUtils {
                 const rawdata = fs.readFileSync(this.path + api + '/index.json');
               } catch {
                 const error = new ApiInfo();
-                error.api = 'add index.json';
+                error.api = this.path + api;
                 error.isFail = true;
                 return error;
               }

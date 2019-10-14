@@ -16,13 +16,15 @@
 5. click Api Address and then get index.json file.
 <img src="https://github.com/joon610/readMEImg/blob/master/mock-server/mock-api.png" width="50%" height="50%">
 
-
 ## Download
 - mac : 
 https://github.com/joon610/mock-server/releases/download/0.1.0/mock-server-0.1.0.dmg
 - window :
 https://github.com/joon610/mock-server/releases/download/0.1.0/mock-server.Setup.0.1.0.exe
 
+## License
+
+MIT License
 
 ## Project setup
 ```
