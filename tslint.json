@@ -19,10 +19,4 @@
     "no-var-requires":false,
     "no-angle-bracket-type-assertion": true
   }
-  // "compilerOptions": {
-  //   "target": "es5",
-  //   "module": "commonjs",
-  //   "strict": true,
-  //   "esModuleInterop": true
-  // }
 }

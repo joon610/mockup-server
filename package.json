@@ -9,7 +9,6 @@
     "dev": "vue-cli-service electron:serve",
     "build:electron": "yarn vue-cli-service electron:build",
     "build:all": "yarn vue-cli-service electron:build --mac --win"
-    
   },
   "dependencies": {
     "@types/express": "^4.17.1",
