@@ -12,7 +12,7 @@
 4. you can get API list!
 <img src="https://github.com/joon610/readMEImg/blob/master/mock-server/mock-server.png" width="30%" height="30%">
 
- Directory becomes a API server as follows 
+ Directory becomes a API server as follows
     - /Users/jungdong-joon/Downloads/root        ==  http://loacalhost:9000/
     - /Users/jungdong-joon/Downloads/root/nice1  ==  http://loacalhost:9000/nice1
     
