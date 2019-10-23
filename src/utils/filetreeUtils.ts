@@ -3,7 +3,7 @@ const fs = remote.require('fs');
 import { ApiInfo } from '@/const/mockType';
 export default class FiletreeUtils {
     private static instance: FiletreeUtils;
-    private dirTask: string[] = [];
+    private dirQueue: string[] = [];
     private dirEnd: string[] = [];
     private path!: string;
 
@@ -17,8 +17,7 @@ export default class FiletreeUtils {
     public setRootPath(path: string) {
         this.dirEnd = [];
         this.path = path;
-        this.setChildDirectroy(this.path);
-        this.setRootDirectory(this.path);
+        this.generateDirList(this.path);
     }
 
     public getRelativePath() {
@@ -29,15 +28,15 @@ export default class FiletreeUtils {
             const indexPath = this.path + api + '/index.json';
             const errorPath = this.path + api + '/error.json';
             apiInfo.api = api;
-            apiInfo.index =  this.generatorJson(indexPath);
-            apiInfo.error =  this.generatorJson(errorPath) === undefined ? errorPath : this.generatorJson(errorPath);
+            apiInfo.index =  this.readJson(indexPath);
+            apiInfo.error =  this.readJson(errorPath) === undefined ? errorPath : this.readJson(errorPath);
             apiInfo.isFail = apiInfo.index === undefined ? true : false;
             return apiInfo;
         });
         return apiList;
     }
 
-    private generatorJson(indexPath: string) {
+    private readJson(indexPath: string) {
         try {
             const result = JSON.parse(fs.readFileSync(indexPath));
             return result;
@@ -46,38 +45,59 @@ export default class FiletreeUtils {
           }
     }
 
-    private setRootDirectory(path: string) {
+    private generateDone(path: string) {
         if (fs.existsSync(path + '/index.json')) {
             this.dirEnd.unshift('/');
         }
+        return this.dirEnd;
     }
 
-    private setChildDirectroy(path: string= ''): any {
+    private generateDirList(path: string = ''): any {
         if (!fs.lstatSync(path).isDirectory()) {
-            if (this.dirTask.length === 0) {
+            if (this.isEmptyDirQueue()) {
                 return;
             }
-            return this.setChildDirectroy(this.dirTask.pop());
-        }
-        const childDir = fs.readdirSync(path).filter((value: string) => {
-            return value.indexOf('.') === -1;
-        }).map((value: string) => {
-            return path + '/' + value;
-        });
-
-        this.dirTask = this.dirTask.concat(childDir);
-
-        if (childDir.length === 0) {
-            if (fs.existsSync(path + '/index.json')) {
-                this.dirEnd.unshift(path);
-            } else {
-                this.dirEnd.push(path);
-            }
-        }
-        if (this.dirTask.length === 0) {
-            return this.dirEnd;
+            return this.generateDirList(this.dirQueue.pop());
         }
 
-        return this.setChildDirectroy(this.dirTask.pop());
+        const childDir = this.checkDirectory(path);
+        this.dirQueue = this.dirQueue.concat(childDir);
+
+        if (this.isEndPoint(childDir)) {
+            this.addEndPointDir(path);
+        }
+
+        if (this.isEmptyDirQueue()) {
+            return this.generateDone(this.path);
+        }
+        return this.generateDirList(this.dirQueue.pop());
     }
+
+    private isEndPoint(childDir: string) {
+        return childDir.length === 0 ? true : false;
+    }
+
+    private isEmptyDirQueue() {
+        return this.dirQueue.length === 0 ? true : false;
+    }
+
+    private addEndPointDir(path: string) {
+        if (fs.existsSync(path + '/index.json')) {
+            this.dirEnd.unshift(path);
+        } else {
+            this.dirEnd.push(path);
+        }
+    }
+
+    private checkDirectory(path: string): string {
+        const directory = fs.readdirSync(path).filter((value: string) => {
+            const selectDir = value.indexOf('.') === -1;
+            return selectDir;
+        }).map((lastDirName: string) => {
+            const dirPath = path + '/' + lastDirName;
+            return dirPath;
+        });
+        return directory;
+    }
+
 }
