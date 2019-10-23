@@ -1,5 +1,5 @@
 import express from 'express';
-import { ApiInfo, Json} from '@/const/mockType';
+import { ApiInfo } from '@/const/mockType';
 const app = express();
 const fs = require('fs');
 

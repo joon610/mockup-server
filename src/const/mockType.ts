@@ -8,7 +8,3 @@ export class ApiInfo {
     public error: string = '';
 }
 
-export class Json {
-    public index: string = '';
-    public error: string = 'Empty Json';
-}

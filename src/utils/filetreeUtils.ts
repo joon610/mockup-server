@@ -1,6 +1,6 @@
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
-import { ApiInfo, Json } from '../const/mockType';
+import { ApiInfo } from '@/const/mockType';
 export default class FiletreeUtils {
     private static instance: FiletreeUtils;
     private dirTask: string[] = [];
