@@ -1,7 +1,7 @@
 import express from 'express';
+import { ApiInfo, Json} from '@/const/mockType';
 const app = express();
 const fs = require('fs');
-import { ApiInfo } from '@/const/mockServerConst';
 
 export default class VirtualServerUtils {
   private server: any;
@@ -24,7 +24,7 @@ export default class VirtualServerUtils {
     if ( this.server !== undefined) {
       return false;
     }
-    this.api();
+    this.generateAPI(this.rootPath);
     console.log(this.port);
     this.server = app.listen( this.port, () => {
       console.log( `server started at http://localhost:${ this.port }` );
@@ -42,31 +42,34 @@ export default class VirtualServerUtils {
     return false;
   }
 
-  private async api() {
-    await this.restfullList.forEach((restfull: ApiInfo) => {
+  private async generateAPI(rootPath: string) {
+    await this.restfullList.forEach((restful: ApiInfo) => {
       try {
-        const rawdata = {success: '', error: ''};
-        const INDEX_JSON = this.rootPath + restfull.api + '/index.json';
-        const ERROR_JSON = this.rootPath + restfull.api + '/error.json';
-        if (!restfull.isFail) {
-          const success = fs.readFileSync(INDEX_JSON);
-          rawdata.success = JSON.parse(success);
-          if (fs.existsSync(ERROR_JSON)) {
-            const error = fs.readFileSync(ERROR_JSON);
-            rawdata.error = JSON.parse(error);
-          }
-        }
-        app.get( restfull.api, ( req: any, res: any ) => {
-          // @ts-ignore
-          res.send( rawdata[restfull.status] );
-        } );
+        const rawJson: Json = this.getJsonStatus(rootPath, restful.api);
+        app.get( restful.api, ( req: any, res: any ) => {
+              // @ts-ignore
+              const result = restful.status === 'success' ?  restful.index : restful.error;
+              res.send(result);
+          });
       } catch (err) {
-        console.log(err);
-        app.get(restfull.api, (req: any, res: any) => {
+        app.get(restful.api, (req: any, res: any) => {
           res.send(err);
         });
       }
     });
+  }
+
+  private getJsonStatus(rootPath: string, api: string): Json {
+    const INDEX_JSON = rootPath + api + '/index.json';
+    const ERROR_JSON = rootPath + api + '/error.json';
+    const success = fs.readFileSync(INDEX_JSON);
+    const json = new Json();
+    json.index = JSON.parse(success);
+    if (fs.existsSync(ERROR_JSON)) {
+      const error = fs.readFileSync(ERROR_JSON);
+      json.error = JSON.parse(error);
+    }
+    return json;
   }
 }
 

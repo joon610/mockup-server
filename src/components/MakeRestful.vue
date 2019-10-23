@@ -2,7 +2,7 @@
     .api-list-container
         .server-on-container
           .input-row
-            .loacalhost-label http://loacalhost:
+            .loacalhost-label http://localhost:
             .loacalhost-input
               v-text-field(v-model="vPort" :solo="true" :readonly="isServerOn" :flat="true" style="hegiht:48px")
           .server-btn
@@ -23,7 +23,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import VirtualServerUtils from '../utils/virtualServerUtils';
-import { ApiInfo } from '../const/mockServerConst';
+import { ApiInfo } from '../const/mockType';
 const shell = require('electron').shell;
 @Component
 export default class MakeRestful extends Vue {
@@ -88,7 +88,6 @@ export default class MakeRestful extends Vue {
   private async startServer() {
     this.server = new VirtualServerUtils(this.vPort, this.rootPath, this.restfullList);
     this.isRunningServer = await this.server.start();
-
     this.$emit('input', this.isRunningServer);
     this.$forceUpdate();
   }

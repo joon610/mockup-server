@@ -1,13 +1,21 @@
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
-import { ApiInfo } from '../const/mockServerConst';
+import { ApiInfo, Json } from '../const/mockType';
 export default class FiletreeUtils {
-
+    private static instance: FiletreeUtils;
     private dirTask: string[] = [];
     private dirEnd: string[] = [];
     private path!: string;
 
-    constructor(path: string) {
+    public getInstance() {
+        if (FiletreeUtils.instance === undefined) {
+            FiletreeUtils.instance = new FiletreeUtils();
+        }
+        return FiletreeUtils.instance;
+    }
+
+    public setRootPath(path: string) {
+        this.dirEnd = [];
         this.path = path;
         this.setChildDirectroy(this.path);
         this.setRootDirectory(this.path);
@@ -17,19 +25,25 @@ export default class FiletreeUtils {
         const apiList = this.dirEnd.map((value: string) => {
             return value.replace(this.path, '');
         }).map((api: string) => {
-            try {
-                const rawdata = fs.readFileSync(this.path + api + '/index.json');
-              } catch {
-                const error = new ApiInfo();
-                error.api = this.path + api;
-                error.isFail = true;
-                return error;
-              }
             const apiInfo = new ApiInfo();
+            const indexPath = this.path + api + '/index.json';
+            const errorPath = this.path + api + '/error.json';
             apiInfo.api = api;
+            apiInfo.index =  this.generatorJson(indexPath);
+            apiInfo.error =  this.generatorJson(errorPath);
+            apiInfo.isFail = apiInfo.index === undefined ? true : false;
             return apiInfo;
         });
         return apiList;
+    }
+
+    private generatorJson(indexPath: string) {
+        try {
+            const result = JSON.parse(fs.readFileSync(indexPath));
+            return result;
+          } catch {
+            return undefined;
+          }
     }
 
     private setRootDirectory(path: string) {

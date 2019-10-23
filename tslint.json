@@ -17,6 +17,7 @@
     "quotemark": [true, "single"],
     "no-console": [false],
     "no-var-requires":false,
-    "no-angle-bracket-type-assertion": true
+    "no-angle-bracket-type-assertion": true,
+    "max-classes-per-file": false
   }
 }
