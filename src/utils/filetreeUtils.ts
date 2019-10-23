@@ -30,7 +30,7 @@ export default class FiletreeUtils {
             const errorPath = this.path + api + '/error.json';
             apiInfo.api = api;
             apiInfo.index =  this.generatorJson(indexPath);
-            apiInfo.error =  this.generatorJson(errorPath);
+            apiInfo.error =  this.generatorJson(errorPath) === undefined ? errorPath : this.generatorJson(errorPath);
             apiInfo.isFail = apiInfo.index === undefined ? true : false;
             return apiInfo;
         });
