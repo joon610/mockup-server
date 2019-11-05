@@ -29,7 +29,6 @@ export default class MockServer extends Vue {
   private rootPath: string = '';
   private restfullList: ApiInfo[] = Array<ApiInfo>();
   private portNum: string = STANDARD_PORT;
-
   private serverStatus: boolean = false;
   private isServerOn: boolean = false;
   private hasRestfullList: boolean = true;
@@ -50,7 +49,6 @@ export default class MockServer extends Vue {
     filetree.getInstance().setRootPath(this.rootPath);
     this.restfullList = filetree.getInstance().getRelativePath();
   }
-
 }
 </script>
 

@@ -3,9 +3,9 @@ const fs = remote.require('fs');
 import { ApiInfo } from '@/const/mockType';
 export default class FiletreeUtils {
     private static instance: FiletreeUtils;
-    private dirQueue: string[] = [];
-    private dirEnd: string[] = [];
-    private path!: string;
+    private checkEndDirectory: string[] = [];
+    private dirEndPoint: string[] = [];
+    private rootPath!: string;
 
     public getInstance() {
         if (FiletreeUtils.instance === undefined) {
@@ -15,18 +15,17 @@ export default class FiletreeUtils {
     }
 
     public setRootPath(path: string) {
-        this.dirEnd = [];
-        this.path = path;
-        this.generateDirList(this.path);
+        this.dirEndPoint = [];
+        this.rootPath = path;
+        this.generateDirList(this.rootPath);
     }
 
     public getRelativePath() {
-        const apiList = this.dirEnd.map((value: string) => {
-            return value.replace(this.path, '');
-        }).map((api: string) => {
+        const apiList = this.dirEndPoint.map((value: string) => {
+            const api = value.replace(this.rootPath, '');
             const apiInfo = new ApiInfo();
-            const indexPath = this.path + api + '/index.json';
-            const errorPath = this.path + api + '/error.json';
+            const indexPath = this.rootPath + api + '/index.json';
+            const errorPath = this.rootPath + api + '/error.json';
             apiInfo.api = api;
             apiInfo.index =  this.readJson(indexPath);
             apiInfo.error =  this.readJson(errorPath) === undefined ? errorPath : this.readJson(errorPath);
@@ -42,62 +41,53 @@ export default class FiletreeUtils {
             return result;
           } catch {
             return undefined;
-          }
+        }
     }
 
     private generateDone(path: string) {
         if (fs.existsSync(path + '/index.json')) {
-            this.dirEnd.unshift('/');
+            this.dirEndPoint.unshift('/');
         }
-        return this.dirEnd;
+        return this.dirEndPoint;
     }
 
-    private generateDirList(path: string = ''): any {
-        if (!fs.lstatSync(path).isDirectory()) {
-            if (this.isEmptyDirQueue()) {
+    private generateDirList(paths: string = ''): any {
+        if (!fs.lstatSync(paths).isDirectory()) {
+            if (this.isEmptyLength(this.checkEndDirectory)) {
                 return;
             }
-            return this.generateDirList(this.dirQueue.pop());
+            return this.generateDirList(this.checkEndDirectory.pop());
         }
-
-        const childDir = this.checkDirectory(path);
-        this.dirQueue = this.dirQueue.concat(childDir);
-
-        if (this.isEndPoint(childDir)) {
-            this.addEndPointDir(path);
+        this.checkEndDirectory = this.checkEndDirectory.concat(this.getAllDirectorys(paths));
+        if (this.isEmptyLength(this.checkEndDirectory)) {
+            return this.generateDone(this.rootPath);
         }
-
-        if (this.isEmptyDirQueue()) {
-            return this.generateDone(this.path);
-        }
-        return this.generateDirList(this.dirQueue.pop());
+        return this.generateDirList(this.checkEndDirectory.pop());
     }
 
-    private isEndPoint(childDir: string) {
-        return childDir.length === 0 ? true : false;
-    }
-
-    private isEmptyDirQueue() {
-        return this.dirQueue.length === 0 ? true : false;
+    private isEmptyLength(target: any[]) {
+        return target.length === 0 ?  true : false;
     }
 
     private addEndPointDir(path: string) {
         if (fs.existsSync(path + '/index.json')) {
-            this.dirEnd.unshift(path);
+            this.dirEndPoint.unshift(path);
         } else {
-            this.dirEnd.push(path);
+            this.dirEndPoint.push(path);
         }
     }
 
-    private checkDirectory(path: string): string {
-        const directory = fs.readdirSync(path).filter((value: string) => {
+    private getAllDirectorys(path: string): string {
+        const childDirectory = fs.readdirSync(path).filter((value: string) => {
             const selectDir = value.indexOf('.') === -1;
             return selectDir;
         }).map((lastDirName: string) => {
             const dirPath = path + '/' + lastDirName;
             return dirPath;
         });
-        return directory;
+        if (this.isEmptyLength(childDirectory)) {
+            this.addEndPointDir(path);
+        }
+        return childDirectory;
     }
-
 }
