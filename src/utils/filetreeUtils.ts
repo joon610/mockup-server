@@ -81,11 +81,11 @@ export default class FiletreeUtils {
 
     private getAllDirectorys(path: string): string {
         const childDirectory = fs.readdirSync(path).filter((value: string) => {
-            const selectDir = value.indexOf('.') === -1;
-            return selectDir;
+            const getDirName = value.indexOf('.') === -1;
+            return getDirName;
         }).map((lastDirName: string) => {
-            const dirPath = path + '/' + lastDirName;
-            return dirPath;
+            const getDirPath = path + '/' + lastDirName;
+            return getDirPath;
         });
         if (this.isEmptyLength(childDirectory)) {
             this.addEndPointDir(path);

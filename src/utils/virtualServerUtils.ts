@@ -1,7 +1,6 @@
 import express from 'express';
 import { ApiInfo } from '@/const/mockType';
 const app = express();
-const fs = require('fs');
 
 export default class VirtualServerUtils {
   private server: any;

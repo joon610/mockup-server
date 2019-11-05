@@ -18,8 +18,6 @@ import { STANDARD_PORT } from '@/const/mockConst';
 import resController from '@/utils/responsController';
 import MakeRestful from '@/components/MakeRestful.vue';
 
-
-const fs = require('fs');
 @Component({
   components: {
     vMockRestful: MakeRestful,

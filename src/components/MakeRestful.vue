@@ -22,8 +22,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import VirtualServerUtils from '../utils/virtualServerUtils';
-import { ApiInfo } from '../const/mockType';
+import VirtualServerUtils from '@/utils/virtualServerUtils';
+import { ApiInfo } from '@/const/mockType';
 import { LOCAL_HOST, COLOR_PALLET, DEFAULT, CURSOR_POINTER } from '@/const/mockConst';
 const shell = require('electron').shell;
 @Component
@@ -38,11 +38,8 @@ export default class MakeRestful extends Vue {
     @Prop(String) private rootPath!: string;
     @Prop(Boolean) private isServerOn!: boolean;
 
-
     private vPort: string = '';
-
     private isRunningServer!: boolean;
-
     private server!: VirtualServerUtils;
 
 
