@@ -24,6 +24,7 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import VirtualServerUtils from '../utils/virtualServerUtils';
 import { ApiInfo } from '../const/mockType';
+import { LOCAL_HOST, COLOR_PALLET, DEFAULT, CURSOR_POINTER } from '@/const/mockConst';
 const shell = require('electron').shell;
 @Component
 export default class MakeRestful extends Vue {
@@ -47,33 +48,33 @@ export default class MakeRestful extends Vue {
 
     private httpMethodStyle(restfull: ApiInfo) {
       const style = {
-        color: 'dimgray',
+        color: COLOR_PALLET.DISABLE_API_TEXT_COLOR,
       };
       if (restfull.isFail === true) { return style; }
       if (this.isRunningServer ) {
-        style.color = 'orange';
+        style.color = COLOR_PALLET.RESTFUL_TEXT_COLOR;
       }
       return style;
     }
 
     private apiPathStyle(restfull: ApiInfo) {
       const style = {
-        color: 'dimgray',
+        color: COLOR_PALLET.DISABLE_API_TEXT_COLOR,
       };
       if (restfull.isFail === true) { return style; }
       if (this.isRunningServer) {
-        style.color = 'white';
+        style.color = COLOR_PALLET.RUN_API_TEXT_COLOR;
       }
       return style;
     }
 
     private apiContainerStyle(restfull: ApiInfo) {
       const style = {
-        cursor: 'default',
+        cursor: DEFAULT,
       };
       if (restfull.isFail === true) { return style; }
       if (this.isRunningServer) {
-        style.cursor = 'pointer';
+        style.cursor = CURSOR_POINTER;
       }
       return style;
     }
@@ -100,8 +101,8 @@ export default class MakeRestful extends Vue {
 
   private openBrowser(api: string) {
     if (this.isRunningServer) {
-      console.log('http://localhost:' + this.vPort + api);
-      shell.openExternalSync('http://localhost:' + this.vPort + api);
+      console.log(LOCAL_HOST + this.vPort + api);
+      shell.openExternalSync(LOCAL_HOST + this.vPort + api);
     }
   }
 

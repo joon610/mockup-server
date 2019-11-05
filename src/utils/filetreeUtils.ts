@@ -1,6 +1,8 @@
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 import { ApiInfo } from '@/const/mockType';
+import { INDEX_DIR, ERROR_DIR} from '@/const/mockConst';
+
 export default class FiletreeUtils {
     private static instance: FiletreeUtils;
     private checkEndDirectory: string[] = [];
@@ -24,8 +26,8 @@ export default class FiletreeUtils {
         const apiList = this.dirEndPoint.map((value: string) => {
             const api = value.replace(this.rootPath, '');
             const apiInfo = new ApiInfo();
-            const indexPath = this.rootPath + api + '/index.json';
-            const errorPath = this.rootPath + api + '/error.json';
+            const indexPath = this.rootPath + api + INDEX_DIR;
+            const errorPath = this.rootPath + api + ERROR_DIR;
             apiInfo.api = api;
             apiInfo.index =  this.readJson(indexPath);
             apiInfo.error =  this.readJson(errorPath) === undefined ? errorPath : this.readJson(errorPath);
@@ -45,7 +47,7 @@ export default class FiletreeUtils {
     }
 
     private generateDone(path: string) {
-        if (fs.existsSync(path + '/index.json')) {
+        if (fs.existsSync(path + INDEX_DIR)) {
             this.dirEndPoint.unshift('/');
         }
         return this.dirEndPoint;
@@ -70,7 +72,7 @@ export default class FiletreeUtils {
     }
 
     private addEndPointDir(path: string) {
-        if (fs.existsSync(path + '/index.json')) {
+        if (fs.existsSync(path + INDEX_DIR)) {
             this.dirEndPoint.unshift(path);
         } else {
             this.dirEndPoint.push(path);
