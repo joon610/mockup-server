@@ -1,8 +1,11 @@
 export class ApiInfo {
-    public api: string = '';
-    public status: string = 'success';
-    public isFail: boolean = false;
-    public index: string = '';
-    public error: string = '';
-}
+    public api = '';
 
+    public status = 'success';
+
+    public isFail = false;
+
+    public index = '';
+
+    public error = '';
+}

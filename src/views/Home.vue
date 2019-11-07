@@ -5,18 +5,18 @@
         .input-row
           v-text-field(v-model="rootPath" :solo="true" :flat="true" readonly)
         .select-root-container
-          v-btn(color="#A5D6A7" :disabled="serverStatus" @click="getPath()") Select Root
+          v-btn(color="#A5D6A7" :disabled="serverStatus" @click="initPath()") Select Root
       v-row(no-gutters)
         v-mock-restful(v-model="serverStatus" :restfullList="restfullList" :rootPath="rootPath" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import FileTreeUtils from '@/utils/filetreeUtils';
 import { ApiInfo } from '@/const/mockType';
 import { STANDARD_PORT } from '@/const/mockConst';
-import resController from '@/utils/responsController';
 import MakeRestful from '@/components/MakeRestful.vue';
+import ResponsApiController from '@/utils/responsApiController';
 
 @Component({
   components: {
@@ -24,14 +24,14 @@ import MakeRestful from '@/components/MakeRestful.vue';
   },
 })
 export default class MockServer extends Vue {
-  private rootPath: string = '';
+  private rootPath = '';
   private restfullList: ApiInfo[] = Array<ApiInfo>();
-  private portNum: string = STANDARD_PORT;
-  private serverStatus: boolean = false;
-  private isServerOn: boolean = false;
-  private hasRestfullList: boolean = true;
+  private portNum = STANDARD_PORT;
+  private serverStatus = false;
+  private isServerOn = false;
+  private hasRestfullList = true;
 
-  private async getPath() {
+  private async initPath() {
     const electron = require('electron').remote;
     const dialog = electron.dialog;
     const path = await dialog.showOpenDialog({ properties: ['openDirectory'] });
@@ -39,13 +39,19 @@ export default class MockServer extends Vue {
         return;
     }
     this.rootPath = path.filePaths![0];
-    this.makeFileTree();
+     this.makeFileTree();
+    this.initApiController();
   }
 
-  private makeFileTree() {
+  private async makeFileTree() {
     const filetree = new FileTreeUtils();
-    filetree.getInstance().setRootPath(this.rootPath);
-    this.restfullList = filetree.getInstance().getRelativePath();
+    filetree.getInstance().build(this.rootPath);
+    this.restfullList =  filetree.getInstance().getApiInfoList()!;
+  }
+
+  private initApiController(){
+    const apiController = new ResponsApiController().getInstance();
+    apiController!.setResponsApi(this.restfullList);
   }
 }
 </script>

@@ -38,7 +38,7 @@ export default class MakeRestful extends Vue {
     @Prop(String) private rootPath!: string;
     @Prop(Boolean) private isServerOn!: boolean;
 
-    private vPort: string = '';
+    private vPort = '';
     private isRunningServer!: boolean;
     private server!: VirtualServerUtils;
 
@@ -84,7 +84,7 @@ export default class MakeRestful extends Vue {
     }
 
   private async startServer() {
-    this.server = new VirtualServerUtils(this.vPort, this.rootPath, this.restfullList);
+    this.server = new VirtualServerUtils(this.vPort, this.restfullList);
     this.isRunningServer = await this.server.start();
     this.$emit('input', this.isRunningServer);
     this.$forceUpdate();
