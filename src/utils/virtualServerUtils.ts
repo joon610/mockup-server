@@ -59,8 +59,6 @@ export default class VirtualServerUtils {
   private postApi(restful:ApiInfo,cnt:number){
     app.post(restful.api, (req: any, res: any) => {
       const result = restful.status === 'success' ? this.post(req,restful,cnt): restful.error;
-      console.log('req params :', req.body);
-      
       res.send(result);
     });  
   }
@@ -75,28 +73,26 @@ export default class VirtualServerUtils {
 
   private putApi(restful:ApiInfo){
     app.put(restful.api, (req: any, res: any) => {
-      const result = restful.status === 'success' ? restful.index : restful.error;
+      const result = this.getJson(restful)
       res.send(result);
     });  
   }
 
   private getApi(restful:ApiInfo){
     app.get(restful.api, (req: any, res: any) => {
-      const result = restful.status === 'success' ? restful.index : restful.error;
+      const result = this.getJson(restful)
       res.send(result);
     });
   } 
 
   private getDynamicApi(restful:ApiInfo){
-    app.get(restful.api+':id', (req: any, res: any) => {
-      const result = restful.status === 'success' ? restful.index : restful.error;
-      const data = result.filter((value:any)=>{
-          const key =  Object.keys(req.params)[0];
-        return value[key] === req.params.id ? true : false; 
-      })
+    app.get(restful.api+'/:id', (req: any, res: any) => {
+      const result = this.getJson(restful)
+      const data = req.params.hasOwnProperty('id')?this.datafilter(result,req.params): result;
       res.send(data);
     });
-  }
+  } 
+
 
   private getObjectKey(query:object){
     return Object.keys(query).map(function(key){
@@ -111,7 +107,7 @@ export default class VirtualServerUtils {
   private post(req:any, restful:ApiInfo, cnt:number){
     console.log('req.body :', req.params);
     const result = restful.index.concat(req.body)
-  this.restfullList[cnt].index = result; 
+    this.restfullList[cnt].index = result; 
   return result;
   }
 
@@ -120,16 +116,15 @@ export default class VirtualServerUtils {
   } 
 
   private deleted(req:any, restful:ApiInfo, cnt:number){
-    const result = this.getObjectKey(req.query).reduce((pre:any,key)=>{
-                      const deleteObject = pre.filter((value:any) =>{
-                        return value[key] === req.query[key]? false:true
-                      })
-                    return deleteObject;
-                  },this.deepCopy(restful.index));
-    this.restfullList[cnt].index = result;
-    return result;
+      // const result = this.getObjectKey(req.query).reduce((pre:any,key)=>{
+      //                   const deleteObject = pre.filter((value:any) =>{
+      //                     return value[key] === req.query[key]? false:true
+      //                   })
+      //                 return deleteObject;
+      //               },this.deepCopy(restful.index));
+      // this.restfullList[cnt].index = result;
+      return '';
   }
-
 
   private restfulApi(restful:ApiInfo,cnt:number){
     this.getApi(restful);
@@ -138,6 +133,19 @@ export default class VirtualServerUtils {
   }
 
   private restfulDynamicApi(restful:ApiInfo,cnt:number){
-    this.getDynamicApi(restful)
+    this.getDynamicApi(restful);
+  }
+
+
+
+  private datafilter(data:any,params:any){
+    return data.filter((value:any)=>{
+      const hasData = value['id'] === params.id ? true : false; 
+      return hasData;
+    })
+  }
+
+  private getJson(restful:ApiInfo) {
+    return restful.status === 'success' ? restful.index : restful.error;
   }
 }

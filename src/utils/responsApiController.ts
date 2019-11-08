@@ -20,7 +20,6 @@ export default class ResponsApiController {
         pre[value.api] = json;
         return pre;
       }, {});
-      console.log('this.apiInfoList :', this.apiInfoList);
     }
 
     public getResponsApi() {
