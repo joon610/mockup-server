@@ -29,8 +29,8 @@ https://github.com/joon610/mock-server/releases/download/0.1.0/mock-server.Setup
 - [ ] Matching server response Json
 - [ ] Mock-server icon
 - [ ] Auto Update
-- [ ] CRUD
-- [ ] wrong text loacalhost -> localhost
+- [x] CRUD
+- [x] wrong text loacalhost -> localhost
 - [ ] refactoring component, class name
 
 ## License
