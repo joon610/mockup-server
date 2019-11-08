@@ -11,7 +11,7 @@
         .api-container(v-for="rest,index in restfullList" :key="index"  :style="apiContainerStyle(rest)" )
             a(@click="openBrowser(rest.api)")
                 .http-method(:style="httpMethodStyle(rest)")
-                    | GET 
+                    | API 
                 .api-path(:style="apiPathStyle(rest)")
                     | {{ rest.api }}
             v-radio-group.radio-group(v-model="restfullList[index].status" row :disabled="rest.isFail || isRunningServer")

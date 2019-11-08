@@ -26,12 +26,10 @@ https://github.com/joon610/mock-server/releases/download/0.1.0/mock-server-0.1.0
 https://github.com/joon610/mock-server/releases/download/0.1.0/mock-server.Setup.0.1.0.exe
 
 ## TodoList 
-- [ ] Matching server response Json
 - [ ] Mock-server icon
 - [ ] Auto Update
 - [x] CRUD
 - [x] wrong text loacalhost -> localhost
-- [ ] refactoring component, class name
 
 ## License
 
