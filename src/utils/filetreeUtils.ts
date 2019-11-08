@@ -63,9 +63,6 @@ export default class FiletreeUtils {
     }
 
     private generateDone(path: string) {
-      if (fs.existsSync(path + INDEX_DIR)) {
-        this.dirEndPoint.unshift('/');
-      }
       return this.dirEndPoint;
     }
 
