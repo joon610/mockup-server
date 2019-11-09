@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import VirtualServerUtils from '@/utils/virtualServerUtils';
+import MockupServer from '@/utils/server/mockupServer';
 import { ApiInfo } from '@/const/mockType';
 import { LOCAL_HOST, COLOR_PALLET, DEFAULT, CURSOR_POINTER } from '@/const/mockConst';
 const shell = require('electron').shell;
@@ -40,7 +40,7 @@ export default class MakeRestful extends Vue {
 
     private vPort = '';
     private isRunningServer!: boolean;
-    private server!: VirtualServerUtils;
+    private server!: MockupServer;
 
 
     private httpMethodStyle(restfull: ApiInfo) {
@@ -84,7 +84,7 @@ export default class MakeRestful extends Vue {
     }
 
   private async startServer() {
-    this.server = new VirtualServerUtils(this.vPort, this.restfullList);
+    this.server = new MockupServer(this.vPort, this.restfullList);
     this.isRunningServer = await this.server.start();
     this.$emit('input', this.isRunningServer);
     this.$forceUpdate();
