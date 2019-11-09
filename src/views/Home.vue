@@ -16,7 +16,6 @@ import FileTreeUtils from '@/utils/filetreeUtils';
 import { ApiInfo } from '@/const/mockType';
 import { STANDARD_PORT } from '@/const/mockConst';
 import MakeRestful from '@/components/MakeRestful.vue';
-import ResponsApiController from '@/utils/responsApiController';
 
 @Component({
   components: {
@@ -40,7 +39,6 @@ export default class MockServer extends Vue {
     }
     this.rootPath = path.filePaths![0];
      this.makeFileTree();
-    this.initApiController();
   }
 
   private async makeFileTree() {
@@ -49,10 +47,6 @@ export default class MockServer extends Vue {
     this.restfullList =  filetree.getInstance().getApiInfoList()!;
   }
 
-  private initApiController(){
-    const apiController = new ResponsApiController().getInstance();
-    apiController!.setResponsApi(this.restfullList);
-  }
 }
 </script>
 
