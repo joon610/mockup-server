@@ -5,16 +5,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        resApiList: {aa: 'hello'},
+        apiInfoList: [],
     },
     getters: {
-        resApiList: (state) => {
-            return state.resApiList;
+        apiInfoList: (state) => {
+            return state.apiInfoList;
         },
     },
     mutations: {
-        resApiList(state, payload) {
-            state.resApiList = payload;
+        apiInfoList(state, payload) {
+            state.apiInfoList = payload;
         },
     },
 });

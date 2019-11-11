@@ -7,7 +7,7 @@
         .select-root-container
           v-btn(color="#A5D6A7" :disabled="serverStatus" @click="initPath()") Select Root
       v-row(no-gutters)
-        v-mock-restful(v-model="serverStatus" :restfullList="restfullList" :rootPath="rootPath" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
+        v-mock-restful(v-model="serverStatus"  :rootPath="rootPath" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
 </template>
 
 <script lang="ts">
@@ -24,7 +24,6 @@ import MakeRestful from '@/components/MakeRestful.vue';
 })
 export default class MockServer extends Vue {
   private rootPath = '';
-  private restfullList: ApiInfo[] = Array<ApiInfo>();
   private portNum = STANDARD_PORT;
   private serverStatus = false;
   private isServerOn = false;
@@ -44,7 +43,7 @@ export default class MockServer extends Vue {
   private async makeFileTree() {
     const filetree = new FileTreeUtils();
     filetree.getInstance().build(this.rootPath);
-    this.restfullList =  filetree.getInstance().getApiInfoList()!;
+    this.$store.state.apiInfoList =  filetree.getInstance().getApiInfoList()!;
   }
 
 }

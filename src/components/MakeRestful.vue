@@ -6,41 +6,41 @@
             .loacalhost-input
               v-text-field(v-model="vPort" :solo="true" :readonly="isServerOn" :flat="true" style="hegiht:48px")
           .server-btn
-            v-btn(v-show="isRunningServer === false" color="primary"  @click="startServer()") start Server
+            v-btn(v-show="isRunningServer === false" color="primary"   :disabled="hasApiList" @click="startServer()") start Server
             v-btn(v-show="isRunningServer === true " color="deep-orange" :disabled="hasApiList" @click="closeServer()") close Server
-        .api-container(v-for="rest,index in restfullList" :key="index"  :style="apiContainerStyle(rest)" )
+        .api-container(v-for="rest,index in $store.getters.apiInfoList" :key="index"  :style="apiContainerStyle(rest)" )
             a(@click="openBrowser(rest.api)")
                 .http-method(:style="httpMethodStyle(rest)")
                     | API 
                 .api-path(:style="apiPathStyle(rest)")
                     | {{ rest.api }}
-            v-radio-group.radio-group(v-model="restfullList[index].status" row :disabled="rest.isFail || isRunningServer")
+            v-radio-group.radio-group(v-model="$store.getters.apiInfoList[index].status" row :disabled="rest.isFail || isRunningServer")
               v-radio.radio-style(label="sucsses" color="green" value="success")
               v-radio.radio-style(label="error" color="red" value="error")
               
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import MockupServer from '@/utils/server/mockupServer';
 import { ApiInfo } from '@/const/mockType';
+
 import { LOCAL_HOST, COLOR_PALLET, DEFAULT, CURSOR_POINTER } from '@/const/mockConst';
 const shell = require('electron').shell;
 @Component
 export default class MakeRestful extends Vue {
 
     private get hasApiList() {
-      return this.restfullList.length === 0 ? true : false ;
+      return this.$store.getters.apiInfoList.length === 0 ? true : false ;
     }
 
-    @Prop() private restfullList!: ApiInfo[];
     @Prop(String) private port!: string;
     @Prop(String) private rootPath!: string;
     @Prop(Boolean) private isServerOn!: boolean;
 
     private vPort = '';
     private isRunningServer!: boolean;
-    private server!: MockupServer;
+    private server!: MockupServer | undefined;
 
 
     private httpMethodStyle(restfull: ApiInfo) {
@@ -84,14 +84,15 @@ export default class MakeRestful extends Vue {
     }
 
   private async startServer() {
-    this.server = new MockupServer(this.vPort, this.restfullList);
+    this.server = new MockupServer(this,this.vPort);
     this.isRunningServer = await this.server.start();
     this.$emit('input', this.isRunningServer);
     this.$forceUpdate();
   }
 
   private async closeServer() {
-    this.isRunningServer = await this.server.close();
+    this.isRunningServer = await this.server!.close();
+    this.server = undefined;
     this.$emit('input', this.isRunningServer);
     this.$forceUpdate();
   }

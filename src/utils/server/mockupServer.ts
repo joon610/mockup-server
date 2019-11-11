@@ -6,7 +6,7 @@ const app = express();
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
 
-export default class MockupServer extends JsonLogic{
+export default class MockupServer {
   private server: any;
 
   private port!: string;
@@ -15,27 +15,33 @@ export default class MockupServer extends JsonLogic{
 
   private readonly DYNAMIC_PARAM: string = 'id';
 
-  public constructor(serverPort: string, restfullList: ApiInfo[]) {
-    super();
-    this.port = serverPort;
-    this.restfullList = this.deepCopy(restfullList);
-  }
+  private jsonLogic!: JsonLogic;
 
+  private self:any;
+
+  public constructor(vueComponent:any, serverPort: string) {
+    this.port = serverPort;
+    this.jsonLogic = new JsonLogic();
+    this.self = vueComponent;
+    this.restfullList = this.self.$store.state.apiInfoList;
+  }
+  
   public start(): boolean {
     if (!this.isValidateStart) { return false; }
-    this.generateAPI();
     this.server = app.listen(this.port, () => {
       console.log(`server started at http://localhost:${this.port}`);
     });
+    this.generateAPI();
     return true;
   }
-
+  
   public close(): boolean {
     if (this.server === undefined) { return false; }
     this.server.close(() => {
       console.log('Closed out remaining connections');
     });
-    this.server = undefined;
+    delete this.server;
+    this.restfullList = [];
     return false;
   }
 
@@ -46,10 +52,10 @@ export default class MockupServer extends JsonLogic{
     return true;
   }
 
-  private async generateAPI() {
-    await this.restfullList.forEach((restful: ApiInfo,cnt:number) => {
+  private  generateAPI() {
+      this.restfullList.forEach((restful: ApiInfo,cnt:number) => {
       try {
-        this.getApi(restful);
+        this.getApi(restful,cnt);
         this.postApi(restful,cnt);
         this.deleteApi(restful,cnt);
         this.putApi(restful,cnt);
@@ -63,7 +69,7 @@ export default class MockupServer extends JsonLogic{
 
   private postApi(restful:ApiInfo,cnt:number){
     app.post(restful.api, (req: any, res: any) => {
-      const result = restful.status === 'success' ? this.postData(req,restful): restful.error;
+      const result = restful.status === 'success' ? this.jsonLogic.postData(req,restful): restful.error;
       this.restfullList[cnt].index = result;
       res.send(result);
     });  
@@ -71,8 +77,8 @@ export default class MockupServer extends JsonLogic{
   
   private deleteApi(restful:ApiInfo,cnt:number){
     app.delete(restful.api+'/:'+this.DYNAMIC_PARAM, (req: any, res: any) => {
-      const result = this.getJson(restful);
-      const data = req.params.hasOwnProperty(this.DYNAMIC_PARAM)?this.deleteData(result,req.params): result;
+      const result = this.jsonLogic.getJson(restful);
+      const data = req.params.hasOwnProperty(this.DYNAMIC_PARAM)?this.jsonLogic.deleteData(result,req.params): result;
       this.restfullList[cnt].index =data;
       res.send(data);
     });
@@ -80,22 +86,22 @@ export default class MockupServer extends JsonLogic{
 
   private putApi(restful:ApiInfo,cnt:number){
     app.put(restful.api+'/:'+this.DYNAMIC_PARAM, (req: any, res: any) => {
-      const result = this.getJson(restful);
-      const data = req.params.hasOwnProperty(this.DYNAMIC_PARAM)?this.putData(result,req): result;
+      const result = this.jsonLogic.getJson(restful);
+      const data = req.params.hasOwnProperty(this.DYNAMIC_PARAM)?this.jsonLogic.putData(result,req): result;
       this.restfullList[cnt].index =data;
       res.send(data);
     });  
   }
 
-  private getApi(restful:ApiInfo){
+  private getApi(restful:ApiInfo,cnt:number){
     app.get(restful.api, (req: any, res: any) => {
-      const result = this.getJson(restful);
+      const result = this.jsonLogic.getJson(restful);
       res.send(result);
     });
-
+    
     app.get(restful.api+'/:'+this.DYNAMIC_PARAM, (req: any, res: any) => {
-      const result = this.getJson(restful);
-      const data = req.params.hasOwnProperty(this.DYNAMIC_PARAM)?this.selectData(result,req.params): result;
+      const result = this.jsonLogic.getJson(restful);
+      const data = req.params.hasOwnProperty(this.DYNAMIC_PARAM)?this.jsonLogic.selectData(result,req.params): result;
       res.send(data);
     });
   } 
