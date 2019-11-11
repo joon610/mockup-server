@@ -28,8 +28,8 @@ https://github.com/joon610/mock-server/releases/download/0.1.0/mock-server.Setup
 ## TodoList 
 - [ ] mockup-server icon
 - [ ] Auto Update
-- [x] CRUD
-- [x] wrong text loacalhost -> localhost
+- [x] CRUD   get, post, put, delete  v0.2.0
+- [x] wrong text loacalhost -> localhost v0.2.0
 - [ ] custom key name
 
 ## License

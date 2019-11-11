@@ -7,13 +7,14 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
 
 export default class MockupServer {
+
+  private readonly DYNAMIC_PARAM: string = 'id';
+
   private server: any;
 
   private port!: string;
 
   private restfullList!: ApiInfo[];
-
-  private readonly DYNAMIC_PARAM: string = 'id';
 
   private jsonLogic!: JsonLogic;
 

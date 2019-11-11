@@ -42,7 +42,6 @@ export default class MakeRestful extends Vue {
     private isRunningServer!: boolean;
     private server!: MockupServer | undefined;
 
-
     private httpMethodStyle(restfull: ApiInfo) {
       const style = {
         color: COLOR_PALLET.DISABLE_API_TEXT_COLOR,
