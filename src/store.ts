@@ -8,12 +8,12 @@ export default new Vuex.Store({
         apiInfoList: [],
     },
     getters: {
-        apiInfoList: (state) => {
+        apiInfoList: state => {
             return state.apiInfoList;
         },
     },
     mutations: {
-        apiInfoList(state, payload) {
+        apiInfoList(state, payload): void {
             state.apiInfoList = payload;
         },
     },

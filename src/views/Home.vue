@@ -13,81 +13,82 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import FileTreeUtils from '@/utils/filetreeUtils';
-import { ApiInfo } from '@/const/mockType';
 import { STANDARD_PORT } from '@/const/mockConst';
 import MakeRestful from '@/components/MakeRestful.vue';
 
 @Component({
-  components: {
-    vMockRestful: MakeRestful,
-  },
+    components: {
+        vMockRestful: MakeRestful,
+    },
 })
 export default class MockServer extends Vue {
-  private rootPath = '';
-  private portNum = STANDARD_PORT;
-  private serverStatus = false;
-  private isServerOn = false;
-  private hasRestfullList = true;
+    private rootPath = '';
+    private portNum = STANDARD_PORT;
+    private serverStatus = false;
+    private isServerOn = false;
+    private hasRestfullList = true;
 
-  private async initPath() {
-    const electron = require('electron').remote;
-    const dialog = electron.dialog;
-    const path = await dialog.showOpenDialog({ properties: ['openDirectory'] });
-    if (path.filePaths!.length === 0) {
-        return;
+    private async initPath(): Promise<void> {
+        const electron = require('electron').remote;
+        const dialog = electron.dialog;
+        const path = await dialog.showOpenDialog({
+            properties: ['openDirectory'],
+        });
+        if (path.filePaths!.length === 0) {
+            return;
+        }
+        this.rootPath = path.filePaths![0];
+        this.makeFileTree();
     }
-    this.rootPath = path.filePaths![0];
-     this.makeFileTree();
-  }
 
-  private async makeFileTree() {
-    const filetree = new FileTreeUtils();
-    filetree.getInstance().build(this.rootPath);
-    this.$store.state.apiInfoList =  filetree.getInstance().getApiInfoList()!;
-  }
-
+    private makeFileTree(): void {
+        const filetree = new FileTreeUtils();
+        filetree.getInstance().build(this.rootPath);
+        this.$store.state.apiInfoList = filetree
+            .getInstance()
+            .getApiInfoList()!;
+    }
 }
 </script>
 
 <style lang="css" scoped>
-.select-root-container{
-  display: flex;
+.select-root-container {
+    display: flex;
 }
 
 .rootPath {
-  margin: 10px;
-  border-radius: 3px;
-  padding: 20px;
-  background-color: #424242;
+    margin: 10px;
+    border-radius: 3px;
+    padding: 20px;
+    background-color: #424242;
 }
 button {
-  margin-left: 5px;
-  width: 165px;
-  height: 48px !important;
+    margin-left: 5px;
+    width: 165px;
+    height: 48px !important;
 }
 
 .loacalhost-label {
-  height: 48px;
-  line-height: 48px;
-  font-size: 18px;
-  width: 40px;
-  text-align: right;
-  margin-right: 0px;
-  float: left;
+    height: 48px;
+    line-height: 48px;
+    font-size: 18px;
+    width: 40px;
+    text-align: right;
+    margin-right: 0px;
+    float: left;
 }
 
 .loacalhost-input {
-  float: right;
-  width: 200px;
+    float: right;
+    width: 200px;
 }
 
 .input-row {
-  width: 340px;
+    width: 340px;
 }
 
 .row-height {
-  height: 48px;
-  margin-bottom: 5px;
+    height: 48px;
+    margin-bottom: 5px;
 }
 </style>
-

@@ -5,7 +5,7 @@ export class ApiInfo {
 
     public isFail = false;
 
-    public index:any = '';
+    public index: any = '';
 
-    public error:any = '';
+    public error: any = '';
 }

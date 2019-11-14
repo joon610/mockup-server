@@ -6,7 +6,7 @@
     "build": "vue-cli-service build",
     "lint": "eslint --ext .vue,.ts src",
     "dev:vue": "vue-cli-service serve",
-    "dev": "yarn lint && yarn vue-cli-service electron:serve ",
+    "dev": "yarn vue-cli-service electron:serve ",
     "build:electron": "yarn vue-cli-service electron:build",
     "build:all": "yarn vue-cli-service electron:build --mac --win"
   },

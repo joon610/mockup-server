@@ -16,10 +16,9 @@ import { Component, Vue } from 'vue-property-decorator';
 const shell = require('electron').shell;
 @Component
 export default class ComponentName extends Vue {
-
-    private openBrowser() {
-      shell.openExternalSync('https://github.com/joon610/mock-server/releases');
-    }
-
+  private openBrowser(): void {
+    shell.openExternalSync('https://github.com/joon610/mock-server/releases');
+    return;
+  }
 }
 </script>

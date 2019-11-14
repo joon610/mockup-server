@@ -2,20 +2,21 @@ module.exports = {
     root: true,
     plugins: ["@typescript-eslint"],
     parserOptions: {
-      parser: "@typescript-eslint/parser"
+        parser: "@typescript-eslint/parser"
     },
     extends: [
-      "plugin:@typescript-eslint/recommended",
-      "prettier/@typescript-eslint", 
-      "plugin:vue/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint",
+        "plugin:vue/recommended"
     ],
     rules: {
-      quotes: ["error", "single"],
-      "no-console": process.env.NODE_ENV === "production" ? "error" : "off"
+        quotes: ["error", "single"],
+        "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
+        "no-explicit-any": 0,
     }
-  };
+};
 
-  // {
+// {
 //   "defaultSeverity": "warning",
 //   "extends": [
 //     "tslint:recommended"
