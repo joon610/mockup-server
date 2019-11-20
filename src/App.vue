@@ -12,12 +12,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-const shell = require('electron').shell;
+import { Component, Vue } from "vue-property-decorator";
+const shell = require("electron").shell;
 @Component
 export default class ComponentName extends Vue {
   private openBrowser(): void {
-    shell.openExternalSync('https://github.com/joon610/mock-server/releases');
+    shell.openExternalSync("https://github.com/joon610/mock-server/releases");
     return;
   }
 }

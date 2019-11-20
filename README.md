@@ -36,7 +36,7 @@ https://github.com/joon610/mock-server/releases/download/0.1.0/mock-server.Setup
 
 MIT License
 
-## Project setup
+## Project setupø
 ```
 yarn install
 ```

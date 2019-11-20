@@ -58,8 +58,8 @@ export default class FiletreeUtils {
     private readJson(indexPath: string): object | undefined {
         try {
             const readJson = JSON.parse(fs.readFileSync(indexPath));
-            const result = readJson['data'] ? readJson['data'] : readJson;
-            return result;
+            // const result = readJson['data'] ? readJson['data'] : readJson;
+            return readJson;
         } catch {
             return undefined;
         }
