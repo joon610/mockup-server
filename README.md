@@ -2,35 +2,71 @@
 
 ![mock-manual](https://github.com/joon610/readMEImg/blob/master/mock-server/mock-manual.gif)
 
-## How to use
+## 사용방법
+<img src="https://joon610.github.io/assets/images/mockupServer/graph.png" alt="graph">
 
-1. make root directory.
-2. make child directory and add json(index.json) files in child directory.
-<img src="https://github.com/joon610/readMEImg/blob/master/mock-server/mock-directory.png" width="50%" height="50%">
+1. created directory.
+2. make Json files, index.json(successe case),error.json(error case).
+3. Mockup Server start! 
 
-3. open Mock-Server and select root directory
-4. you can get API list!
-<img src="https://github.com/joon610/readMEImg/blob/master/mock-server/mock-server.png" width="30%" height="30%">
+## CRUD (Create, Read, Update ,Delete) 기능 추가 v0.2.0부터
+```
+// index.json
+[
+  {
+        "id": "1",
+        "name": "Sara",
+        "age": "13"
+    },
+    {
+        "id": "2",
+        "name": "teddy",
+        "age": "14"
+    }   
+]
+```
 
- + Directory becomes a API server as follows
-    - /Users/jungdong-joon/Downloads/root        ==  http://loacalhost:9000/
-    - /Users/jungdong-joon/Downloads/root/nice1  ==  http://loacalhost:9000/nice1
-    
-5. click Api Address and then get index.json file.
-<img src="https://github.com/joon610/readMEImg/blob/master/mock-server/mock-api.png" width="50%" height="50%">
+### Create: post http://localhost:9000/nice2/test/      
+```
+///Body
+    {
+        "id": "3",
+        "name": "joon",
+        "age": "19"
+    } 
+```
+- add new Json object 
 
-## Download
-- mac : 
-https://github.com/joon610/mock-server/releases/download/0.1.0/mock-server-0.1.0.dmg
-- window :
-https://github.com/joon610/mock-server/releases/download/0.1.0/mock-server.Setup.0.1.0.exe
+### Read: Get http://localhost:9000/nice2/test      
+- get all Json Data
+
+### Update: Put http://localhost:9000/nice2/test/3
+ - http://localhost:9000/nice2/test/:id
+ - update Json object(id == 3)
+```
+///Body
+    {
+        "id": "3",
+        "name": "hello",
+        "age": "19"
+    } 
+```    
+- update Json object
+
+### Delete: Delete http://localhost:9000/nice2/test/3      
+- http://localhost:9000/nice2/test/:id
+- delete Json object(id == 3)  
+
+### DownLoad
+- Mac : 
+  - <https://github.com/joon610/mockup-server/releases/download/v0.2.0/mock-server-0.2.0.dmg>
+
+- Window :
+  - <https://github.com/joon610/mockup-server/releases/download/v0.2.0/mock-server.Setup.0.2.0.exe>
 
 ## TodoList 
 - [ ] mockup-server icon
-- [ ] Auto Update
-- [x] CRUD   get, post, put, delete  v0.2.0
-- [x] wrong text loacalhost -> localhost v0.2.0
-- [ ] custom key name
+- [ ] Dynamic key name
 
 ## License
 
