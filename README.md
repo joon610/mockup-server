@@ -26,9 +26,10 @@
 ]
 ```
 
-### Create: post http://localhost:9000/nice2/test/      
+### Create: post       
 ```
-///Body
+// http://localhost:9000/nice2/test/
+// Body
     {
         "id": "3",
         "name": "joon",
@@ -37,14 +38,18 @@
 ```
 - add new Json object 
 
-### Read: Get http://localhost:9000/nice2/test      
+### Read: Get 
+```
+http://localhost:9000/nice2/test
+```      
 - get all Json Data
 
-### Update: Put http://localhost:9000/nice2/test/3
- - http://localhost:9000/nice2/test/:id
+### Update: Put 
  - update Json object(id == 3)
 ```
-///Body
+// http://localhost:9000/nice2/test/:id
+// http://localhost:9000/nice2/test/3
+// Body
     {
         "id": "3",
         "name": "hello",
@@ -53,8 +58,11 @@
 ```    
 - update Json object
 
-### Delete: Delete http://localhost:9000/nice2/test/3      
-- http://localhost:9000/nice2/test/:id
+### Delete: Delete 
+```
+// http://localhost:9000/nice2/test/:id
+// http://localhost:9000/nice2/test/3      
+```
 - delete Json object(id == 3)  
 
 ### DownLoad
