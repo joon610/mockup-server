@@ -9,7 +9,7 @@
 2. make Json files, index.json(successe case),error.json(error case).
 3. Mockup Server start! 
 
-## CRUD (Create, Read, Update ,Delete) 기능 추가 v0.2.0부터
+## CRUD (Create, Read, Update ,Delete)
 ```
 // index.json
 [
