@@ -2,7 +2,7 @@
 
 ![mock-manual](https://github.com/joon610/readMEImg/blob/master/mock-server/mock-manual.gif)
 
-## 사용방법
+## How to use
 <img src="https://joon610.github.io/assets/images/mockupServer/graph.png" alt="graph">
 
 1. created directory.
