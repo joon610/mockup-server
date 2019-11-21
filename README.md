@@ -3,8 +3,8 @@
 ![mock-manual](https://github.com/joon610/readMEImg/blob/master/mock-server/mock-manual.gif)
 
 ## How to use
-한국어 : <https://joon610.github.io/sideproject/MockUp-Server>
-
+한국어 : <https://joon610.github.io/sideproject/MockUp-Server> <br>
+日本語 : <https://qiita.com/joon610/items/f5aae93815b536a3f56b>
 <img src="https://joon610.github.io/assets/images/mockupServer/graph.png" alt="graph">
 
 1. created directory.
