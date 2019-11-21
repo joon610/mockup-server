@@ -3,6 +3,8 @@
 ![mock-manual](https://github.com/joon610/readMEImg/blob/master/mock-server/mock-manual.gif)
 
 ## How to use
+한국어 : <https://joon610.github.io/sideproject/MockUp-Server>
+
 <img src="https://joon610.github.io/assets/images/mockupServer/graph.png" alt="graph">
 
 1. created directory.
@@ -26,10 +28,9 @@
 ]
 ```
 
-### Create: post       
+### Create: post http://localhost:9000/nice2/test/      
 ```
-// http://localhost:9000/nice2/test/
-// Body
+///Body
     {
         "id": "3",
         "name": "joon",
@@ -38,18 +39,14 @@
 ```
 - add new Json object 
 
-### Read: Get 
-```
-http://localhost:9000/nice2/test
-```      
+### Read: Get http://localhost:9000/nice2/test      
 - get all Json Data
 
-### Update: Put 
+### Update: Put http://localhost:9000/nice2/test/3
+ - http://localhost:9000/nice2/test/:id
  - update Json object(id == 3)
 ```
-// http://localhost:9000/nice2/test/:id
-// http://localhost:9000/nice2/test/3
-// Body
+///Body
     {
         "id": "3",
         "name": "hello",
@@ -58,11 +55,8 @@ http://localhost:9000/nice2/test
 ```    
 - update Json object
 
-### Delete: Delete 
-```
- http://localhost:9000/nice2/test/3      
- http://localhost:9000/nice2/test/:id
-```
+### Delete: Delete http://localhost:9000/nice2/test/3      
+- http://localhost:9000/nice2/test/:id
 - delete Json object(id == 3)  
 
 ### DownLoad
