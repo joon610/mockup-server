@@ -12,11 +12,11 @@
 3. Mockup Server start! 
 
 ## CRUD (Create, Read, Update ,Delete)
-```
+``` Json
 // index.json
 [
   {
-        "id": "1",
+        "id": "1",   // id is key
         "name": "Sara",
         "age": "13"
     },
@@ -28,47 +28,33 @@
 ]
 ```
 
-### Create: post http://localhost:9000/nice2/test/      
-```
-///Body
-    {
-        "id": "3",
-        "name": "joon",
-        "age": "19"
-    } 
-```
-- add new Json object 
+## PostMan Test
+### Create (POST)    
+<img src="https://joon610.github.io/assets/images/mockupServer/post.png" alt="post">
 
-### Read: Get http://localhost:9000/nice2/test      
-- get all Json Data
 
-### Update: Put http://localhost:9000/nice2/test/3
- - http://localhost:9000/nice2/test/:id
- - update Json object(id == 3)
-```
-///Body
-    {
-        "id": "3",
-        "name": "hello",
-        "age": "19"
-    } 
-```    
-- update Json object
+### Read (GET)
+<img src="https://joon610.github.io/assets/images/mockupServer/get_all.png" alt="get_all">
+<img src="https://joon610.github.io/assets/images/mockupServer/get_1.png" alt="get_1">
 
-### Delete: Delete http://localhost:9000/nice2/test/3      
-- http://localhost:9000/nice2/test/:id
-- delete Json object(id == 3)  
+### Update
+<img src="https://joon610.github.io/assets/images/mockupServer/put.png" alt="put">
+
+### Delete
+<img src="https://joon610.github.io/assets/images/mockupServer/delete.png" alt="delete">
 
 ### DownLoad
 - Mac : 
   - <https://github.com/joon610/mockup-server/releases/download/v0.2.0/mock-server-0.2.0.dmg>
 
-- Window :
+- Windows :
   - <https://github.com/joon610/mockup-server/releases/download/v0.2.0/mock-server.Setup.0.2.0.exe>
 
 ## TodoList 
 - [ ] mockup-server icon
 - [ ] Dynamic key name
+- [ ] can post duplicate key [bug]
+- [ ] doesn't remove JSON object after close server. [bug]
 
 ## License
 
