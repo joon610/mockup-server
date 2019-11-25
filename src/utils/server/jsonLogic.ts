@@ -2,7 +2,12 @@ import { ApiInfo } from '@/const/mockType';
 
 export default class JsonLogic {
     public postData(req: any, restful: ApiInfo): object {
-        restful.index.push(req.body);
+        const bodyKey = req.body['id'];
+        const hasKey = restful.index.reduce((hasKey: boolean, key: any) => {
+            if (hasKey) return true;
+            return String(bodyKey) === String(key.id) ? true : false;
+        }, false);
+        hasKey ? restful.index : restful.index.push(req.body);
         return restful.index;
     }
 

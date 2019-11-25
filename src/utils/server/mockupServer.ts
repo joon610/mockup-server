@@ -46,6 +46,7 @@ export default class MockupServer {
         });
         delete this.server;
         this.restfullList = [];
+        this.self.$store.commit('apiInfoList', []);
         return false;
     }
 
@@ -57,9 +58,9 @@ export default class MockupServer {
     }
 
     private generateAPI(): void {
-        this.restfullList.forEach((restful: ApiInfo, cnt: number) => {
+        this.self.$store.state.apiInfoList.forEach((restful: ApiInfo, cnt: number) => {
             try {
-                this.getApi(restful);
+                this.getApi(restful,cnt);
                 this.postApi(restful, cnt);
                 this.deleteApi(restful, cnt);
                 this.putApi(restful, cnt);
@@ -77,7 +78,7 @@ export default class MockupServer {
                 restful.status === 'success'
                     ? this.jsonLogic.postData(req, restful)
                     : restful.error;
-            this.restfullList[cnt].index = result;
+            this.self.$store.state.apiInfoList[cnt].index = result;
             res.send(result);
         });
     }
@@ -110,9 +111,9 @@ export default class MockupServer {
         );
     }
 
-    private getApi(restful: ApiInfo): void {
+    private getApi(restful: ApiInfo,cnt:number): void {
         app.get(restful.api, (req: any, res: any) => {
-            const result = this.jsonLogic.getJson(restful);
+            const result = this.jsonLogic.getJson(this.self.$store.state.apiInfoList[cnt]);
             res.send(result);
         });
 

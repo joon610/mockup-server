@@ -53,8 +53,8 @@
 ## TodoList 
 - [ ] mockup-server icon
 - [ ] Dynamic key name
-- [ ] can post duplicate key [bug]
-- [ ] doesn't remove JSON object after close server. [bug]
+- [X] can post duplicate key [bug0001]
+- [X] doesn't remove JSON object after close server. [bug0002]
 
 ## License
 
