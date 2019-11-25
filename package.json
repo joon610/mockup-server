@@ -1,11 +1,12 @@
 {
-  "name": "mock-server",
+  "name": "mockup-server",
   "version": "0.2.1",
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "eslint --ext .vue,.ts src",
     "dev:vue": "vue-cli-service serve",
+    "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
     "dev": "yarn vue-cli-service electron:serve ",
     "build:electron": "yarn vue-cli-service electron:build",
     "build:all": "yarn vue-cli-service electron:build --mac --win"
@@ -33,6 +34,7 @@
     "@vue/cli-service": "^3.12.1",
     "electron": "^6.1.4",
     "electron-builder": "^21.2.0",
+    "electron-icon-builder": "^1.0.1",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.5.0",

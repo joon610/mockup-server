@@ -1,5 +1,4 @@
 'use strict';
-
 import { app, protocol, BrowserWindow } from 'electron';
 import {
     createProtocol,
@@ -9,7 +8,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win: BrowserWindow | null;
-
+import path from 'path';
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
     { scheme: 'app', privileges: { secure: true, standard: true } },
@@ -28,6 +27,16 @@ function createWindow(): void {
         webPreferences: {
             nodeIntegration: true,
         },
+    });
+
+    win = new BrowserWindow({
+        resizable: true,
+        width: appWidth,
+        height: 600,
+        webPreferences: {
+            nodeIntegration: true,
+        },
+        icon: path.join(__dirname, 'icon.png'),
     });
     win.setMenuBarVisibility(false);
 

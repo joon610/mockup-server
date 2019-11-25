@@ -51,7 +51,7 @@
   - <https://github.com/joon610/mockup-server/releases/download/v0.2.0/mock-server.Setup.0.2.0.exe>
 
 ## TodoList 
-- [ ] mockup-server icon
+- [x] mockup-server icon
 - [ ] Dynamic key name
 - [X] can post duplicate key [bug0001]
 - [X] doesn't remove JSON object after close server. [bug0002]
