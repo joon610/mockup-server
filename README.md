@@ -53,11 +53,10 @@
 ## TodoList 
 - [x] mockup-server icon
 - [ ] Dynamic key name
-- [X] can post duplicate key [bug0001]
-- [X] doesn't remove JSON object after close server. [bug0002]
+- [X] added same key data in POST [bug0001]
+- [X] couldn't initialize Json object after reconnect server [bug0002]
 
 ## License
-
 MIT License
 
 ## Project setupø
