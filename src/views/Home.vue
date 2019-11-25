@@ -69,6 +69,7 @@ export default class MockServer extends Vue {
   private async closeServer(): Promise<void> {
     this.isServerOn = await this.server!.close();
     this.server = undefined;
+    this.makeFileTree();
   }
 }
 </script>

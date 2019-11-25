@@ -45,7 +45,6 @@ export default class MockupServer {
             console.log('Closed out remaining connections');
         });
         delete this.server;
-        this.restfullList = [];
         this.self.$store.commit('apiInfoList', []);
         return false;
     }

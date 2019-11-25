@@ -33,6 +33,9 @@ export default class JsonLogic {
     }
 
     public getJson(restful: ApiInfo): object {
+        if (!restful) {
+            return { status: 'disconnect server' };
+        }
         return restful.status === 'success' ? restful.index : restful.error;
     }
 
