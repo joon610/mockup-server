@@ -53,8 +53,8 @@
 ## TodoList 
 - [x] mockup-server icon
 - [ ] Dynamic key name
-- [X] added same key data in POST [bug0001]
-- [X] couldn't initialize Json object after reconnect server [bug0002]
+- [X] occur duplicate Key Data in POST[bug0001]
+- [X] Json files doesnot initialized after reconnecting to server [bug0002]
 
 ## License
 MIT License
