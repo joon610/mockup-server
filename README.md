@@ -55,6 +55,7 @@
 - [ ] Dynamic key name
 - [X] occur duplicate Key Data in POST[bug0001]
 - [X] Json files doesnot initialized after reconnecting to server [bug0002]
+- [ ] change Select Root Button Start Server Button position Window[bug0003]
 
 ## License
 MIT License
