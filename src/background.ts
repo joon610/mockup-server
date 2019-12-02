@@ -27,15 +27,6 @@ function createWindow(): void {
         webPreferences: {
             nodeIntegration: true,
         },
-    });
-
-    win = new BrowserWindow({
-        resizable: true,
-        width: appWidth,
-        height: 600,
-        webPreferences: {
-            nodeIntegration: true,
-        },
         icon: path.join(__dirname, 'icon.png'),
     });
     win.setMenuBarVisibility(false);
