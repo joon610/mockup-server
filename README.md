@@ -45,10 +45,10 @@
 
 ### DownLoad
 - Mac : 
-  - <https://github.com/joon610/mockup-server/releases/download/v0.2.1/mock-server-0.2.1.dmg>
+  - <https://github.com/joon610/mockup-server/releases/download/v0.2.1/mockup-server-0.2.1.dmg>
 
 - Windows :
-  - <https://github.com/joon610/mockup-server/releases/download/v0.2.1/mock-server.Setup.0.2.1.exe>
+  - <https://github.com/joon610/mockup-server/releases/download/v0.2.1/mockup-server.Setup.0.2.1.exe>
 
 ## TodoList 
 - [x] mockup-server icon
