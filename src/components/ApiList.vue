@@ -114,7 +114,7 @@ button {
   float: left;
   line-height: 50px;
   text-align: left;
-  margin-left: 20px;
+  margin-left: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
