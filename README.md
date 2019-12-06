@@ -52,6 +52,7 @@
 
 ## TodoList 
 - [ ] allow cross origin option
+- [ ] add header and cookie
 - [ ] Dynamic key name 
 - [x] mockup-server icon
 - [X] occur duplicate Key Data in POST[bug0001]
