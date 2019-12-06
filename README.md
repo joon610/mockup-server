@@ -54,6 +54,7 @@
 - [ ] allow cross origin option
 - [ ] add header and cookie
 - [ ] Dynamic key name 
+- [ ] Each api description
 - [x] mockup-server icon
 - [X] occur duplicate Key Data in POST[bug0001]
 - [X] Json files doesnot initialized after reconnecting to server [bug0002]
