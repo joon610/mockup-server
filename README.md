@@ -15,13 +15,13 @@
 <img src="https://joon610.github.io/assets/images/mockupServer/graph.png" alt="graph">
 
 1. created directory.
-2. make Json files, index.json(successe case),error.json(error case),Header.json(api Header, set Cookie)
+2. make Json files, index.json(successe case),error.json(error case),header.json(api Header, set Cookie)
 3. Mockup Server start! 
 
 
 ## <a id="headerSetting"></a> Set Header and Cookies  (header.Json)
 ```js
-{  //example header.json
+{  //example add header.json in your directory
     "header": {
         "Content-Type": "application/json; charset=utf-8"
     },
