@@ -2,16 +2,45 @@
 
 ![mock-manual](https://github.com/joon610/readMEImg/blob/master/mock-server/mock-manual.gif)
 
-## How to use
-한국어 : <https://joon610.github.io/sideproject/MockUp-Server> <br>
-日本語 : <https://qiita.com/joon610/items/f5aae93815b536a3f56b>
+## translate
+한국어 : <https://joon610.github.io/sideproject/MockUp-Server> v0.2.3<br> 
+日本語 : <https://qiita.com/joon610/items/f5aae93815b536a3f56b> v.2.3
+
+## Usage
+- [Initialize Setting`](#initialize)   
+- [`Header Cookies Setting`](#headerSetting)    
+- [`CRUD`](#crud)   
+
+## <a id="initialize"></a> initialize Setting
 <img src="https://joon610.github.io/assets/images/mockupServer/graph.png" alt="graph">
 
 1. created directory.
-2. make Json files, index.json(successe case),error.json(error case).
+2. make Json files, index.json(successe case),error.json(error case),Header.json(api Header, set Cookie)
 3. Mockup Server start! 
 
-## CRUD (Create, Read, Update ,Delete)
+
+## <a id="headerSetting"></a> Custom Header and Cookies  (header.Json)
+```js
+{  //example header.json
+    "header": {
+        "Content-Type": "application/json; charset=utf-8"
+    },
+    "cookies": [
+        {
+            "name": "fff",
+            "value": "cookieValue",
+            "options": {
+                "maxAge": 30000
+            }
+        },
+        {
+            ...
+        }
+    ]
+}
+```
+
+## <a id="crud"></a>CRUD (Create, Read, Update ,Delete)
 ``` Json
 // index.json
 [
@@ -28,7 +57,6 @@
 ]
 ```
 
-## PostMan Test
 ### Create (POST)    
 <img src="https://joon610.github.io/assets/images/mockupServer/post.png" alt="post">
 
@@ -51,15 +79,11 @@
   - <https://github.com/joon610/mockup-server/releases/download/v0.2.1/mockup-server.Setup.0.2.1.exe>
 
 ## TodoList 
-- [ ] allow cross origin option
-- [ ] add header and cookie
+- [X] allow cross origin option
+- [X] add header and cookie  
 - [ ] Dynamic key name 
 - [ ] Each api description
-- [x] mockup-server icon
-- [X] occur duplicate Key Data in POST[bug0001]
-- [X] Json files doesnot initialized after reconnecting to server [bug0002]
-- [x] [Select Root Button] [Start Server Button] changes position in some Window PC[bug0003]
-- [X] Open one more Window [bug0004]
+
 ## License
 MIT License
 
