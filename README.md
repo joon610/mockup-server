@@ -2,13 +2,13 @@
 
 ![mock-manual](https://github.com/joon610/readMEImg/blob/master/mock-server/mock-manual.gif)
 
-## translate
-한국어 : <https://joon610.github.io/sideproject/MockUp-Server> v0.2.3<br> 
-日本語 : <https://qiita.com/joon610/items/f5aae93815b536a3f56b> v.2.3
+## Translate
+한국어 : <https://joon610.github.io/sideproject/MockUp-Server> <br> 
+日本語 : <https://qiita.com/joon610/items/f5aae93815b536a3f56b>
 
 ## Usage
-- [Initialize Setting`](#initialize)   
-- [`Header Cookies Setting`](#headerSetting)    
+- [`Initialize Setting`](#initialize)   
+- [`set Header and Cookies`](#headerSetting)    
 - [`CRUD`](#crud)   
 
 ## <a id="initialize"></a> initialize Setting
@@ -19,7 +19,7 @@
 3. Mockup Server start! 
 
 
-## <a id="headerSetting"></a> Custom Header and Cookies  (header.Json)
+## <a id="headerSetting"></a> Set Header and Cookies  (header.Json)
 ```js
 {  //example header.json
     "header": {
