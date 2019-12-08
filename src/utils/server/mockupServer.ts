@@ -2,26 +2,27 @@ import express from 'express';
 import { ApiInfo } from '@/const/mockType';
 import bodyParser from 'body-parser';
 import JsonLogic from './jsonLogic';
+import cors from 'cors';
 const app = express();
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 export default class MockupServer {
-    private readonly DYNAMIC_PARAM: string = 'id';
+    private readonly DYNAMIC_API_ID: string = 'id';
 
     private server: any;
 
-    private port!: string;
+    private port: string = '';
 
-    private restfullList!: ApiInfo[];
+    private restfullList: ApiInfo[] = [];
 
-    private jsonLogic!: JsonLogic;
+    private jsonLogic: JsonLogic = new JsonLogic();
 
     private self: any;
 
     public constructor(vueComponent: any, serverPort: string) {
         this.port = serverPort;
-        this.jsonLogic = new JsonLogic();
         this.self = vueComponent;
         this.restfullList = this.self.$store.state.apiInfoList;
     }
@@ -30,9 +31,13 @@ export default class MockupServer {
         if (!this.isValidateStart) {
             return false;
         }
+
         this.server = app.listen(this.port, () => {
             console.log(`server started at http://localhost:${this.port}`);
         });
+
+
+        console.log('Date.now() :', Date.now());
         this.generateAPI();
         return true;
     }
@@ -44,6 +49,7 @@ export default class MockupServer {
         this.server.close(() => {
             console.log('Closed out remaining connections');
         });
+
         delete this.server;
         this.self.$store.commit('apiInfoList', []);
         return false;
@@ -57,18 +63,20 @@ export default class MockupServer {
     }
 
     private generateAPI(): void {
-        this.self.$store.state.apiInfoList.forEach((restful: ApiInfo, cnt: number) => {
-            try {
-                this.getApi(restful,cnt);
-                this.postApi(restful, cnt);
-                this.deleteApi(restful, cnt);
-                this.putApi(restful, cnt);
-            } catch (err) {
-                app.get(restful.api, (req: any, res: any) => {
-                    res.send(err);
-                });
-            }
-        });
+        this.self.$store.state.apiInfoList.forEach(
+            (restful: ApiInfo, cnt: number) => {
+                try {
+                    this.getApi(restful, cnt);
+                    this.postApi(restful, cnt);
+                    this.deleteApi(restful, cnt);
+                    this.putApi(restful, cnt);
+                } catch (err) {
+                    app.get(restful.api, (req: any, res: any) => {
+                        res.send(err);
+                    });
+                }
+            },
+        );
     }
 
     private postApi(restful: ApiInfo, cnt: number): void {
@@ -84,10 +92,10 @@ export default class MockupServer {
 
     private deleteApi(restful: ApiInfo, cnt: number): void {
         app.delete(
-            restful.api + '/:' + this.DYNAMIC_PARAM,
+            restful.api + '/:' + this.DYNAMIC_API_ID,
             (req: any, res: any) => {
                 const result = this.jsonLogic.getJson(restful);
-                const data = req.params.hasOwnProperty(this.DYNAMIC_PARAM)
+                const data = req.params.hasOwnProperty(this.DYNAMIC_API_ID)
                     ? this.jsonLogic.deleteData(result, req.params)
                     : result;
                 this.restfullList[cnt].index = data;
@@ -98,10 +106,10 @@ export default class MockupServer {
 
     private putApi(restful: ApiInfo, cnt: number): void {
         app.put(
-            restful.api + '/:' + this.DYNAMIC_PARAM,
+            restful.api + '/:' + this.DYNAMIC_API_ID,
             (req: any, res: any) => {
                 const result = this.jsonLogic.getJson(restful);
-                const data = req.params.hasOwnProperty(this.DYNAMIC_PARAM)
+                const data = req.params.hasOwnProperty(this.DYNAMIC_API_ID)
                     ? this.jsonLogic.putData(result, req)
                     : result;
                 this.restfullList[cnt].index = data;
@@ -110,17 +118,25 @@ export default class MockupServer {
         );
     }
 
-    private getApi(restful: ApiInfo,cnt:number): void {
+    private getApi(restful: ApiInfo, cnt: number): void {
         app.get(restful.api, (req: any, res: any) => {
-            const result = this.jsonLogic.getJson(this.self.$store.state.apiInfoList[cnt]);
+            const result = this.jsonLogic.getJson(
+                this.self.$store.state.apiInfoList[cnt],
+            );
+            console.log('result :', result);
+            if (restful?.cookies !== undefined ) {
+                restful.cookies.forEach(cookie => {
+                    res.cookie(cookie?.name, cookie?.value, cookie?.options);
+                });
+            }
             res.send(result);
         });
 
         app.get(
-            restful.api + '/:' + this.DYNAMIC_PARAM,
+            restful.api + '/:' + this.DYNAMIC_API_ID,
             (req: any, res: any) => {
                 const result = this.jsonLogic.getJson(restful);
-                const data = req.params.hasOwnProperty(this.DYNAMIC_PARAM)
+                const data = req.params.hasOwnProperty(this.DYNAMIC_API_ID)
                     ? this.jsonLogic.selectData(result, req.params)
                     : result;
                 res.send(data);

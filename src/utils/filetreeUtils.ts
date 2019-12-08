@@ -1,15 +1,20 @@
 import { ApiInfo } from '@/const/mockType';
-import { INDEX_DIR, ERROR_DIR } from '@/const/mockConst';
+import { INDEX_DIR, ERROR_DIR, HEADER_DIR } from '@/const/mockConst';
 
 const { remote } = window.require('electron');
 const fs = remote.require('fs');
+
+interface headObject {
+    header:Object;
+    cookies: Array<any>
+}
 
 export default class FiletreeUtils {
     private static instance: FiletreeUtils;
 
     private checkEndDirectory: string[] = [];
 
-    private dirEndPoint: string[] = [];
+    private dirPathList: string[] = [];
 
     private rootPath!: string;
 
@@ -23,7 +28,7 @@ export default class FiletreeUtils {
     }
 
     public build(path: string): void {
-        this.dirEndPoint = [];
+        this.dirPathList = [];
         this.rootPath = path;
         this.generateDirList(this.rootPath);
         this.apiList = this.makeApiList();
@@ -38,27 +43,34 @@ export default class FiletreeUtils {
     }
 
     private makeApiList(): ApiInfo[] {
-        const apiList = this.dirEndPoint.map((value: string) => {
+        const apiList = this.dirPathList.map((value: string) => {
             const api = value.replace(this.rootPath, '');
             const apiInfo = new ApiInfo();
             const indexPath = this.rootPath + api + INDEX_DIR;
             const errorPath = this.rootPath + api + ERROR_DIR;
+            const headerPath = this.rootPath + api + HEADER_DIR;
+            const headerInfo = this.readJson(headerPath);
+            const indexInfo = this.readJson(indexPath)
+            const errorInfo = this.readJson(errorPath);
+            console.log('headerPath :', headerPath);
+            console.log('headerInfo :', headerInfo?.header);
+            console.log('headerInfo :', headerInfo?.cookies);
             apiInfo.api = api;
-            apiInfo.index = this.readJson(indexPath);
-            apiInfo.error =
-                this.readJson(errorPath) === undefined
-                    ? errorPath
-                    : this.readJson(errorPath);
+            apiInfo.index = indexInfo;
+            apiInfo.error = errorInfo
             apiInfo.isFail = apiInfo.index === undefined;
+            apiInfo.header = headerInfo?.header;
+            apiInfo.cookies = headerInfo?.cookies;
+
             return apiInfo;
         });
+        console.log('apiList :', apiList);
         return apiList;
     }
 
-    private readJson(indexPath: string): object | undefined {
+    private readJson(indexPath: string) {
         try {
             const readJson = JSON.parse(fs.readFileSync(indexPath));
-            // const result = readJson['data'] ? readJson['data'] : readJson;
             return readJson;
         } catch {
             return undefined;
@@ -66,7 +78,7 @@ export default class FiletreeUtils {
     }
 
     private generateDone(): string[] {
-        return this.dirEndPoint;
+        return this.dirPathList;
     }
 
     private generateDirList(paths = ''): string[] | void {
@@ -92,9 +104,9 @@ export default class FiletreeUtils {
 
     private addEndPointDir(path: string): void {
         if (fs.existsSync(path + INDEX_DIR)) {
-            this.dirEndPoint.unshift(path);
+            this.dirPathList.unshift(path);
         } else {
-            this.dirEndPoint.push(path);
+            this.dirPathList.push(path);
         }
     }
 
