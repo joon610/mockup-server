@@ -9,6 +9,7 @@
             v-radio-group.radio-group(v-model="$store.getters.apiInfoList[index].status" row :disabled="rest.isFail || isServerOn")
               v-radio.radio-style(label="sucsses" color="green" value="success")
               v-radio.radio-style(label="error" color="red" value="error")   
+            span.tooltiptext(v-if="rest.description !== undefined ") {{ rest.description }}
 </template>
 
 <script lang="ts">
@@ -26,6 +27,7 @@ const shell = require("electron").shell;
 @Component
 export default class ApiList extends Vue {
   private get hasApiList(): boolean {
+    console.log("object :", this.$store.getters.apiInfoList);
     return this.$store.getters.apiInfoList.length === 0 ? true : false;
   }
 
@@ -92,6 +94,9 @@ button {
 }
 
 .api-container {
+  position: relative;
+  display: inline-block;
+
   background-color: #424242;
   border-radius: 5px;
   margin-bottom: 5px;
@@ -104,6 +109,38 @@ button {
 .api-container:hover {
   background-color: rgb(90, 90, 90);
   cursor: default;
+}
+
+.api-container:hover .tooltiptext {
+  visibility: visible;
+}
+
+.api-container span:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  margin-left: -8px;
+  width: 0;
+  height: 0;
+  border-bottom: 8px solid #000000;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+
+.api-container .tooltiptext {
+  visibility: hidden;
+  width: 450px;
+  height: fit-content;
+  background-color: black;
+  color: white;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  top: 45px;
+  opacity: 0.9;
+  text-align: left;
+  padding: 10px;
 }
 
 .api-list-container {
