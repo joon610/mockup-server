@@ -69,17 +69,18 @@
 ```
 
 ### Create (POST)    
-<img src="https://joon610.github.io/assets/images/mockupServer/post.png" alt="post">
+<img src="https://joon610.github.io/assets/images/mockupServer/post.png" width="500" height="500" alt="post">
 
 ### Read (GET)
-<img src="https://joon610.github.io/assets/images/mockupServer/get_all.png" alt="get_all">
-<img src="https://joon610.github.io/assets/images/mockupServer/get_1.png" alt="get_1">
+<img src="https://joon610.github.io/assets/images/mockupServer/get_all.png" width="500" height="500" alt="get_all">
+<img src="https://joon610.github.io/assets/images/mockupServer/get_1.png" width="500" height="500" alt="get_1">
+
 
 ### Update
-<img src="https://joon610.github.io/assets/images/mockupServer/put.png" alt="put">
+<img src="https://joon610.github.io/assets/images/mockupServer/put.png" width="500" height="500" alt="put">
 
 ### Delete
-<img src="https://joon610.github.io/assets/images/mockupServer/delete.png" alt="delete">
+<img src="https://joon610.github.io/assets/images/mockupServer/delete.png" width="500" height="500" alt="delete">
 
 ### DownLoad
 - Mac, Windows : 
