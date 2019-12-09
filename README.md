@@ -44,10 +44,10 @@
     "description": "this API is holy shit"
 }
 ```
-## Set Cookies
+#### Set Cookies
 <img src="https://joon610.github.io/assets/images/mockupServer/headerSetting.png" alt="headerSetting">
 
-## API Description tooltip
+#### API Description tooltip
 <img src="https://joon610.github.io/assets/images/mockupServer/tooltip.png" width="300" height="300" alt="tooltip">
 
 
