@@ -44,8 +44,12 @@
     "description": "this API is holy shit"
 }
 ```
+- set Header
 <img src="https://joon610.github.io/assets/images/mockupServer/headerSetting.png" alt="headerSetting">
-<img src="https://joon610.github.io/assets/images/mockupServer/tooltip.png" alt="tooltip">
+- api description tooltip
+
+![tooltip](https://joon610.github.io/assets/images/mockupServer/tooltip.png){: width="300" height="300"}
+
 
 
 ## <a id="crud"></a>CRUD (Create, Read, Update ,Delete)
@@ -86,6 +90,7 @@
 ## TodoList 
 - [X] allow cross origin option
 - [X] add header and cookie  
+- [x] Api Description
 - [ ] Dynamic key name 
 - [ ] Each api description
 
