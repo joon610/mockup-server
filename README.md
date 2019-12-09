@@ -48,8 +48,7 @@
 <img src="https://joon610.github.io/assets/images/mockupServer/headerSetting.png" alt="headerSetting">
 - api description tooltip
 
-![tooltip](https://joon610.github.io/assets/images/mockupServer/tooltip.png){: width="300" height="300"}
-
+<img src="https://joon610.github.io/assets/images/mockupServer/tooltip.png" width="300" height="300" alt="tooltip">
 
 
 ## <a id="crud"></a>CRUD (Create, Read, Update ,Delete)
