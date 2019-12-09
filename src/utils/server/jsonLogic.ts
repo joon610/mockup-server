@@ -3,11 +3,15 @@ import { ApiInfo } from '@/const/mockType';
 export default class JsonLogic {
     public postData(req: any, restful: ApiInfo): object {
         const bodyKey = req.body['id'];
-        const hasKey = restful.index.reduce((hasKey: boolean, key: any) => {
-            if (hasKey) return true;
-            return String(bodyKey) === String(key.id) ? true : false;
-        }, false);
-        hasKey ? restful.index : restful.index.push(req.body);
+
+        if (this.isArray(restful.index)) {
+            const hasKey = restful.index.reduce((hasKey: boolean, key: any) => {
+                if (hasKey) return true;
+                return String(bodyKey) === String(key.id) ? true : false;
+            }, false);
+            hasKey ? restful.index : restful.index.push(req.body);
+            return restful.index;
+        }
         return restful.index;
     }
 
@@ -50,5 +54,9 @@ export default class JsonLogic {
             object[key] = target[key];
         });
         return object;
+    }
+
+    private isArray(obj: any) {
+        return Object.prototype.toString.call(obj) === '[object Array]';
     }
 }
