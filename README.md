@@ -56,7 +56,7 @@
 // index.json
 [
   {
-        "id": "1",   // id is key
+        "id": "1", 
         "name": "Sara",
         "age": "13"
     },
