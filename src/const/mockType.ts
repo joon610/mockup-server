@@ -12,4 +12,6 @@ export class ApiInfo {
     public header: object | undefined = undefined;
 
     public cookies: Array<any> | undefined = undefined;
+
+    public description: string = '';
 }

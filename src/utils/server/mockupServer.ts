@@ -36,8 +36,6 @@ export default class MockupServer {
             console.log(`server started at http://localhost:${this.port}`);
         });
 
-
-        console.log('Date.now() :', Date.now());
         this.generateAPI();
         return true;
     }
@@ -86,6 +84,7 @@ export default class MockupServer {
                     ? this.jsonLogic.postData(req, restful)
                     : restful.error;
             this.self.$store.state.apiInfoList[cnt].index = result;
+            this.setHeader(res, restful);
             res.send(result);
         });
     }
@@ -99,6 +98,7 @@ export default class MockupServer {
                     ? this.jsonLogic.deleteData(result, req.params)
                     : result;
                 this.restfullList[cnt].index = data;
+                this.setHeader(res, restful);
                 res.send(data);
             },
         );
@@ -113,6 +113,7 @@ export default class MockupServer {
                     ? this.jsonLogic.putData(result, req)
                     : result;
                 this.restfullList[cnt].index = data;
+                this.setHeader(res, restful);
                 res.send(data);
             },
         );
@@ -123,12 +124,8 @@ export default class MockupServer {
             const result = this.jsonLogic.getJson(
                 this.self.$store.state.apiInfoList[cnt],
             );
-            console.log('result :', result);
-            if (restful?.cookies !== undefined ) {
-                restful.cookies.forEach(cookie => {
-                    res.cookie(cookie?.name, cookie?.value, cookie?.options);
-                });
-            }
+
+            this.setHeader(res, restful);
             res.send(result);
         });
 
@@ -139,8 +136,22 @@ export default class MockupServer {
                 const data = req.params.hasOwnProperty(this.DYNAMIC_API_ID)
                     ? this.jsonLogic.selectData(result, req.params)
                     : result;
+
+                this.setHeader(res, restful);
                 res.send(data);
             },
         );
+    }
+
+    private setHeader(res: any, restful: any) {
+        res.set(restful.header)
+        if (restful?.cookies) {
+            restful?.cookies.forEach((cookie: any, idx: number) => {
+                const key = Object.keys(cookie)[0];
+                const name = cookie[key];
+                res.cookie(key, name, cookie.options);
+            });
+        }
+        return;
     }
 }

@@ -1,7 +1,7 @@
 export const STANDARD_PORT = '9000';
-export const INDEX_DIR = '/index.json';
-export const ERROR_DIR = '/error.json';
-export const HEADER_DIR = '/header.json';
+export const INDEX_JSON = '/index.json';
+export const ERROR_JSON = '/error.json';
+export const SETTING_JSON = '/setting.json';
 export const LOCAL_HOST = 'http://localhost:';
 
 export const COLOR_PALLET = {

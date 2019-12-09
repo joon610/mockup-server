@@ -1,5 +1,5 @@
 import { ApiInfo } from '@/const/mockType';
-import { INDEX_DIR, ERROR_DIR, HEADER_DIR } from '@/const/mockConst';
+import { INDEX_JSON, ERROR_JSON, SETTING_JSON } from '@/const/mockConst';
 
 const { remote } = window.require('electron');
 const fs = remote.require('fs');
@@ -45,26 +45,26 @@ export default class FiletreeUtils {
     private makeApiList(): ApiInfo[] {
         const apiList = this.dirPathList.map((value: string) => {
             const api = value.replace(this.rootPath, '');
+            
+            const indexPath = this.rootPath + api + INDEX_JSON;
+            const errorPath = this.rootPath + api + ERROR_JSON;
+            const settingPath = this.rootPath + api + SETTING_JSON;
+
+            const settingInfo = this.readJson(settingPath);
+            const indexJson = this.readJson(indexPath)
+            const errorJson = this.readJson(errorPath);
+
             const apiInfo = new ApiInfo();
-            const indexPath = this.rootPath + api + INDEX_DIR;
-            const errorPath = this.rootPath + api + ERROR_DIR;
-            const headerPath = this.rootPath + api + HEADER_DIR;
-            const headerInfo = this.readJson(headerPath);
-            const indexInfo = this.readJson(indexPath)
-            const errorInfo = this.readJson(errorPath);
-            console.log('headerPath :', headerPath);
-            console.log('headerInfo :', headerInfo?.header);
-            console.log('headerInfo :', headerInfo?.cookies);
             apiInfo.api = api;
-            apiInfo.index = indexInfo;
-            apiInfo.error = errorInfo
+            apiInfo.index = indexJson;
+            apiInfo.error = errorJson
             apiInfo.isFail = apiInfo.index === undefined;
-            apiInfo.header = headerInfo?.header;
-            apiInfo.cookies = headerInfo?.cookies;
+            apiInfo.header = settingInfo?.header;
+            apiInfo.cookies = settingInfo?.cookies;
+            apiInfo.description = settingInfo?.description;
 
             return apiInfo;
         });
-        console.log('apiList :', apiList);
         return apiList;
     }
 
@@ -103,7 +103,7 @@ export default class FiletreeUtils {
     }
 
     private addEndPointDir(path: string): void {
-        if (fs.existsSync(path + INDEX_DIR)) {
+        if (fs.existsSync(path + INDEX_JSON)) {
             this.dirPathList.unshift(path);
         } else {
             this.dirPathList.push(path);
