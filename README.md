@@ -7,38 +7,46 @@
 日本語 : <https://qiita.com/joon610/items/f5aae93815b536a3f56b>
 
 ## Usage
-- [`Initialize Setting`](#initialize)   
-- [`set Header and Cookies`](#headerSetting)    
+- [`Initialize`](#initialize)
+- [`setting Json`](#settingJson)    
 - [`CRUD`](#crud)   
 
 ## <a id="initialize"></a> initialize Setting
 <img src="https://joon610.github.io/assets/images/mockupServer/graph.png" alt="graph">
 
 1. created directory.
-2. make Json files, index.json(successe case),error.json(error case),header.json(api Header, set Cookie)
+2. make Json files, index.json(successe case),error.json(error case),setting.json(header, cookie, api description)
 3. Mockup Server start! 
 
 
-## <a id="headerSetting"></a> Set Header and Cookies  (header.Json)
+## <a id="settingJson"></a> Set Header and Cookies  (header.Json)
 ```js
-{  //example add header.json in your directory
+{
     "header": {
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "123",
+        "ETag": "12345"
     },
     "cookies": [
         {
-            "name": "fff",
-            "value": "cookieValue",
+            "cookiekey": "cookieName",
             "options": {
                 "maxAge": 30000
             }
         },
         {
-            ...
+            "hello": "hi",
+            "options": {
+                "maxAge": 10000
+            }
         }
-    ]
+    ],
+    "description": "this API is holy shit"
 }
 ```
+<img src="https://joon610.github.io/assets/images/mockupServer/headerSetting.png" alt="headerSetting">
+<img src="https://joon610.github.io/assets/images/mockupServer/tooltip.png" alt="tooltip">
+
 
 ## <a id="crud"></a>CRUD (Create, Read, Update ,Delete)
 ``` Json
@@ -60,7 +68,6 @@
 ### Create (POST)    
 <img src="https://joon610.github.io/assets/images/mockupServer/post.png" alt="post">
 
-
 ### Read (GET)
 <img src="https://joon610.github.io/assets/images/mockupServer/get_all.png" alt="get_all">
 <img src="https://joon610.github.io/assets/images/mockupServer/get_1.png" alt="get_1">
@@ -72,11 +79,9 @@
 <img src="https://joon610.github.io/assets/images/mockupServer/delete.png" alt="delete">
 
 ### DownLoad
-- Mac : 
-  - <https://github.com/joon610/mockup-server/releases/download/v0.2.1/mockup-server-0.2.1.dmg>
+- Mac, Windows : 
+  - <https://github.com/joon610/mockup-server/releases>
 
-- Windows :
-  - <https://github.com/joon610/mockup-server/releases/download/v0.2.1/mockup-server.Setup.0.2.1.exe>
 
 ## TodoList 
 - [X] allow cross origin option
