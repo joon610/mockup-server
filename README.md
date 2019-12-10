@@ -37,7 +37,7 @@
 ```
 
 ## <a id="settingJson"></a> about Setting.json
-```json
+```jsonc
 // setting header, cookies, api description etc 
 {
     "header": {
