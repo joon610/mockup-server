@@ -8,10 +8,15 @@
 
 ## Usage
 - [`Start`](#Start)
-- [`index.Json`](#indexJson)    
-- [`setting.Json`](#settingJson)    
+- [`index.json`](#indexJson) 
+ 1. set response Data
+- [`setting.json`](#settingJson)
+ 1. set header, cookies 
+ 2. set Api description
+ 3. set dynamic Route key 
 - [`Get Post Put Delete`](#crud)   
-
+ 1. Create, Read, Update, Delete example
+ 
 ## <a id="Start"></a> Start
 <img src="https://joon610.github.io/assets/images/mockupServer/graph.png" alt="graph">
 
@@ -36,7 +41,7 @@
 ]
 ```
 
-## <a id="settingJson"></a> about Setting.json
+## <a id="settingJson"></a> setting.json
 ```jsonc
 // setting header, cookies, api description etc 
 {
