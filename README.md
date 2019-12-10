@@ -92,7 +92,7 @@
 // index.json
 [
   {
-      "id": "1",   //Dynamic Api는 id기준으로 생성됨
+      "id": "1",   
       "name": "Sara",
       "age": "13"
   },
