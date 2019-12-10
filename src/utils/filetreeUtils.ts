@@ -62,6 +62,7 @@ export default class FiletreeUtils {
             apiInfo.header = settingInfo?.header;
             apiInfo.cookies = settingInfo?.cookies;
             apiInfo.description = settingInfo?.description;
+            apiInfo.dynamicRoute = settingInfo?.dynamicRoute;
 
             return apiInfo;
         });

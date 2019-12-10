@@ -14,4 +14,6 @@ export class ApiInfo {
     public cookies: Array<any> | undefined = undefined;
 
     public description: string = '';
+
+    public dynamicRoute: string = '';
 }
