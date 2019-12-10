@@ -9,13 +9,13 @@
 ## Usage
 - [`Start`](#Start)
 - [`index.json`](#indexJson) 
- - set response Data
+    - set response Data
 - [`setting.json`](#settingJson)
- - set header, cookies 
- - set Api description
- - set dynamic Route key 
+    - set header, cookies 
+    - set Api description
+    - set dynamic Route key 
 - [`Get Post Put Delete`](#crud)   
- - Create, Read, Update, Delete example
+    - Create, Read, Update, Delete example
 
 ## <a id="Start"></a> Start
 <img src="https://joon610.github.io/assets/images/mockupServer/graph.png" alt="graph">
