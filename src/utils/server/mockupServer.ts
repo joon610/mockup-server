@@ -87,14 +87,27 @@ export default class MockupServer {
             this.setHeader(res, restful);
             res.send(result);
         });
+
+        app.post(
+            restful.api + '/:' + this.dynamicRoute(restful.dynamicRoute),
+            (req: any, res: any) => {
+                const result = this.jsonLogic.getJson(restful);
+                const data = req.params.hasOwnProperty(this.dynamicRoute(restful.dynamicRoute))
+                    ? this.jsonLogic.selectData(result, req.params)
+                    : result;
+
+                this.setHeader(res, restful);
+                res.send(data);
+            },
+        );
     }
 
     private deleteApi(restful: ApiInfo, cnt: number): void {
         app.delete(
-            restful.api + '/:' + this.DYNAMIC_API_ID,
+            restful.api + '/:' + this.dynamicRoute(restful.dynamicRoute),
             (req: any, res: any) => {
                 const result = this.jsonLogic.getJson(restful);
-                const data = req.params.hasOwnProperty(this.DYNAMIC_API_ID)
+                const data = req.params.hasOwnProperty(this.dynamicRoute(restful.dynamicRoute))
                     ? this.jsonLogic.deleteData(result, req.params)
                     : result;
                 this.restfullList[cnt].index = data;
@@ -106,10 +119,10 @@ export default class MockupServer {
 
     private putApi(restful: ApiInfo, cnt: number): void {
         app.put(
-            restful.api + '/:' + this.DYNAMIC_API_ID,
+            restful.api + '/:' + this.dynamicRoute(restful.dynamicRoute),
             (req: any, res: any) => {
                 const result = this.jsonLogic.getJson(restful);
-                const data = req.params.hasOwnProperty(this.DYNAMIC_API_ID)
+                const data = req.params.hasOwnProperty(this.dynamicRoute(restful.dynamicRoute))
                     ? this.jsonLogic.putData(result, req)
                     : result;
                 this.restfullList[cnt].index = data;
@@ -130,10 +143,10 @@ export default class MockupServer {
         });
 
         app.get(
-            restful.api + '/:' + this.DYNAMIC_API_ID,
+            restful.api + '/:' + this.dynamicRoute(restful.dynamicRoute),
             (req: any, res: any) => {
                 const result = this.jsonLogic.getJson(restful);
-                const data = req.params.hasOwnProperty(this.DYNAMIC_API_ID)
+                const data = req.params.hasOwnProperty(this.dynamicRoute(restful.dynamicRoute))
                     ? this.jsonLogic.selectData(result, req.params)
                     : result;
 
@@ -154,4 +167,9 @@ export default class MockupServer {
         }
         return;
     }
+
+    private dynamicRoute(dynamicRoute:string) {
+        return dynamicRoute? dynamicRoute: this.DYNAMIC_API_ID;
+    }
+
 }
