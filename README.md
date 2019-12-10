@@ -20,7 +20,7 @@
 3. Mockup Server start! 
 
 ## <a id="indexJson"></a> index.json
-``` Json
+``` jsonc
 // response json
 [
   {
@@ -72,7 +72,7 @@
 
 
 ## <a id="crud"></a>CRUD (Create, Read, Update ,Delete)
-``` Json
+``` jsonc
 // index.json
 [
   {
@@ -88,7 +88,7 @@
 ]
 ```
 ## CRUD (Create, Read, Update ,Delete)
-```json
+```jsonc
 // index.json
 [
   {
@@ -105,7 +105,7 @@
 ```
 ## Post, Get
 - http://localhost:9000/nice2/test   if you send params object, and then add object in response data  (POST)
-```json
+```jsonc
 //response data
 [
     {
@@ -121,7 +121,7 @@
 ]
 ```
 - http://localhost:9000/nice2/test/1
-```json
+```jsonc
 //response data
 [
     {
@@ -133,7 +133,7 @@
 ```
 ## Put
 - http://localhost:9000/nice2/test/1   
-```json
+```jsonc
 //request data
 {
   "id": "3", 
@@ -141,7 +141,7 @@
   "age": "13"
 }
 ```
-```json
+```jsonc
 //response data
 [
     {
@@ -158,7 +158,7 @@
 ```
 ## Delete
 - http://localhost:9000/nice2/test/1
-```json
+```jsonc
 //response data
 [
     {
