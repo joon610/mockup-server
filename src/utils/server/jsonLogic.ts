@@ -9,7 +9,12 @@ export default class JsonLogic {
                 if (hasKey) return true;
                 return String(bodyKey) === String(key.id) ? true : false;
             }, false);
-            hasKey ? restful.index : restful.index.push(req.body);
+
+            if (!hasKey) {
+                if (Object.keys(req.body).length !== 0) {
+                    restful.index.push(req.body);
+                }
+            }
             return restful.index;
         }
         return restful.index;
