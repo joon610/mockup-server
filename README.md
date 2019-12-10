@@ -9,20 +9,21 @@
 ## Usage
 - [`Start`](#Start)
 - [`index.json`](#indexJson) 
- 1. set response Data
+ - set response Data
 - [`setting.json`](#settingJson)
- 1. set header, cookies 
- 2. set Api description
- 3. set dynamic Route key 
+ - set header, cookies 
+ - set Api description
+ - set dynamic Route key 
 - [`Get Post Put Delete`](#crud)   
- 1. Create, Read, Update, Delete example
- 
+ - Create, Read, Update, Delete example
+
 ## <a id="Start"></a> Start
 <img src="https://joon610.github.io/assets/images/mockupServer/graph.png" alt="graph">
 
 1. created directory.
-2. make Json files, index.json(successe case),error.json(error case),setting.json(header, cookie, api description)
-3. Mockup Server start! 
+2. make index.json file in each directory
+3. If you want to configure more, and then add error.json, setting.json
+4. Mockup Server start! 
 
 ## <a id="indexJson"></a> index.json
 ``` jsonc
@@ -92,22 +93,7 @@
     }   
 ]
 ```
-## CRUD (Create, Read, Update ,Delete)
-```jsonc
-// index.json
-[
-  {
-      "id": "1",   
-      "name": "Sara",
-      "age": "13"
-  },
-  {
-      "id": "2",
-      "name": "teddy",
-      "age": "14"
-  }   
-]
-```
+
 ## Post, Get
 - http://localhost:9000/nice2/test   if you send params object, and then add object in response data  (POST)
 ```jsonc
