@@ -165,12 +165,9 @@
 
 
 ## TodoList 
-- [X] allow cross origin option
-- [X] add header and cookie  
-- [x] Api Description
 - [ ] request parameter check
 - [ ] delay response 
-- [x] change Dynamic Route name 
+- [ ] request parameta log
 
 ## License
 MIT License
