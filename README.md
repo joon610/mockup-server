@@ -169,7 +169,7 @@
 - [X] add header and cookie  
 - [x] Api Description
 - [ ] request parameter check
-- [ ] dealy response 
+- [ ] delay response 
 - [x] change Dynamic Route name 
 
 ## License
