@@ -17,10 +17,12 @@ module.exports = {
         "babel/camelcase": 1,
         "babel/no-invalid-this": 1,
         "babel/object-curly-spacing": 1,
-        "babel/quotes": 1,
+        "babel/quotes": 0,
         "babel/semi": 1,
         "babel/no-unused-expressions": 1,
-        "babel/valid-typeof": 1
+        "babel/valid-typeof": 1,
+        "@typescript-eslint/explicit-function-return-type":0,
+        "@typescript-eslint/no-use-before-define":0
     }
 };
 

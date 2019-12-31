@@ -1,32 +1,38 @@
 <template lang="pug">
-  v-container
+  v-container.screen-container
+    .server-container
       v-row.row-height(no-gutters)
         v-col(cols="8" sm="8")
-          v-text-field(v-model="rootPath" :solo="true" :flat="true" readonly)
+          v-text-field.text-container(v-model="rootPath" :solo="true" :flat="true" readonly)
         v-col(cols="4" sm="4")
-          v-btn(color="#A5D6A7" :disabled="serverStatus" @click="initPath()") Select Root
+          v-btn.setting-btns(color="#A5D6A7" :disabled="serverStatus" @click="initPath()") Select Root
       v-row.row-height(no-gutters)
         v-col(cols="4" sm="4")
             .loacalhost-label http://localhost:
         v-col(cols="4" sm="4")
             .loacalhost
-              v-text-field(v-model="portNum" :solo="true" :readonly="isServerOn" :flat="true" style="hegiht:48px")
+              v-text-field.text-container(v-model="portNum" :solo="true" :readonly="isServerOn" :flat="true" style="hegiht:48px")
         v-col(cols="4" sm="4")
-            v-btn(v-if="isServerOn === false" color="primary"   :disabled="hasApiList" @click="startServer()") start Server
-            v-btn(v-else color="deep-orange" :disabled="hasApiList" @click="closeServer()") close Server
+            v-btn.setting-btns(v-if="isServerOn === false" color="primary"   :disabled="hasApiList" @click="startServer()") start Server
+            v-btn.setting-btns(v-else color="deep-orange" :disabled="hasApiList" @click="closeServer()") close Server
       v-row(no-gutters)
-        v-api-list(v-model="serverStatus" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
+        v-col.api-list-outer(cols="12" sm="12")
+          v-api-list(v-model="serverStatus" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
+    .logger-container
+      v-logger
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import {Component, Vue} from "vue-property-decorator";
 import FileTreeUtils from "@/utils/filetreeUtils";
-import { STANDARD_PORT } from "@/const/mockConst";
+import {STANDARD_PORT} from "@/const/mockConst";
 import ApiList from "@/components/ApiList.vue";
+import Logger from "@/components/Logger.vue";
 import MockupServer from "@/utils/server/mockupServer";
 @Component({
   components: {
-    vApiList: ApiList
+    vApiList: ApiList,
+    vLogger:Logger
   }
 })
 export default class MockServer extends Vue {
@@ -54,7 +60,8 @@ export default class MockServer extends Vue {
   private makeFileTree(): void {
     const filetree = new FileTreeUtils();
     filetree.getInstance().build(this.rootPath);
-    this.$store.state.apiInfoList = filetree.getInstance().getApiInfoList()!;
+    this.$store.state.apiInfoList = filetree.getInstance().getApiInfoList();
+    this.$store.state.rootPath = this.rootPath;
   }
 
   private get hasApiList(): boolean {
@@ -86,7 +93,6 @@ export default class MockServer extends Vue {
   background-color: #424242;
 }
 button {
-  margin-left: 5px;
   width: 165px;
   height: 48px !important;
 }
@@ -122,10 +128,51 @@ button {
   display: flex;
 }
 
-.server-btn {
-  margin-bottom: 10px;
-  float: left;
-  width: max-content;
+.setting-btns {
+  width: 100%
+}
+
+.logger-container {
+  width: 300px;
+  height: 610px;
+  margin: 0px 0px 5px 10px;
+  padding: 5px;
+  background: rgb(56, 56, 56);
+}
+
+.server-container {
+  width: 610px;
+  height: 620px;
+}
+
+.text-container {
+  margin-right: 5px !important;
+  margin-top: 0px !important;
+}
+
+.screen-container {
   display: flex;
+  height: fit-content;
+}
+.api-list-outer {
+  width: 100%;
+  /* height: 100%; */
+  overflow-y:auto;
+  background: rgb(56, 56, 56);
+}
+
+.api-list-outer::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.api-list-outer::-webkit-scrollbar {
+    width: 18px;
+}
+ 
+.api-list-outer::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+
 }
 </style>
