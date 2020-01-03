@@ -11,7 +11,7 @@ export default class JsonLogic {
             }, false);
 
             if (!hasKey) {
-                if (Object.keys(req.body).length !== 0) {
+                if (req.body?.id) {
                     restful.index.push(req.body);
                 }
             }

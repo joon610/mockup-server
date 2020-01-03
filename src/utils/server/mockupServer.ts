@@ -3,9 +3,10 @@ import { ApiInfo } from '@/const/mockType';
 import bodyParser from 'body-parser';
 import JsonLogic from './jsonLogic';
 import cors from 'cors';
+import { initLogObject, saveLogInfo, addLogHistroy } from './logLogic';
 const app = express();
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 export default class MockupServer {
@@ -25,6 +26,7 @@ export default class MockupServer {
         this.port = serverPort;
         this.self = vueComponent;
         this.restfullList = this.self.$store.state.apiInfoList;
+        initLogObject(this.self);
     }
 
     public start(): boolean {
@@ -85,18 +87,21 @@ export default class MockupServer {
                     : restful.error;
             this.self.$store.state.apiInfoList[cnt].index = result;
             this.setHeader(res, restful);
+            saveLogInfo(restful.api,req.body);
+             addLogHistroy(restful.api,'POST',req.body);
             res.send(result);
         });
-
+        
         app.post(
             restful.api + '/:' + this.dynamicRoute(restful.dynamicRoute),
             (req: any, res: any) => {
                 const result = this.jsonLogic.getJson(restful);
                 const data = req.params.hasOwnProperty(this.dynamicRoute(restful.dynamicRoute))
-                    ? this.jsonLogic.selectData(result, req.params)
-                    : result;
-
+                ? this.jsonLogic.selectData(result, req.params)
+                : result;
                 this.setHeader(res, restful);
+                saveLogInfo(restful.api, req.body);
+                addLogHistroy(restful.api,'POST',req.body);
                 res.send(data);
             },
         );
@@ -127,6 +132,7 @@ export default class MockupServer {
                     : result;
                 this.restfullList[cnt].index = data;
                 this.setHeader(res, restful);
+                saveLogInfo(restful.api, req.body);
                 res.send(data);
             },
         );
@@ -137,8 +143,9 @@ export default class MockupServer {
             const result = this.jsonLogic.getJson(
                 this.self.$store.state.apiInfoList[cnt],
             );
-
             this.setHeader(res, restful);
+            saveLogInfo(restful.api, req.body);
+            addLogHistroy(restful.api,'GET',req.body);
             res.send(result);
         });
 
@@ -151,6 +158,8 @@ export default class MockupServer {
                     : result;
 
                 this.setHeader(res, restful);
+                saveLogInfo(restful.api, req.body);
+                addLogHistroy(restful.api,'GET',req.body);
                 res.send(data);
             },
         );

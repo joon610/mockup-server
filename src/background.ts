@@ -15,15 +15,19 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 function createWindow(): void {
-    let appWidth = 570;
+    let appWidth = 870;
     if (process.platform === 'darwin') {
-        appWidth = 540;
+        appWidth = 870;
     }
     // Create the browser window.
     win = new BrowserWindow({
         resizable: true,
         width: appWidth,
-        height: 600,
+        titleBarStyle: 'hidden',
+        maximizable:false,
+        transparent: isDevelopment? false: true, 
+        frame: isDevelopment? true: false,
+        height: 710,
         webPreferences: {
             nodeIntegration: true,
         },

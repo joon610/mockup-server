@@ -1,3 +1,4 @@
+export const VERSION = '0.2.6';
 export const STANDARD_PORT = '9000';
 export const INDEX_JSON = '/index.json';
 export const ERROR_JSON = '/error.json';
@@ -12,3 +13,5 @@ export const COLOR_PALLET = {
 
 export const DEFAULT = 'default';
 export const CURSOR_POINTER = 'pointer';
+
+export const REQUEST_PARAM_JSON = '/requestLog.json'
