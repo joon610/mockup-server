@@ -6,10 +6,11 @@
           v-text-field.text-container(v-model="rootPath" :solo="true" :flat="true" readonly)
         v-col(cols="4" sm="4")
           v-btn.setting-btn-width(color="light-green" :disabled="serverStatus" @click="initPath()") 
-            v-icon mdi-folder-plus
-            | Select Root
+            v-icon fa-folder-open
+            .button-name Select Root
         v-col(cols="2" sm="2")
-          v-btn.setting-btns(color="warning" @click="refresh()") Refresh
+          v-btn.setting-btns(color="warning" @click="refresh()")
+            v-icon fa-sync-alt
       v-row.row-height(no-gutters)
         v-col(cols="3" sm="3")
             .loacalhost-label http://localhost:
@@ -18,19 +19,19 @@
               v-text-field.text-container(v-model="portNum" :solo="true" :readonly="isServerOn" :flat="true" style="hegiht:48px")
         v-col(cols="6" sm="6")
             v-btn.setting-btns(v-if="isServerOn === false"  color="#546E7A"   :disabled="hasApiList" @click="startServer()") 
-              | Start Server
+              v-icon fa-circle-notch 
+              .button-server Start Server
             v-btn.setting-btns(v-else color="#546E7A"  :disabled="hasApiList"  @click="closeServer()") 
-              v-icon mdi-access-point
-              | Running Server
+              v-icon fa-circle-notch fa-spin
+              .button-server Running Server
       v-row(no-gutters)
         v-col.api-list-outer(cols="12" sm="12")
           template(v-if="rootPath")
             v-api-list(v-model="serverStatus" :port="portNum" :isServerOn="isServerOn" style="width:100%" ) 
           template(v-else)
             .empty-container
-              v-icon.empty-icon mdi-folder-plus
-              div
-                | Select Root Path
+              v-icon.empty-icon fa-folder-open
+              .button-name Select Root Path
     .logger-div
       v-logger
 </template>
@@ -192,6 +193,14 @@ export default class MockServer extends Vue {
   font-size: 100px;
   top: calc(50% - 120px);
   position: relative;
+}
+
+.button-name {
+  margin-left: 5px;
+}
+.button-server {
+  margin-left: 5px;
+  width: 150px;
 }
 
 ::-webkit-scrollbar-thumb {

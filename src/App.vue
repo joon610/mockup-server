@@ -7,13 +7,14 @@
       v-spacer
       v-btn(v-if="diffResult === true"  color="deep-orange" @click="openBrowser()")
         span.mr-2 Release {{ newVersion }}
-        v-icon mdi-open-in-new
+        v-icon fa-external-link-square-alt
       v-btn(v-else  @click="openBugReport()")
           span.mr-2 Issues
-          v-icon mdi-open-in-new
+          v-icon fa-external-link-square-alt
     v-content
       router-view
 </template>　　 
+
 
 <script lang="ts">
 import fs from 'fs';

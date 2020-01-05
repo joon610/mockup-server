@@ -78,7 +78,6 @@ export default class ApiList extends Vue {
 
   private openBrowser(api: string): void {
     if (this.isServerOn) {
-      console.log(LOCAL_HOST + this.port + api);
       shell.openExternalSync(LOCAL_HOST + this.port + api);
     }
   }

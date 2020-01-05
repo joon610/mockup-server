@@ -29,6 +29,7 @@ export const initLogObject = (self:any) =>{
 }
 
 export const saveLogInfo = (api:any, params:any) => {
+    // if(Object.keys(params).length === 0) return;
     moment.locale();
     let now = moment().format('LLL');
     // @ts-ignore
@@ -41,6 +42,7 @@ export const saveLogInfo = (api:any, params:any) => {
 }
 
 export const addLogHistroy  = (api:string, http:any, params:any) => {
+    // if(Object.keys(params).length === 0) return;
     const historyInfo = {
         restful: http,
         api,
@@ -48,5 +50,4 @@ export const addLogHistroy  = (api:string, http:any, params:any) => {
     }
     //@ts-ignore
     store.state.logHistroy.push(historyInfo);
-    console.log('$store.getters.logHistroy :', store.getters);
 }

@@ -1,13 +1,13 @@
 <template lang="pug">
   .log-container
     v-btn.log-title(color="#616161" :disabled="isEmptyRootPath()" @click="openLogFile()")
-     v-icon mdi-file-code-outline
+     v-icon.log-icon fa-list-alt
      | Request Log
     .log-console(ref="logConsole")
       .log-start(ref="logStart")
         template(v-if="isEmptyLog()")
           .empty-container
-            v-icon.empty-icon mdi-cloud-print
+            v-icon.empty-icon fa-list-alt
             br
             div Empty (GET, POST) Parameta
         template(v-else)
@@ -15,14 +15,14 @@
             .log-api
               v-chip.chip-style(label :color="getChipColor(log.restful)") {{log.restful}}
               | {{log.api}}
-            .log-request
+            .log-request(v-if="hasObject(log.params)")
               v-chip.chip-style(label :color="getChipColor(log.restful)") REQUEST
               | {{log.params}}
 </template>>
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import {REQUEST_PARAM_JSON} from '@/const/mockConst';
+import {REQUEST_PARAM_JSON,GET,PUT,DELETE,POST} from '@/const/mockConst';
 import fs from 'fs';
 // Open a local file in the default app
 @Component
@@ -32,12 +32,28 @@ export default class ComponentName extends Vue {
   }
 
   private scrollToEnd() {
-    (this.$refs.logConsole as HTMLElement).scrollTop = (this.$refs.logStart as HTMLElement).offsetHeight;
-      console.dir(this.$refs.logConsole);
-      console.dir(this.$refs.logStart);
+    (this.$refs.logConsole as HTMLElement).scrollTop = 
+    (this.$refs.logStart as HTMLElement).offsetHeight;
   }   
+
   private getChipColor(restful:string):string {
-    return restful === 'GET'? 'cyan': 'teal'; 
+    switch(restful){
+      case GET:
+        return 'cyan';
+      case PUT:
+        return '#FB8C00';
+      case POST:
+        return 'teal';
+      case DELETE:
+        return '#BF360C';
+      default:
+        return '';
+    }
+  }
+
+  private hasObject( params:string ){
+    const keysCnt =  Object.keys(JSON.parse(params)).length;
+    return keysCnt === 0 ? false:true;
   }
 
   private isEmptyLog() {
@@ -70,11 +86,14 @@ export default class ComponentName extends Vue {
     background: none;   
     word-break: break-word; 
  }
-
+.log-icon {
+  margin-right: 5px;
+}
  .log-console {
   width: 300px;
   height: 560px;
   overflow-y: auto;
+  overflow-x: hidden;
   background: rgb(56, 56, 56);
 }
 
@@ -122,7 +141,7 @@ export default class ComponentName extends Vue {
     width: inherit;
     height: inherit;
     -webkit-box-pack: center;
-    display: contents;
+    /* display: table; */
     justify-content: center;
 }
 

@@ -1,5 +1,6 @@
 import express from 'express';
 import { ApiInfo } from '@/const/mockType';
+import { GET,PUT,DELETE,POST, COLOR_PALLET } from '@/const/mockConst';
 import bodyParser from 'body-parser';
 import JsonLogic from './jsonLogic';
 import cors from 'cors';
@@ -86,9 +87,9 @@ export default class MockupServer {
                     ? this.jsonLogic.postData(req, restful)
                     : restful.error;
             this.self.$store.state.apiInfoList[cnt].index = result;
-            this.setHeader(res, restful);
+            // res = this.setHeader(res, restful);
             saveLogInfo(restful.api,req.body);
-             addLogHistroy(restful.api,'POST',req.body);
+            addLogHistroy(restful.api,POST,req.body);
             res.send(result);
         });
         
@@ -99,9 +100,9 @@ export default class MockupServer {
                 const data = req.params.hasOwnProperty(this.dynamicRoute(restful.dynamicRoute))
                 ? this.jsonLogic.selectData(result, req.params)
                 : result;
-                this.setHeader(res, restful);
+                // res = this.setHeader(res, restful);
                 saveLogInfo(restful.api, req.body);
-                addLogHistroy(restful.api,'POST',req.body);
+                addLogHistroy(restful.api,POST,req.body);
                 res.send(data);
             },
         );
@@ -116,24 +117,28 @@ export default class MockupServer {
                     ? this.jsonLogic.deleteData(result, req.params)
                     : result;
                 this.restfullList[cnt].index = data;
-                this.setHeader(res, restful);
-                res.send(data);
+                addLogHistroy(restful.api,DELETE,req.body);
+                // res = this.setHeader(res, restful);
+                res.sendStatus(200)
             },
         );
     }
 
     private putApi(restful: ApiInfo, cnt: number): void {
+        
         app.put(
             restful.api + '/:' + this.dynamicRoute(restful.dynamicRoute),
             (req: any, res: any) => {
+
                 const result = this.jsonLogic.getJson(restful);
                 const data = req.params.hasOwnProperty(this.dynamicRoute(restful.dynamicRoute))
                     ? this.jsonLogic.putData(result, req)
                     : result;
                 this.restfullList[cnt].index = data;
-                this.setHeader(res, restful);
+                // res = this.setHeader(res, restful);
+                addLogHistroy(restful.api,PUT,req.body);
                 saveLogInfo(restful.api, req.body);
-                res.send(data);
+                res.sendStatus(200);
             },
         );
     }
@@ -143,10 +148,10 @@ export default class MockupServer {
             const result = this.jsonLogic.getJson(
                 this.self.$store.state.apiInfoList[cnt],
             );
-            this.setHeader(res, restful);
+            // res = this.setHeader(res, restful);
             saveLogInfo(restful.api, req.body);
-            addLogHistroy(restful.api,'GET',req.body);
             res.send(result);
+            addLogHistroy(restful.api,GET,req.body);
         });
 
         app.get(
@@ -157,25 +162,25 @@ export default class MockupServer {
                     ? this.jsonLogic.selectData(result, req.params)
                     : result;
 
-                this.setHeader(res, restful);
+                // res = this.setHeader(res, restful);
                 saveLogInfo(restful.api, req.body);
-                addLogHistroy(restful.api,'GET',req.body);
+                addLogHistroy(restful.api,GET,req.body);
                 res.send(data);
             },
         );
     }
 
-    private setHeader(res: any, restful: any) {
-        res.set(restful.header)
-        if (restful?.cookies) {
-            restful?.cookies.forEach((cookie: any, idx: number) => {
-                const key = Object.keys(cookie)[0];
-                const name = cookie[key];
-                res.cookie(key, name, cookie.options);
-            });
-        }
-        return;
-    }
+    // private setHeader(res: any, restful: any) {
+    //     res.set(restful.header)
+    //     if (restful?.cookies) {
+    //         restful?.cookies.forEach((cookie: any, idx: number) => {
+    //             const key = Object.keys(cookie)[0];
+    //             const name = cookie[key];
+    //             res.cookie(key, name, cookie.options);
+    //         });
+    //     }
+    //     return res;
+    // }
 
     private dynamicRoute(dynamicRoute:string) {
         return dynamicRoute? dynamicRoute: this.DYNAMIC_API_ID;

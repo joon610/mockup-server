@@ -53,7 +53,6 @@ export default class FiletreeUtils {
             const settingInfo = this.readJson(settingPath);
             const indexJson = this.readJson(indexPath)
             const errorJson = this.readJson(errorPath);
-
             const apiInfo = new ApiInfo();
             apiInfo.api = api;
             apiInfo.index = indexJson;
