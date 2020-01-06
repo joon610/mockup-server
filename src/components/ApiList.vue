@@ -13,9 +13,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import {Component, Prop, Vue} from "vue-property-decorator";
 import MockupServer from "@/utils/server/mockupServer";
-import { ApiInfo } from "@/const/mockType";
+import {ApiInfo} from "@/const/mockType";
 
 import {
   LOCAL_HOST,
@@ -27,7 +27,6 @@ const shell = require("electron").shell;
 @Component
 export default class ApiList extends Vue {
   private get hasApiList(): boolean {
-    console.log("object :", this.$store.getters.apiInfoList);
     return this.$store.getters.apiInfoList.length === 0 ? true : false;
   }
 
@@ -79,7 +78,6 @@ export default class ApiList extends Vue {
 
   private openBrowser(api: string): void {
     if (this.isServerOn) {
-      console.log(LOCAL_HOST + this.port + api);
       shell.openExternalSync(LOCAL_HOST + this.port + api);
     }
   }
@@ -98,12 +96,11 @@ button {
   display: inline-block;
 
   background-color: #424242;
-  border-radius: 5px;
-  margin-bottom: 5px;
+  padding-bottom: 5px;
   justify-content: center;
   vertical-align: middle;
   height: 50px;
-  width: 510px;
+  border-bottom: 3px solid #303030;
   display: flex;
 }
 .api-container:hover {
@@ -142,10 +139,6 @@ button {
   text-align: left;
   padding: 10px;
 }
-
-.api-list-container {
-  width: 340px;
-}
 .api-path {
   width: 250px;
   float: left;
@@ -157,6 +150,11 @@ button {
   white-space: nowrap;
 }
 
+.api-container .radio-group .v-input__control .v-input__slot{
+  margin-bottom: 0 !important;
+}
+
+
 .http-method {
   line-height: 50px;
   width: 50px;
@@ -165,13 +163,19 @@ button {
 
 .radio-style {
   height: 50px;
+  margin-right: 10px;
+  padding: 0;
 }
 
 .radio-group {
   margin: 0px;
   padding: 0px;
+  display: contents;
 }
-
+.v-input__slot {
+  margin: 0px !important;
+  padding: 0px !important;
+}
 .loacalhost-label {
   height: 48px;
   line-height: 48px;

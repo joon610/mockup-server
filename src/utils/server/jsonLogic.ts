@@ -11,7 +11,7 @@ export default class JsonLogic {
             }, false);
 
             if (!hasKey) {
-                if (Object.keys(req.body).length !== 0) {
+                if (req.body?.id) {
                     restful.index.push(req.body);
                 }
             }
@@ -35,6 +35,8 @@ export default class JsonLogic {
 
     public putData(data: any, req: any): object {
         const result = data.map((value: any) => {
+            console.log('value :', value);
+            console.log('req :', req.params);
             const hasData = value['id'] === req.params.id ? true : false;
             return hasData ? this.objectMixin(value, req.body) : value;
         });
