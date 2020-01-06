@@ -2,7 +2,7 @@
   v-app(dark  style="-webkit-app-region: drag")
     v-app-bar(app)
       v-toolbar-title.headline
-        span Interact-server 
+        span Mockup-server 
         | {{'v'+packageVersion}}
       v-spacer
       v-btn(v-if="diffResult === true"  color="deep-orange" @click="openBrowser()")
@@ -15,6 +15,11 @@
       router-view
 </template>　　 
 
+<style scoped>
+.headline {
+  margin-top: 20px
+}
+</style>
 
 <script lang="ts">
 import fs from 'fs';
