@@ -19,7 +19,7 @@ function createWindow(): void {
     let frame = undefined;
     if (process.platform === 'darwin') {
         appWidth = 870;
-        frame = isDevelopment? true: false,
+        frame = isDevelopment? true: false;
     }else {
         frame =true;
     }
