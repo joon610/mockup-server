@@ -49,5 +49,5 @@ export const addLogHistroy  = (api:string, http:any, params:any) => {
         params:JSON.stringify(params),
     }
     //@ts-ignore
-    store.state.logHistroy.push(historyInfo);
+    store.state.logHistory.push(historyInfo);
 }

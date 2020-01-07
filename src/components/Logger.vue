@@ -1,15 +1,22 @@
 <template lang="pug">
   .log-container
-    v-btn.log-title(color="#616161" :disabled="isEmptyRootPath()" @click="openLogFile()")
-     v-icon.log-icon fa-list-alt
-     | Request Log
+    v-container.log-title
+      v-row
+        v-col.log-cols-left(cols="8" sm="8")
+          v-btn.log-button(color="#616161" :disabled="isEmptyRootPath()" @click="openLogFile()")
+            v-icon.log-icon fa-list-alt
+            | RequestLog
+        v-col.log-cols-right(cols="4" sm="4")
+          v-btn.log-button(color="#616161" :disabled="isEmptyRootPath()" @click="clearConsole()")
+            v-icon.log-icon fa-eraser
+            | Clear
     .log-console(ref="logConsole")
       .log-start(ref="logStart")
         template(v-if="isEmptyLog()")
           .empty-container
             v-icon.empty-icon fa-list-alt
             br
-            div Empty (GET, POST) Parameta
+            div Empty logHistory
         template(v-else)
           div.log-info(v-for="log,index in $store.getters.logHistory" )
             .log-api
@@ -35,6 +42,12 @@ export default class ComponentName extends Vue {
     (this.$refs.logConsole as HTMLElement).scrollTop = 
     (this.$refs.logStart as HTMLElement).offsetHeight;
   }   
+
+  private clearConsole() {
+    console.log('this.$store.state.logHistory :', this.$store.state.logHistory);
+    this.$store.state.logHistory = [];
+    this.$forceUpdate();
+  }
 
   private getChipColor(restful:string):string {
     switch(restful){
@@ -86,15 +99,27 @@ export default class ComponentName extends Vue {
     background: none;   
     word-break: break-word; 
  }
-.log-icon {
-  margin-right: 5px;
-}
+  .log-icon {
+    margin-right: 5px;
+  }
  .log-console {
   width: 300px;
-  height: 560px;
+  height: 550px;
   overflow-y: auto;
   overflow-x: hidden;
   background: rgb(56, 56, 56);
+}
+.log-cols-left {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 10px;
+  /* display: contents; */
+}
+.log-cols-right {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left:0
+  /* display: contents; */
 }
 
 .log-container {
@@ -102,12 +127,27 @@ export default class ComponentName extends Vue {
   margin: 0px 0px 5px 10px;
 }
 
+.log-button {
+  height: 50px !important;
+  width: 100%;
+  font-size: 1.0rem;
+  text-transform:none;
+}
+
 .log-title {
   margin-bottom: 5px;
   text-transform: none;
   font-size: 20px;
-  height: 40px !important;
+  padding: 0;
+  height: 50px;
   margin-bottom: 5px;
+}
+
+ .log-clear{
+  width: 20px;
+  height: 50px !important;
+  margin: 0, 0, 0, 10px;
+  padding: 0;
 }
 
 .log-info {
@@ -144,6 +184,8 @@ export default class ComponentName extends Vue {
     /* display: table; */
     justify-content: center;
 }
+
+
 
 ::-webkit-scrollbar-thumb {
   background-color: darkgrey;

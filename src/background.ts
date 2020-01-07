@@ -16,11 +16,12 @@ protocol.registerSchemesAsPrivileged([
 
 function createWindow(): void {
     let appWidth = 870;
+    let appHeight = 690;
     let frame = undefined;
     if (process.platform === 'darwin') {
-        appWidth = 870;
         frame = isDevelopment? true: false;
     }else {
+        appHeight = 740;
         frame =true;
     }
 
@@ -32,7 +33,7 @@ function createWindow(): void {
         maximizable:false,
         transparent: isDevelopment? false: true, 
         frame: frame,
-        height: 710,
+        height: appHeight,
         webPreferences: {
             nodeIntegration: true,
         },

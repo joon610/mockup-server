@@ -8,7 +8,7 @@ export default new Vuex.Store({
     state: {
         apiInfoList: [],
         apiRequestLog: [],
-        logHistroy:[],
+        logHistory:[],
         rootPath: '',
     },
     getters: {
@@ -19,7 +19,7 @@ export default new Vuex.Store({
             return state.apiRequestLog;
         },
         logHistory: state =>{
-            return state.logHistroy;
+            return state.logHistory;
         },
         rootPath: state =>{
             return state.rootPath;
@@ -36,7 +36,7 @@ export default new Vuex.Store({
             state.apiRequestLog = payload;
         },
         logHistroy(state,payload):void {
-            state.logHistroy = payload;
+            state.logHistory = payload;
         }
     
     },
