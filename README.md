@@ -165,9 +165,12 @@
 
 
 ## TodoList 
-- [ ] request parameter check
+- [x] request parameter check
 - [ ] delay response 
-- [ ] request parameta log
+- [x] request parameta log
+
+## Bug
+- [ ] use setting.json and then don't work CRUD.
 
 ## License
 MIT License
