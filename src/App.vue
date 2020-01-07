@@ -11,7 +11,7 @@
       v-btn.issue-button(v-else  @click="openBugReport()" style="-webkit-app-region: no-drag")
         span.mr-2 Issues
         v-icon fa-external-link-square-alt
-      v-btn.close-button(style="-webkit-app-region: no-drag" @click ="windowClose()")
+      v-btn.close-button(v-if="isWindow === true" style="-webkit-app-region: no-drag" @click ="windowClose()")
         v-icon fa-times
     v-content
       router-view
