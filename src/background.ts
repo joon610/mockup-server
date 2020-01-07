@@ -16,13 +16,11 @@ protocol.registerSchemesAsPrivileged([
 
 function createWindow(): void {
     let appWidth = 870;
-    let appHeight = 690;
     let frame = undefined;
     if (process.platform === 'darwin') {
-        frame = isDevelopment? true: false;
-    }else {
-        appHeight = 740;
-        frame =true;
+        frame = isDevelopment ? true : false;
+    } else {
+        frame = true;
     }
 
     // Create the browser window.
@@ -30,15 +28,16 @@ function createWindow(): void {
         resizable: true,
         width: appWidth,
         titleBarStyle: 'hidden',
-        maximizable:false,
-        transparent: isDevelopment? false: true, 
-        frame: frame,
-        height: appHeight,
+        maximizable: false,
+        transparent: isDevelopment ? false : true,
+        frame: false,
+        height: 690,
         webPreferences: {
             nodeIntegration: true,
         },
         icon: path.join(__dirname, 'icon.png'),
     });
+
     win.setMenuBarVisibility(false);
 
     if (process.env.WEBPACK_DEV_SERVER_URL) {

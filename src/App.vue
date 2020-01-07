@@ -1,41 +1,61 @@
 <template lang="pug">
-  v-app(dark  style="-webkit-app-region: drag")
-    v-app-bar(app)
+  v-app(dark)
+    v-app-bar(app style="-webkit-app-region: drag")
       v-toolbar-title.headline
         span Mockup-server 
         | {{'v'+packageVersion}}
       v-spacer
-      v-btn(v-if="diffResult === true"  color="deep-orange" @click="openBrowser()")
+      v-btn.issue-button(v-if="diffResult === true"  style="-webkit-app-region: no-drag" color="deep-orange" @click="openBrowser()")
         span.mr-2 Release {{ newVersion }}
         v-icon fa-external-link-square-alt
-      v-btn(v-else  @click="openBugReport()")
-          span.mr-2 Issues
-          v-icon fa-external-link-square-alt
+      v-btn.issue-button(v-else  @click="openBugReport()" style="-webkit-app-region: no-drag")
+        span.mr-2 Issues
+        v-icon fa-external-link-square-alt
+      v-btn.close-button(style="-webkit-app-region: no-drag" @click ="windowClose()")
+        v-icon fa-times
     v-content
       router-view
 </template>　　 
 
 <style scoped>
 .headline {
-  margin-top: 20px
+  margin-top: 20px;
+}
+.issue-button {
+  background: black;
+}
+.close-button {
+  min-width: 40px !important;
+  padding: 0 !important;
+  margin-left: 20px;
+  background: black;
 }
 </style>
 
 <script lang="ts">
 import fs from 'fs';
+import os from 'os';
 import {Component, Vue} from 'vue-property-decorator';
 const shell = require('electron').shell;
 import {VERSION} from '@/const/mockConst';
 @Component
   export default class ComponentName extends Vue {
+      
     private newVersion = '';
     private packageVersion = VERSION;
-    
+    private isWindow = os.platform() === 'win32'? true : false;
+
     private openBrowser() {
         shell.openExternalSync(
             'https://github.com/joon610/mock-server/releases',
         );
         return;
+    }
+
+    private windowClose() {
+       const remote = require('electron').remote;
+       const window = remote.getCurrentWindow();
+       window.close();
     }
 
     private openBugReport() {
@@ -47,7 +67,6 @@ import {VERSION} from '@/const/mockConst';
 
     private created() {
       this.getNewRelease();
-      // this.getCurrentVersion();
     }
 
     private get diffResult() {
