@@ -18,10 +18,9 @@ function createWindow(): void {
     let appWidth = 870;
     let frame = undefined;
     if (process.platform === 'darwin') {
-        appWidth = 870;
-        frame = isDevelopment? true: false;
-    }else {
-        frame =true;
+        frame = isDevelopment ? true : false;
+    } else {
+        frame = true;
     }
 
     // Create the browser window.
@@ -29,15 +28,16 @@ function createWindow(): void {
         resizable: true,
         width: appWidth,
         titleBarStyle: 'hidden',
-        maximizable:false,
-        transparent: isDevelopment? false: true, 
-        frame: frame,
-        height: 710,
+        maximizable: false,
+        transparent: isDevelopment ? false : true,
+        frame: false,
+        height: 690,
         webPreferences: {
             nodeIntegration: true,
         },
         icon: path.join(__dirname, 'icon.png'),
     });
+
     win.setMenuBarVisibility(false);
 
     if (process.env.WEBPACK_DEV_SERVER_URL) {

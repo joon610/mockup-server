@@ -1,4 +1,4 @@
-export const VERSION = '1.0.0';
+export const VERSION = '1.0.1';
 export const STANDARD_PORT = '9000';
 export const INDEX_JSON = '/index.json';
 export const ERROR_JSON = '/error.json';
