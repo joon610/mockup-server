@@ -21,7 +21,7 @@
 <img src="https://joon610.github.io/assets/images/mockupServer/graph.png" alt="graph">
 
 1. created directory.
-2. make index.json file in each directory
+2. make response index.json file in each directory
 3. If you want to configure more, and then add error.json, setting.json
 4. Mockup Server start! 
 
