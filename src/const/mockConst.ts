@@ -1,4 +1,4 @@
-export const VERSION = '1.0.1';
+export const VERSION = '1.0.2';
 export const STANDARD_PORT = '9000';
 export const INDEX_JSON = '/index.json';
 export const ERROR_JSON = '/error.json';
@@ -19,3 +19,8 @@ export const GET = 'GET';
 export const PUT = 'PUT';
 export const DELETE = 'DELETE';
 export const POST = 'POST';
+
+export const LOG_GET_COLOR = 'cyan';
+export const LOG_PUT_COLOR = '#FB8C00';
+export const LOG_POST_COLOR = 'teal';
+export const LOG_DELETE_COLOR = '#BF360C';

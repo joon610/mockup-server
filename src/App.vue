@@ -2,8 +2,7 @@
   v-app(dark)
     v-app-bar(app style="-webkit-app-region: drag")
       v-toolbar-title.headline
-        span Mockup-server 
-        | {{'v'+packageVersion}}
+        span Mockup Server 
       v-spacer
       v-btn.issue-button(v-if="diffResult === true"  style="-webkit-app-region: no-drag" color="deep-orange" @click="openBrowser()")
         span.mr-2 Release {{ newVersion }}

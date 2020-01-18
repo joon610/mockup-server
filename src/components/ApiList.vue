@@ -9,6 +9,7 @@
             v-radio-group.radio-group(v-model="$store.getters.apiInfoList[index].status" row :disabled="rest.isFail || isServerOn")
               v-radio.radio-style(label="sucsses" color="green" value="success")
               v-radio.radio-style(label="error" color="red" value="error")   
+            v-icon.setting-style(@click="openDirectory(rest.api)") far fa-folder-open
             span.tooltiptext(v-if="rest.description !== undefined ") {{ rest.description }}
 </template>
 
@@ -16,13 +17,13 @@
 import {Component, Prop, Vue} from "vue-property-decorator";
 import MockupServer from "@/utils/server/mockupServer";
 import {ApiInfo} from "@/const/mockType";
-
 import {
   LOCAL_HOST,
   COLOR_PALLET,
   DEFAULT,
   CURSOR_POINTER
 } from "@/const/mockConst";
+import * as fsMock from '@/utils/fsMock';
 const shell = require("electron").shell;
 @Component
 export default class ApiList extends Vue {
@@ -81,6 +82,10 @@ export default class ApiList extends Vue {
       shell.openExternalSync(LOCAL_HOST + this.port + api);
     }
   }
+
+  private openDirectory(path:string){
+    fsMock.openDirectory(path);
+  }
 }
 </script>
 
@@ -127,7 +132,6 @@ button {
 
 .api-container .tooltiptext {
   visibility: hidden;
-  width: 450px;
   height: fit-content;
   background-color: black;
   color: white;
@@ -140,7 +144,7 @@ button {
   padding: 10px;
 }
 .api-path {
-  width: 250px;
+  width: 200px;
   float: left;
   line-height: 50px;
   text-align: left;
@@ -194,5 +198,15 @@ button {
 .input-row {
   width: 340px;
   float: left;
+}
+
+.setting-style{
+  width: 50px;
+  height: 50px;
+  color: white;
+  cursor: pointer;
+}
+.setting-style:hover{
+  color: orange;
 }
 </style>

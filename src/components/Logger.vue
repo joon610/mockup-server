@@ -29,7 +29,8 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import {REQUEST_PARAM_JSON,GET,PUT,DELETE,POST} from '@/const/mockConst';
+import {REQUEST_PARAM_JSON,GET,PUT,DELETE,POST, 
+LOG_GET_COLOR,LOG_PUT_COLOR,LOG_POST_COLOR,LOG_DELETE_COLOR} from '@/const/mockConst';
 import fs from 'fs';
 // Open a local file in the default app
 @Component
@@ -52,13 +53,13 @@ export default class ComponentName extends Vue {
   private getChipColor(restful:string):string {
     switch(restful){
       case GET:
-        return 'cyan';
+        return LOG_GET_COLOR;
       case PUT:
-        return '#FB8C00';
+        return LOG_PUT_COLOR;
       case POST:
-        return 'teal';
+        return LOG_POST_COLOR;
       case DELETE:
-        return '#BF360C';
+        return LOG_DELETE_COLOR;
       default:
         return '';
     }
@@ -84,7 +85,6 @@ export default class ComponentName extends Vue {
     }else {
       shell.showItemInFolder(this.$store.getters.rootPath);
     }
-   
   }
 
   private isEmptyRootPath() {
@@ -165,7 +165,7 @@ export default class ComponentName extends Vue {
 .empty-container {
   text-align: center;
   color:dimgray;
-  top: calc(50% - 120px);
+  top: 180px;
   position: relative;
 }
 
@@ -177,15 +177,12 @@ export default class ComponentName extends Vue {
 }
 
 .log-start {
-    /* position: absolute; */
     width: inherit;
     height: inherit;
     -webkit-box-pack: center;
-    /* display: table; */
+    display: table;
     justify-content: center;
 }
-
-
 
 ::-webkit-scrollbar-thumb {
   background-color: darkgrey;
