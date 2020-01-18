@@ -4,6 +4,7 @@ import { REQUEST_PARAM_JSON } from '@/const/mockConst';
 import fs from 'fs';
 import { Moment } from 'moment'
 let moment = require('moment');
+
 export const initLogObject = (self:any) =>{
     const data = store.state.apiInfoList;
     const path = store.state.rootPath + REQUEST_PARAM_JSON;

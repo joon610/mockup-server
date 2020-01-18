@@ -1,15 +1,15 @@
 {
   "name": "mockup-server",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "eslint --ext .vue,.ts src",
     "dev:vue": "vue-cli-service serve",
-    "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
+    "electron:icon": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
     "dev": "yarn vue-cli-service electron:serve ",
     "build:electron": "yarn vue-cli-service electron:build",
-    "build:all": "yarn vue-cli-service electron:build --mac --win"
+    "build:linux": "yarn vue-cli-service electron:build --linux --x64"
   },
   "dependencies": {
     "@types/cors": "^2.8.6",

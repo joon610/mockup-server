@@ -15,7 +15,6 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 function createWindow(): void {
-    let appWidth = 870;
     let frame = undefined;
     if (process.platform === 'darwin') {
         frame = isDevelopment ? true : false;
@@ -26,7 +25,7 @@ function createWindow(): void {
     // Create the browser window.
     win = new BrowserWindow({
         resizable: true,
-        width: appWidth,
+        width: 870,
         titleBarStyle: 'hidden',
         maximizable: false,
         transparent: isDevelopment ? false : true,

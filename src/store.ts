@@ -38,6 +38,5 @@ export default new Vuex.Store({
         logHistroy(state,payload):void {
             state.logHistory = payload;
         }
-    
     },
 });

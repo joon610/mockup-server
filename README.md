@@ -1,31 +1,81 @@
-# Mock Server 
+# MockUp Server [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)]() [![GitHub release](https://img.shields.io/badge/release-v1.0.2-blue)](https://https://github.com/joon610/mockup-server/releases)
 
-![mock-manual](https://github.com/joon610/readMEImg/blob/master/mock-server/mock-manual.gif)
+<img src="/assets/images/mockupServer/main.gif" alt="mainGif">
 
-## Translate
-한국어 : <https://joon610.github.io/sideproject/MockUp-Server> <br> 
-日本語 : <https://qiita.com/joon610/items/f5aae93815b536a3f56b>
+## Initialize directory.
+<img src="/assets/images/mockupServer/directory-setting.png" alt="directory">
 
-## Usage
-- [`Start`](#Start)
-- [`index.json`](#indexJson) 
-    - set response Data
-- [`setting.json`](#settingJson)
-    - set header, cookies 
-    - set Api description
-    - set dynamic Route key 
+## Click Events
+- Radio Button
+    1. sucesses: response index.json
+    2. error: response error.json
+- buttons
+    1. Select Root : choice root Directory
+    2. Refresh : re rendering screen
+    3. Folder icon : open current Directory
+    4. RequestLog : move recod request Parame Json file
+    5. Clear : logHistory clear
+    6. API bar : click API bar and then get index.json or error.json
+
+## Setting Files
+- <b>index.json</b> 
+    1. <b> this file is necessariness</b> 
+    2. make in api Directory 
+    2. Json
+        ``` jsonc
+        // index.json
+        {
+            {
+                "id": "1", 
+                "name": "Sara",
+                "age": "13"
+            }   
+        }
+        ```
+
+- <b>setting.json</b>  
+    1. <b> !this file will be change this json files </b>
+    2. make json in Api Directory
+    3. Json
+        ```jsonc
+        // setting header, cookies, api description etc 
+        {
+            "header": {
+                "Content-Type": "application/json; charset=utf-8",
+                "Content-Length": "123",
+                "ETag": "12345"
+            },
+            "cookies": [
+                {  //cookie1
+                    "cookiekey": "cookieName",
+                    "options": {
+                        "maxAge": 30000
+                    }
+                },
+                { //cookie2
+                    "hello": "hi",
+                    "options": {
+                        "maxAge": 10000
+                    }
+                }
+            ],
+            "dynamicRoute":"hello",      //  ex) localhost/bla/:hello
+            "description": "this API is holy shit" // api description
+        }
+        ```
+- <b>requestLog.json</b>
+    1. in root Directory.
+    2. record request Parameta.
+- <b>init.json</b>
+    1. in root Direcotory.
+    2. saved init port number;
+
+## CRUD
 - [`Get Post Put Delete`](#crud)   
     - Create, Read, Update, Delete example
 
-## <a id="Start"></a> Start
-<img src="https://joon610.github.io/assets/images/mockupServer/graph.png" alt="graph">
 
-1. created directory.
-2. make index.json file in each directory
-3. If you want to configure more, and then add error.json, setting.json
-4. Mockup Server start! 
-
-## <a id="indexJson"></a> index.json
+### <a id="indexJson"></a> index.json
 ``` jsonc
 // response json
 [
@@ -42,60 +92,11 @@
 ]
 ```
 
-## <a id="settingJson"></a> setting.json
-```jsonc
-// setting header, cookies, api description etc 
-{
-    "header": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Content-Length": "123",
-        "ETag": "12345"
-    },
-    "cookies": [
-        {  //cookie1
-            "cookiekey": "cookieName",
-            "options": {
-                "maxAge": 30000
-            }
-        },
-        { //cookie2
-            "hello": "hi",
-            "options": {
-                "maxAge": 10000
-            }
-        }
-    ],
-    "dynamicRoute":"hello",      //  ex) localhost/bla/:hello
-    "description": "this API is holy shit" // api description
-
-}
-```
-#### Set Cookies
-<img src="https://joon610.github.io/assets/images/mockupServer/headerSetting.png" alt="headerSetting">
-
-#### API Description tooltip
-<img src="https://joon610.github.io/assets/images/mockupServer/tooltip.png" width="300" height="300" alt="tooltip">
-
-
 ## <a id="crud"></a>CRUD (Create, Read, Update ,Delete)
-``` jsonc
-// index.json
-[
-  {
-        "id": "1", 
-        "name": "Sara",
-        "age": "13"
-    },
-    {
-        "id": "2",
-        "name": "teddy",
-        "age": "14"
-    }   
-]
-```
 
 ## Post, Get
-- http://localhost:9000/nice2/test   if you send params object, and then add object in response data  (POST)
+- http://localhost:9000/nice2/test  
+    - if you want to send params object, and then add object in response data  (POST)
 ```jsonc
 //response data
 [
@@ -163,11 +164,6 @@
 - Mac, Windows: 
   - <https://github.com/joon610/mockup-server/releases>
 
-
-## TodoList 
-- [x] request parameter check
-- [ ] delay response 
-- [x] request parameta log
 
 ## Bug
 - [ ] use setting.json and then don't work CRUD.

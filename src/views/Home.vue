@@ -43,6 +43,7 @@ import {STANDARD_PORT} from "@/const/mockConst";
 import ApiList from "@/components/ApiList.vue";
 import Logger from "@/components/Logger.vue";
 import MockupServer from "@/utils/server/mockupServer";
+import fs from 'fs';
 @Component({
   components: {
     vApiList: ApiList,
@@ -51,7 +52,7 @@ import MockupServer from "@/utils/server/mockupServer";
 })
 export default class MockServer extends Vue {
   private rootPath = "";
-  private portNum = STANDARD_PORT;
+  private portNum = "";
   private serverStatus = false;
   private isServerOn = false;
   private hasRestfullList = true;
@@ -64,11 +65,34 @@ export default class MockServer extends Vue {
     const path = await dialog.showOpenDialog({
       properties: ["openDirectory"]
     });
-    if (path.filePaths!.length === 0) {
+    if (path?.filePaths!.length === 0) {
       return;
     }
-    this.rootPath = path.filePaths![0];
+    this.rootPath = path?.filePaths![0];
+    this.readPort(this.rootPath);
+    this.writePort(this.rootPath,this.portNum);
     this.makeFileTree();
+  }
+
+  private readPort(path:string) {
+    const portPath = path+'/init.json';
+    if (fs.existsSync(portPath)){
+      const initJson = JSON.parse(fs.readFileSync(portPath,'utf8'));
+      if(initJson?.serverPort){
+        this.portNum = initJson.serverPort;
+      }
+    }else {
+      this.portNum = STANDARD_PORT;
+    }
+  }
+
+  private writePort(path:string,port:string){
+    const portPath = path+'/init.json';
+    this.portNum = port ==='' ? STANDARD_PORT:port;
+    const initPort = {
+      serverPort: this.portNum,
+    };
+    fs.writeFileSync(portPath,JSON.stringify(initPort,null,2),'utf8');
   }
 
   private makeFileTree(): void {
@@ -83,6 +107,8 @@ export default class MockServer extends Vue {
   }
 
   private async startServer(): Promise<void> {
+    this.writePort(this.rootPath,this.portNum);
+    await this.makeFileTree();
     this.server = new MockupServer(this, this.portNum);
     this.isServerOn = await this.server.start();
   }
