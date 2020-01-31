@@ -172,9 +172,6 @@
   - <https://github.com/joon610/mockup-server/releases>
 
 
-## Bug
-- [ ] use setting.json and then don't work CRUD.
-
 ## License
 MIT License
 
