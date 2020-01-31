@@ -3,6 +3,7 @@ import { ApiInfo } from '@/const/mockType';
 import { GET,PUT,DELETE,POST, COLOR_PALLET } from '@/const/mockConst';
 import bodyParser from 'body-parser';
 import JsonLogic from './jsonLogic';
+import  store  from '../../store';
 import cors from 'cors';
 import { initLogObject, saveLogInfo, addLogHistroy } from './logLogic';
 const app = express();
@@ -23,10 +24,9 @@ export default class MockupServer {
 
     private self: any;
 
-    public constructor(vueComponent: any, serverPort: string) {
+    public constructor(serverPort: string) {
         this.port = serverPort;
-        this.self = vueComponent;
-        this.restfullList = this.self.$store.state.apiInfoList;
+        this.restfullList = store.state.apiInfoList;
         initLogObject(this.self);
     }
 
@@ -38,7 +38,6 @@ export default class MockupServer {
         this.server = app.listen(this.port, () => {
             console.log(`server started at http://localhost:${this.port}`);
         });
-
         this.generateAPI();
         return true;
     }
@@ -52,7 +51,7 @@ export default class MockupServer {
         });
 
         delete this.server;
-        this.self.$store.commit('apiInfoList', []);
+        store.commit('apiInfoList', []);
         return false;
     }
 
@@ -64,7 +63,7 @@ export default class MockupServer {
     }
 
     private generateAPI(): void {
-        this.self.$store.state.apiInfoList.forEach(
+        store.state.apiInfoList.forEach(
             (restful: ApiInfo, cnt: number) => {
                 try {
                     this.getApi(restful, cnt);
@@ -86,8 +85,8 @@ export default class MockupServer {
                 restful.status === 'success'
                     ? this.jsonLogic.postData(req, restful)
                     : restful.error;
-            this.self.$store.state.apiInfoList[cnt].index = result;
-            // res = this.setHeader(res, restful);
+            
+            store.state.apiInfoList[cnt]!.index = result;
             saveLogInfo(restful.api,req.body);
             addLogHistroy(restful.api,POST,req.body);
             res.send(result);
@@ -146,7 +145,7 @@ export default class MockupServer {
     private getApi(restful: ApiInfo, cnt: number): void {
         app.get(restful.api, (req: any, res: any) => {
             const result = this.jsonLogic.getJson(
-                this.self.$store.state.apiInfoList[cnt],
+                store.state.apiInfoList[cnt],
             );
             // res = this.setHeader(res, restful);
             saveLogInfo(restful.api, req.body);
