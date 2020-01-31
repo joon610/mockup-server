@@ -109,7 +109,7 @@ export default class MockServer extends Vue {
   private async startServer(): Promise<void> {
     this.writePort(this.rootPath,this.portNum);
     await this.makeFileTree();
-    this.server = new MockupServer(this, this.portNum);
+    this.server = new MockupServer(this.portNum);
     this.isServerOn = await this.server.start();
   }
 

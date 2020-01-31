@@ -37,9 +37,9 @@ import fs from 'fs';
 export default class ComponentName extends Vue {
   private updated() {
     this.$nextTick(() => this.scrollToEnd());;
-  }
+    }
 
-  private scrollToEnd() {
+    private scrollToEnd() {
     (this.$refs.logConsole as HTMLElement).scrollTop = 
     (this.$refs.logStart as HTMLElement).offsetHeight;
   }   
@@ -78,6 +78,7 @@ export default class ComponentName extends Vue {
   }
 
   private openLogFile() {
+      
     const shell = require("electron").shell;
     const result = fs.existsSync(this.$store.getters.rootPath+REQUEST_PARAM_JSON);
     if(result){
