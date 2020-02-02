@@ -9,6 +9,18 @@
 <img src="https://joon610.github.io/assets/images/mockupServer/main.gif" width="435px" height="345px" alt="mainGif">
 </p>
 
+
+## Why make it
+ Used when developing Front-end and Back-ends at the same time. Since Front-End developers have to develop without a server,  there is a possibility of future problems (async, variable names, object types, API, etc.). You can reduce the problems   later by developing 
+
+## How to use it
+ 1. Make Directory. (become API path)
+ 2. make Json File  in Directory ( response Data)
+ 3. select Root Directory
+ 4. Start Server .. finish.
+ 5. Share to Github for Front-End and Back-End developers  
+ 6. Manage using GitHub
+
 ## Initialize directory.
 <img src="https://joon610.github.io/assets/images/mockupServer/directory-setting.png" alt="directory">
 
