@@ -14,7 +14,7 @@
  Used when developing Front-end and Back-ends at the same time. Since Front-End developers have to develop without a server,  there is a possibility of future problems (async, variable names, object types, API, etc.). You can reduce the problems   later by developing 
 
 ## How to use it
- 1. Make Directory. (become API path)
+ 1. Make Directory. (will be API path)
  2. make Json File  in Directory ( response Data)
  3. select Root Directory
  4. Start Server .. finish.
