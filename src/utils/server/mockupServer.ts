@@ -148,7 +148,7 @@ export default class MockupServer {
                 store.state.apiInfoList[cnt],
             );
             // res = this.setHeader(res, restful);
-            saveLogInfo(restful.api, req.body);
+            saveLogInfo(restful.api, result);
             res.send(result);
             addLogHistroy(restful.api,GET,req.body);
         });
@@ -160,9 +160,7 @@ export default class MockupServer {
                 const data = req.params.hasOwnProperty(this.dynamicRoute(restful.dynamicRoute))
                     ? this.jsonLogic.selectData(result, req.params)
                     : result;
-
-                // res = this.setHeader(res, restful);
-                saveLogInfo(restful.api, req.body);
+                saveLogInfo(restful.api, data);
                 addLogHistroy(restful.api,GET,req.body);
                 res.send(data);
             },

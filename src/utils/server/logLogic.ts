@@ -33,11 +33,8 @@ export const saveLogInfo = (api:any, params:any) => {
     // if(Object.keys(params).length === 0) return;
     moment.locale();
     let now = moment().format('LLL');
-    // @ts-ignore
-    store.state.apiRequestLog[api].requestParams = params
-    // @ts-ignore
-    store.state.apiRequestLog[api].update = now
-    //@ts-ignore
+    store.state.apiRequestLog[api].requestParams = params;
+    store.state.apiRequestLog[api].update = now;
     const jsonData = JSON.stringify(store.state.apiRequestLog,null, 2);
     fs.writeFileSync(store.state.rootPath + '/requestLog.json', jsonData, 'utf8');
 }
@@ -49,6 +46,5 @@ export const addLogHistroy  = (api:string, http:any, params:any) => {
         api,
         params:JSON.stringify(params),
     }
-    //@ts-ignore
     store.state.logHistory.push(historyInfo);
 }

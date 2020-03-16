@@ -48,18 +48,18 @@ export default class FiletreeUtils {
     private makeApiList(): ApiInfo[] {
         const apiList = this.dirPathList.map((value: string,cnt:number) => {
             const api = value.replace(this.rootPath, '');
-            
             const indexPath = this.rootPath + api + INDEX_JSON;
             this.apiHashMap[indexPath] = cnt;
-            console.log(indexPath);
             const errorPath = this.rootPath + api + ERROR_JSON;
             const settingPath = this.rootPath + api + SETTING_JSON;
             const settingInfo = this.readJson(settingPath);
             const indexJson = this.readJson(indexPath)
             const errorJson = this.readJson(errorPath);
+            const statusOptionButton = store?.getters?.apiInfoList[cnt]?.status
             const apiInfo = new ApiInfo();
             apiInfo.api = api;
             apiInfo.index = indexJson;
+            apiInfo.status = statusOptionButton ? statusOptionButton : apiInfo.status; 
             apiInfo.error = errorJson
             apiInfo.isFail = apiInfo.index === undefined;
             apiInfo.header = settingInfo?.header;
