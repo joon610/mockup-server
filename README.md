@@ -3,6 +3,27 @@
     <img src="https://joon610.github.io/assets/images/mockupServer/mockup-logo.png" alt="logo" width="128px" height="128px">
 </p>
 
+### DownLoad
+- Mac, Windows: 
+  - <https://github.com/joon610/mockup-server/releases>
+   ※Mac Developer is not certified. so you need clone repo and then build in your Mac
+
+## Project setupø
+```
+yarn install
+```
+
+### Compiles and hot-reloads for development
+```
+yarn dev
+```
+
+### Compiles and minifies for production(electront)
+```
+build:electron
+```
+
+
 # MockUp Server [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)]() [![GitHub release](https://img.shields.io/badge/release-v1.0.3-blue)](https://https://github.com/joon610/mockup-server/releases)
 
 <p align="center">
@@ -179,26 +200,9 @@
     }   
 ]
 ```
-### DownLoad
-- Mac, Windows: 
-  - <https://github.com/joon610/mockup-server/releases>
-
 
 ## License
 MIT License
 
-## Project setupø
-```
-yarn install
-```
 
-### Compiles and hot-reloads for development
-```
-yarn dev
-```
-
-### Compiles and minifies for production(electront)
-```
-build:electron
-```
 
