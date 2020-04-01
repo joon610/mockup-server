@@ -3,6 +3,9 @@
     <img src="https://joon610.github.io/assets/images/mockupServer/mockup-logo.png" alt="logo" width="128px" height="128px">
 </p>
 
+
+# MockUp Server [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)]() [![GitHub release](https://img.shields.io/badge/release-v1.0.4-blue)](https://https://github.com/joon610/mockup-server/releases)
+
 ### DownLoad
 - Mac, Windows: 
   - <https://github.com/joon610/mockup-server/releases>
@@ -25,9 +28,6 @@ yarn dev
 ```
 build:electron
 ```
-
-
-# MockUp Server [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)]() [![GitHub release](https://img.shields.io/badge/release-v1.0.3-blue)](https://https://github.com/joon610/mockup-server/releases)
 
 <p align="center">
 <img src="https://joon610.github.io/assets/images/mockupServer/main.gif" width="435px" height="345px" alt="mainGif">
