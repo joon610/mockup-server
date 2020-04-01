@@ -8,11 +8,14 @@
   - <https://github.com/joon610/mockup-server/releases>
    ※Mac Developer is not certified. so you need clone repo and then build in your Mac
 
-## Project setupø
+## Project setup
 ```
+git clone https://github.com/joon610/mockup-server.git
+cd mockup-server
 yarn install
+yarn dev
+yarn build:electron
 ```
-
 ### Compiles and hot-reloads for development
 ```
 yarn dev
