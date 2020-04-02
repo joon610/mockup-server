@@ -4,7 +4,7 @@
 </p>
 
 
-# MockUp Server [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)]() [![GitHub release](https://img.shields.io/badge/release-v1.0.4-blue)](https://https://github.com/joon610/mockup-server/releases)
+# MockUp Server [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/joon610/mockup-server/blob/master/LICENSE) [![GitHub release](https://img.shields.io/badge/release-v1.0.4-blue)](https://https://github.com/joon610/mockup-server/releases)
 
 ### DownLoad
 - Mac, Windows: 
