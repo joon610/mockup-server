@@ -16,8 +16,6 @@
 git clone https://github.com/joon610/mockup-server.git
 cd mockup-server
 yarn install
-yarn dev
-yarn build:electron
 ```
 ### Compiles and hot-reloads for development
 ```
