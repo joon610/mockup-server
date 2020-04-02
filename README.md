@@ -9,7 +9,7 @@
 ### DownLoad
 - Mac, Windows: 
   - <https://github.com/joon610/mockup-server/releases>
-   ※Mac Developer is not certified. so you need clone repo and then build in your Mac
+  <p>※im' not Apple Developer. so you need clone repo and then build in your Mac</p>
 
 ## Project setup
 ```
