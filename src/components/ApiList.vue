@@ -1,7 +1,7 @@
 <template lang="pug">
     .api-list-container
         .api-container(v-for="rest,index in $store.getters.apiInfoList" :key="index"  :style="apiContainerStyle(rest, isServerOn)" )
-            a(@click="openBrowser(rest.api)")
+            a.api-name(@click="openBrowser(rest.api)")
                 .http-method(:style="httpMethodStyle(rest,isServerOn)")
                     | API 
                 .api-path(:style="apiPathStyle(rest,isServerOn)")
@@ -10,7 +10,7 @@
               v-radio.radio-style(label="sucsses" color="green" value="success")
               v-radio.radio-style(label="error" color="red" value="error")   
             v-icon.setting-style(@click="openDirectory(rest.api)") far fa-folder-open
-            span.tooltiptext(v-if="rest.description !== undefined ") {{ rest.description }}
+              span.tooltiptext(v-if="rest.description !== undefined ") {{ rest.description }}
 </template>
 
 <script lang="ts">
@@ -95,6 +95,10 @@ button {
   margin-left: 5px;
   height: 48px !important;
 }
+.api-name{
+  display: flex;
+  padding-left: 10px;
+}
 
 .api-container {
   position: relative;
@@ -174,7 +178,7 @@ button {
 .radio-group {
   margin: 0px;
   padding: 0px;
-  display: contents;
+  display: block;
 }
 .v-input__slot {
   margin: 0px !important;
