@@ -9,7 +9,7 @@
             v-radio-group.radio-group(v-model="$store.getters.apiInfoList[index].status" row :disabled="rest.isFail || isServerOn")
               v-radio.radio-style(label="sucsses" color="green" value="success")
               v-radio.radio-style(label="error" color="red" value="error")   
-              v-icon.setting-style(@click="openDirectory(rest.api)") far fa-folder-open
+            v-icon.setting-style(@click="openDirectory(rest.api)") far fa-folder-open
               span.tooltiptext(v-if="rest.description !== undefined ") {{ rest.description }}
 </template>
 
@@ -97,7 +97,7 @@ button {
 }
 .api-name{
   display: flex;
-  padding-left: 20px;
+  padding-left: 10px;
 }
 
 .api-container {
@@ -178,7 +178,7 @@ button {
 .radio-group {
   margin: 0px;
   padding: 0px;
-  display: contents;
+  display: block;
 }
 .v-input__slot {
   margin: 0px !important;
