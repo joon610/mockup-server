@@ -1,7 +1,7 @@
 <template lang="pug">
     .api-list-container
         .api-container(v-for="rest,index in $store.getters.apiInfoList" :key="index"  :style="apiContainerStyle(rest, isServerOn)" )
-            a(@click="openBrowser(rest.api)")
+            a.api-name(@click="openBrowser(rest.api)")
                 .http-method(:style="httpMethodStyle(rest,isServerOn)")
                     | API 
                 .api-path(:style="apiPathStyle(rest,isServerOn)")
@@ -9,8 +9,8 @@
             v-radio-group.radio-group(v-model="$store.getters.apiInfoList[index].status" row :disabled="rest.isFail || isServerOn")
               v-radio.radio-style(label="sucsses" color="green" value="success")
               v-radio.radio-style(label="error" color="red" value="error")   
-            v-icon.setting-style(@click="openDirectory(rest.api)") far fa-folder-open
-            span.tooltiptext(v-if="rest.description !== undefined ") {{ rest.description }}
+              v-icon.setting-style(@click="openDirectory(rest.api)") far fa-folder-open
+              span.tooltiptext(v-if="rest.description !== undefined ") {{ rest.description }}
 </template>
 
 <script lang="ts">
@@ -94,6 +94,10 @@ button {
   width: 165px;
   margin-left: 5px;
   height: 48px !important;
+}
+.api-name{
+  display: flex;
+  padding-left: 20px;
 }
 
 .api-container {
