@@ -1,6 +1,6 @@
 
 <p align="center">
-    <img src="https://joon610.github.io/assets/images/mockupServer/mockup-logo.png" alt="logo" width="128px" height="128px">
+    <img src="https://raw.githubusercontent.com/joon610/imageRepo/main/image/mockup-server/icon.png" alt="logo" width="128px" height="128px">
 </p>
 
 
@@ -27,10 +27,6 @@ yarn dev
 build:electron
 ```
 
-<p align="center">
-<img src="https://joon610.github.io/assets/images/mockupServer/main.gif" width="435px" height="345px" alt="mainGif">
-</p>
-
 
 ## Why make it
  Used when developing Front-end and Back-ends at the same time. Since Front-End developers have to develop without a server,  there is a possibility of future problems (async, variable names, object types, API, etc.). You can reduce the problems   later by developing 
@@ -44,7 +40,7 @@ build:electron
  6. Manage using GitHub
 
 ## Initialize directory.
-<img src="https://joon610.github.io/assets/images/mockupServer/directory-setting.png" alt="directory">
+<img src="https://raw.githubusercontent.com/joon610/imageRepo/main/image/mockup-server/process.png" alt="directory">
 
 ## Click Events
 - Radio Button
